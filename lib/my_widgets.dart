@@ -150,7 +150,7 @@ class SliderSideButton extends StatelessWidget {
   }
 }
 
-// Tabs Tabs
+// Tabs Tabs Tabs
 class TabWidget extends StatelessWidget {
   final String title, description, formula;
   TabWidget({this.title, this.description, this.formula});

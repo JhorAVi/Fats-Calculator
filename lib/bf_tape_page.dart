@@ -477,6 +477,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   // Widget inside the slider card FUNCTION
   // Widget inside the slider card FUNCTION
+  // TODO add the ft with proper size
   Column statsCardContent(
       {final String text,
       final String unit,

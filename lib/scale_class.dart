@@ -130,6 +130,8 @@ class LengthScale {
   int cmMin, cmMax;
   int inchMin, inchMax;
   String lengthDisplay;
+  String feetText;
+  String inchesDisplay; // the inches part of feet display computed differently from the rest
   String text;
   String unit = 'centimeters';
   String toggleText; // maybe unused
@@ -148,6 +150,8 @@ class LengthScale {
 //      toggleText = '<< switch cm';
 //    }
     lengthDisplay = length.round().toString();
+    inchesDisplay = '';
+    feetText = '';
   }
   void toggleToInches() {
     unit = 'inches';
@@ -157,9 +161,16 @@ class LengthScale {
     cmIsDefault = false;
     // SETSTATE this!!
     // toggleText = '<< switch cm';
-    lengthDisplay = (text == 'HEIGHT') // just HEIGHT because we already know this is inches
-        ? (length ~/ 12).toInt().toString() + ' ft, ' + (length % 12).toStringAsFixed(1)
-        : length.toStringAsFixed(1);
+    if (text == 'HEIGHT') {
+      inchesDisplay = (length % 12).toStringAsFixed(1);
+      feetText = 'ft';
+      lengthDisplay = (length ~/ 12).toInt().toString();
+    } else {
+      inchesDisplay = '';
+      feetText = '';
+      //lengthDisplay = length.toStringAsFixed(1);
+      lengthDisplay = removeDecimalZero(length);
+    }
   }
 
   void toggleToCentimeters() {
@@ -170,7 +181,11 @@ class LengthScale {
     cmIsDefault = true;
     // SETSTATE this
     // toggleText = (text == 'HEIGHT') ? '<< switch feet' : '<< switch inches';
-    lengthDisplay = length.toStringAsFixed(1); // remove zero decimal
+    //lengthDisplay = length.toStringAsFixed(1); // remove zero decimal
+    lengthDisplay = removeDecimalZero(length);
+
+    feetText = '';
+    inchesDisplay = '';
   }
 
   void decrementOne() {
@@ -178,9 +193,13 @@ class LengthScale {
       length = length.roundToDouble() - 1;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'inches') {
-        lengthDisplay = (length ~/ 12).toInt().toString() + ' ft, ' + (length % 12).toStringAsFixed(0);
+        inchesDisplay = (length % 12).toStringAsFixed(0);
+        feetText = 'ft';
+        lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
+        feetText = '';
+        inchesDisplay = '';
       }
     }
   }
@@ -190,9 +209,13 @@ class LengthScale {
       length = length.roundToDouble() + 1;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'inches') {
-        lengthDisplay = (length ~/ 12).toInt().toString() + ' ft, ' + (length % 12).toStringAsFixed(0);
+        inchesDisplay = (length % 12).toStringAsFixed(0);
+        feetText = 'ft';
+        lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
+        feetText = '';
+        inchesDisplay = '';
       }
     }
   }
@@ -202,9 +225,15 @@ class LengthScale {
       length = length + 0.1;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'inches') {
-        lengthDisplay = (length ~/ 12).toInt().toString() + ' ft, ' + (length % 12).toStringAsFixed(1);
+        inchesDisplay = (length % 12).toStringAsFixed(1);
+        feetText = 'ft';
+        lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
-        lengthDisplay = length.toStringAsFixed(1);
+        //lengthDisplay = length.toStringAsFixed(1);
+        lengthDisplay = removeDecimalZero(length);
+
+        feetText = '';
+        inchesDisplay = '';
       }
     }
   }
@@ -215,9 +244,13 @@ class LengthScale {
       length = newValue.roundToDouble();
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'inches') {
-        lengthDisplay = (length ~/ 12).toInt().toString() + ' ft, ' + (length % 12).toStringAsFixed(0);
+        inchesDisplay = (length % 12).toStringAsFixed(0);
+        feetText = 'ft';
+        lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
+        feetText = '';
+        inchesDisplay = '';
       }
     }
   }

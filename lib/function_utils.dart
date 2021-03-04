@@ -454,3 +454,9 @@ double centimetersToInches(double value) {
 double inchesToCentimeters(double value) {
   return value * 2.54;
 }
+
+// removes the trailing zeros
+String removeDecimalZero(double n) {
+  n = double.parse(n.toStringAsFixed(1));
+  return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
+}

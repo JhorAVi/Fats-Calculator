@@ -499,10 +499,23 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             SizedBox(width: 10),
             // tap to Add .1 decimal accuracy to the value
             GestureDetector(
-              child: Text(
-                // SLIDER CURRENT VALUE NUMBER
-                currentValueTxt(text),
-                style: kAgeTextStyle,
+              // Todo Add column here to inlcude ft and inches
+              child: Row(
+                children: [
+                  Text(
+                    // SLIDER CURRENT VALUE NUMBER
+                    currentValueTxt(text),
+                    style: kAgeTextStyle,
+                  ),
+                  Text(
+                    currentFeetText(text),
+                    style: kUnitTextStyle, // feet
+                  ),
+                  Text(
+                    currentInchesText(text),
+                    style: kAgeTextStyle, // inches fraction
+                  ),
+                ],
               ),
               onTap: () {
                 setState(() {
@@ -606,8 +619,19 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
       return '';
   }
 
+  // Process the inches display part
+  String currentInchesText(String text) {
+    return (text == 'HEIGHT') ? cHeight.inchesDisplay : ' ';
+  }
+
+  // Process the visibility of the feet text
+  String currentFeetText(String text) {
+    return (text == 'HEIGHT') ? cHeight.feetText : ' ';
+  }
+
   // The new value in text returned by the slider
-  String newValueTxt(String text, double newValue) {
+  void newValueTxt(String text, double newValue) {
+    // I've just changed this from STring to void
     if (text == "HEIGHT")
       cHeight.movingValue(newValue);
     else if (text == "WEIGHT")

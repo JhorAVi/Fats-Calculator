@@ -234,16 +234,27 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               ],
             ),
             // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
-            ReusableCard(
-              // AGE AGE AGE
-              colour: kInActiveButtonColor,
-              widgetContents: ageCardContent(text: cAge.text, unit: cAge.unit, value: cAge.age, min: cAge.min, max: cAge.max),
+            Visibility(
+              visible: isCOVERTBAILEY | isHERITAGE,
+              child: ReusableCard(
+                // AGE AGE AGE
+                colour: kInActiveButtonColor,
+                widgetContents: ageCardContent(
+                  // AGE AGE AGE
+                  text: cAge.text,
+                  unit: cAge.unit,
+                  value: cAge.age,
+                  min: cAge.min,
+                  max: cAge.max,
+                ),
+              ),
             ),
             Visibility(
               visible: isUSNAVY | isHERITAGE,
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
+                    // HEIGHT HEIGHT HEIGHT
                     text: cHeight.text,
                     unit: cHeight.unit,
                     value: cHeight.length,
@@ -258,6 +269,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
+                    // WEIGHT WEIGHT WEIGHT
                     text: cWeight.text,
                     unit: cWeight.unit,
                     value: cWeight.weight,
@@ -272,7 +284,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
-                    text: cWaist.text, unit: cWaist.unit, value: cWaist.length, min: cWaist.min, max: cWaist.max, toggleText: cWaist.toggleText),
+                  text: cWaist.text,
+                  unit: cWaist.unit,
+                  value: cWaist.length,
+                  min: cWaist.min,
+                  max: cWaist.max,
+                  toggleText: cWaist.toggleText,
+                ),
               ),
             ),
             Visibility(
@@ -280,7 +298,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
-                    text: cHips.text, unit: cHips.unit, value: cHips.length, min: cHips.min, max: cHips.max, toggleText: cHips.toggleText),
+                  text: cHips.text,
+                  unit: cHips.unit,
+                  value: cHips.length,
+                  min: cHips.min,
+                  max: cHips.max,
+                  toggleText: cHips.toggleText,
+                ),
               ),
             ),
             Visibility(
@@ -301,7 +325,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
-                    text: cWrist.text, unit: cWrist.unit, value: cWrist.length, min: cWrist.min, max: cWrist.max, toggleText: cWrist.toggleText),
+                  text: cWrist.text,
+                  unit: cWrist.unit,
+                  value: cWrist.length,
+                  min: cWrist.min,
+                  max: cWrist.max,
+                  toggleText: cWrist.toggleText,
+                ),
               ),
             ),
 
@@ -310,7 +340,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
-                    text: cThigh.text, unit: cThigh.unit, value: cThigh.length, min: cThigh.min, max: cThigh.max, toggleText: cThigh.toggleText),
+                  text: cThigh.text,
+                  unit: cThigh.unit,
+                  value: cThigh.length,
+                  min: cThigh.min,
+                  max: cThigh.max,
+                  toggleText: cThigh.toggleText,
+                ),
               ),
             ),
 
@@ -319,7 +355,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
-                    text: cCalf.text, unit: cCalf.unit, value: cCalf.length, min: cCalf.min, max: cCalf.max, toggleText: cCalf.toggleText),
+                  text: cCalf.text,
+                  unit: cCalf.unit,
+                  value: cCalf.length,
+                  min: cCalf.min,
+                  max: cCalf.max,
+                  toggleText: cCalf.toggleText,
+                ),
               ),
             ),
             Visibility(
@@ -327,7 +369,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 colour: kInActiveButtonColor,
                 widgetContents: statsCardContent(
-                    text: cNeck.text, unit: cNeck.unit, value: cNeck.length, min: cNeck.min, max: cNeck.max, toggleText: cNeck.toggleText),
+                  text: cNeck.text,
+                  unit: cNeck.unit,
+                  value: cNeck.length,
+                  min: cNeck.min,
+                  max: cNeck.max,
+                  toggleText: cNeck.toggleText,
+                ),
               ),
             ),
 
@@ -523,9 +571,9 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                 });
               },
             ),
-            SizedBox(
+            /*          SizedBox(
               width: 5,
-            ),
+            ),*/
 //            Text(unit, style: kUnitTextStyle),
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
@@ -597,6 +645,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   // The actual value depending on the text
   String currentValueTxt(String text) {
+    if (text == 'AGE') return cAge.ageDisplay;
     if (text == 'WEIGHT')
       return cWeight.weightDisplay;
     else if (text == 'HEIGHT')
@@ -621,12 +670,12 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   // Process the inches display part
   String currentInchesText(String text) {
-    return (text == 'HEIGHT') ? cHeight.inchesDisplay : ' ';
+    return (text == 'HEIGHT') ? cHeight.inchesDisplay : '';
   }
 
   // Process the visibility of the feet text
   String currentFeetText(String text) {
-    return (text == 'HEIGHT') ? cHeight.feetText : ' ';
+    return (text == 'HEIGHT') ? cHeight.feetText : '';
   }
 
   // The new value in text returned by the slider
@@ -653,6 +702,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   // increment by fraction
   void incrementFractionNow(String text) {
+    if (text == 'AGE') cAge.incrementPointOne();
     if (text == 'WEIGHT')
       cWeight.incrementPointOne();
     else if (text == 'HEIGHT')
@@ -714,40 +764,40 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   // toggle text
   void toggleNow(String text, unit) {
-    if (text == 'HEIGHT' && unit == 'centimeters')
+    if (text == 'HEIGHT' && unit == 'cm.')
       cHeight.toggleToInches();
-    else if (text == 'HEIGHT' && unit == 'inches')
+    else if (text == 'HEIGHT' && unit == 'in.')
       cHeight.toggleToCentimeters();
-    else if (text == 'WEIGHT' && unit == 'kilograms')
+    else if (text == 'WEIGHT' && unit == 'kgs')
       cWeight.toggleToLbs();
     else if (text == 'WEIGHT' && unit == 'lbs')
       cWeight.toggleToKilograms();
-    else if (text == 'WAIST' && unit == 'centimeters')
+    else if (text == 'WAIST' && unit == 'cm.')
       cWaist.toggleToInches();
-    else if (text == 'WAIST' && unit == 'inches')
+    else if (text == 'WAIST' && unit == 'in.')
       cWaist.toggleToCentimeters();
-    else if (text == 'HIP' && unit == 'centimeters')
+    else if (text == 'HIP' && unit == 'cm.')
       cHips.toggleToInches();
-    else if (text == 'HIP' && unit == 'inches')
+    else if (text == 'HIP' && unit == 'in.')
       cHips.toggleToCentimeters();
-    else if (text == 'FOREARM' && unit == 'centimeters')
+    else if (text == 'FOREARM' && unit == 'cm.')
       cForearm.toggleToInches();
-    else if (text == 'FOREARM' && unit == 'inches')
+    else if (text == 'FOREARM' && unit == 'in.')
       cForearm.toggleToCentimeters();
-    else if (text == 'WRIST' && unit == 'centimeters')
+    else if (text == 'WRIST' && unit == 'cm.')
       cWrist.toggleToInches();
-    else if (text == 'WRIST' && unit == 'inches')
+    else if (text == 'WRIST' && unit == 'in.')
       cWrist.toggleToCentimeters();
-    else if (text == 'THIGH' && unit == 'centimeters')
+    else if (text == 'THIGH' && unit == 'cm.')
       cThigh.toggleToInches();
-    else if (text == 'THIGH' && unit == 'inches')
+    else if (text == 'THIGH' && unit == 'in.')
       cThigh.toggleToCentimeters();
-    else if (text == 'CALF' && unit == 'centimeters')
+    else if (text == 'CALF' && unit == 'cm.')
       cCalf.toggleToInches();
-    else if (text == 'CALF' && unit == 'inches')
+    else if (text == 'CALF' && unit == 'in.')
       cCalf.toggleToCentimeters();
-    else if (text == 'NECK' && unit == 'centimeters')
+    else if (text == 'NECK' && unit == 'cm.')
       cNeck.toggleToInches();
-    else if (text == 'NECK' && unit == 'inches') cNeck.toggleToCentimeters();
+    else if (text == 'NECK' && unit == 'in.') cNeck.toggleToCentimeters();
   }
 }

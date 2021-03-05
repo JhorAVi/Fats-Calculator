@@ -460,3 +460,9 @@ String removeDecimalZero(double n) {
   n = double.parse(n.toStringAsFixed(1));
   return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
 }
+
+// my simpler version of the above
+// Wong wrong this doesnt work here
+String singlePrecisionNoZero(double n) {
+  return double.parse(n.toStringAsFixed(1)).toString();
+}

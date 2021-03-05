@@ -30,6 +30,16 @@ class AgeScale {
     }
   }
 
+  // New
+  void incrementPointOne() {
+    if (max - 1 > age + 1) {
+      age = age + 0.2;
+      // SETSTATE this
+      ageDisplay = removeDecimalZero(age);
+      // print(removeDecimalZero(weight));
+    }
+  }
+
   void movingValue(double newValue) {
     if (min + 1 < newValue && max - 1 > newValue) {
       // deduct 1 in range for safety
@@ -65,14 +75,15 @@ class WeightScale {
   }
 
   void toggleToKilograms() {
-    unit = 'kilograms';
+    unit = 'kgs';
     weight = lbsToKilograms(weight); //  Do conversion here
     min = kgMin;
     max = kgMax;
     lbsIsDefault = false;
     // SETSTATE THIS!
     //toggleText = '<< switch lbs';
-    weightDisplay = weight.toStringAsFixed(1); // remove trailing zeros
+    //weightDisplay = weight.toStringAsFixed(1); // remove trailing zeros
+    weightDisplay = removeDecimalZero(weight);
   }
 
   void toggleToLbs() {
@@ -83,7 +94,8 @@ class WeightScale {
     lbsIsDefault = true;
     // SETSTATE THIS!
     //toggleText = '<< switch kgs';
-    weightDisplay = weight.toStringAsFixed(1); // remove trailing zeros
+    //weightDisplay = weight.toStringAsFixed(1); // remove trailing zeros
+    weightDisplay = removeDecimalZero(weight);
   }
 
   void decrementOne() {
@@ -107,7 +119,8 @@ class WeightScale {
     if (max - 1 > weight + 1) {
       weight = weight + 0.1;
       // SETSTATE this
-      weightDisplay = weight.toStringAsFixed(1);
+      weightDisplay = removeDecimalZero(weight);
+      // print(removeDecimalZero(weight));
     }
   }
 
@@ -133,7 +146,7 @@ class LengthScale {
   String feetText;
   String inchesDisplay; // the inches part of feet display computed differently from the rest
   String text;
-  String unit = 'centimeters';
+  String unit = 'cm.';
   String toggleText; // maybe unused
   bool cmIsDefault = true;
 
@@ -153,8 +166,10 @@ class LengthScale {
     inchesDisplay = '';
     feetText = '';
   }
+
+  // This toogles to height
   void toggleToInches() {
-    unit = 'inches';
+    unit = 'in.';
     length = centimetersToInches(length); // temp
     min = inchMin;
     max = inchMax;
@@ -163,7 +178,8 @@ class LengthScale {
     // toggleText = '<< switch cm';
     if (text == 'HEIGHT') {
       inchesDisplay = (length % 12).toStringAsFixed(1);
-      feetText = 'ft';
+      //inchesDisplay = ((length % 12)==0)?'':length.toStringAsFixed(1);
+      feetText = 'ft. ';
       lengthDisplay = (length ~/ 12).toInt().toString();
     } else {
       inchesDisplay = '';
@@ -174,7 +190,7 @@ class LengthScale {
   }
 
   void toggleToCentimeters() {
-    unit = 'centimeters';
+    unit = 'cm.';
     length = inchesToCentimeters(length); // Do conversion here
     min = cmMin;
     max = cmMax;
@@ -192,9 +208,9 @@ class LengthScale {
     if (min + 1 < length - 1 && max - 1 > length - 1) {
       length = length.roundToDouble() - 1;
       // SETSTATE this
-      if (text == 'HEIGHT' && unit == 'inches') {
+      if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);
-        feetText = 'ft';
+        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
@@ -208,9 +224,9 @@ class LengthScale {
     if (min + 1 < length + 1 && max - 1 > length + 1) {
       length = length.roundToDouble() + 1;
       // SETSTATE this
-      if (text == 'HEIGHT' && unit == 'inches') {
+      if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);
-        feetText = 'ft';
+        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
@@ -224,9 +240,9 @@ class LengthScale {
     if (max - 1 > length + 1) {
       length = length + 0.1;
       // SETSTATE this
-      if (text == 'HEIGHT' && unit == 'inches') {
+      if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(1);
-        feetText = 'ft';
+        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         //lengthDisplay = length.toStringAsFixed(1);
@@ -243,9 +259,9 @@ class LengthScale {
       // deduct 1 in range for safety
       length = newValue.roundToDouble();
       // SETSTATE this
-      if (text == 'HEIGHT' && unit == 'inches') {
+      if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);
-        feetText = 'ft';
+        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);

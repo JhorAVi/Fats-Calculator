@@ -57,10 +57,7 @@ class _InputPageState extends State<InputPage> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: <Widget>[
-            Text('BMI CALCULATOR   '),
-            Text('by jhoravi', style: kAuthorTextStyle)
-          ],
+          children: <Widget>[Text('BMI CALCULATOR   '), Text('by jhoravi', style: kAuthorTextStyle)],
         ),
       ),
       body: Column(
@@ -78,9 +75,7 @@ class _InputPageState extends State<InputPage> {
                           selectedGender = Gender.male;
                         });
                       },
-                      colour: (selectedGender == Gender.male)
-                          ? kActiveButtonColor
-                          : kInActiveButtonColor,
+                      colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
                       widgetContents: GenderCardContent(
                         label: 'MALE',
                         iconGender: FontAwesomeIcons.mars,
@@ -97,9 +92,7 @@ class _InputPageState extends State<InputPage> {
                           selectedGender = Gender.female;
                         });
                       },
-                      colour: (selectedGender == Gender.female)
-                          ? kActiveButtonColor
-                          : kInActiveButtonColor,
+                      colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
                       widgetContents: GenderCardContent(
                         label: 'FEMALE',
                         iconGender: FontAwesomeIcons.venus,
@@ -116,36 +109,22 @@ class _InputPageState extends State<InputPage> {
             child: ReusableCard(
               colour: kInActiveButtonColor,
               widgetContents: statsCardContent(
-                  text: 'WEIGHT',
-                  unit: weightUnitStr,
-                  value: weight,
-                  min: weightMin,
-                  max: weightMax,
-                  toggleText: 'toggle lbs or kilogram'),
+                  text: 'WEIGHT', unit: weightUnitStr, value: weight, min: weightMin, max: weightMax, toggleText: 'toggle lbs or kilogram'),
             ),
           ),
           Expanded(
               // HEIGHT SLIDER CARD
               child: ReusableCard(
             colour: kInActiveButtonColor,
-            widgetContents: statsCardContent(
-                text: 'HEIGHT',
-                unit: heightUnitStr,
-                value: height,
-                min: heightMin,
-                max: heightMax,
-                toggleText: 'toggle cm or feet'),
+            widgetContents:
+                statsCardContent(text: 'HEIGHT', unit: heightUnitStr, value: height, min: heightMin, max: heightMax, toggleText: 'toggle cm or feet'),
           )),
           BottomButton(
             // CALCULATE CALCULATE CALCULATE CALCULATE
             // CALCULATE CALCULATE CALCULATE CALCULATE
             text: 'CALCULATE',
             onPress: () {
-              CalculatorBrain calc = CalculatorBrain(
-                  height: height,
-                  weight: weight,
-                  lbsIsDefault: lbsIsDefault,
-                  cmIsDefault: cmIsDefault);
+              CalculatorBrain calc = CalculatorBrain(height: height, weight: weight, lbsIsDefault: lbsIsDefault, cmIsDefault: cmIsDefault);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -157,9 +136,7 @@ class _InputPageState extends State<InputPage> {
                       selFlex1: calc.getFlex1(),
                       selFlex2: calc.getFlex2(),
                       selFlex3: calc.getFlex3(),
-                      genderPath: (selectedGender == Gender.female)
-                          ? 'images/bmi females.jpg'
-                          : 'images/bmi males.jpg',
+                      genderPath: (selectedGender == Gender.female) ? 'images/bmi females.jpg' : 'images/bmi males.jpg',
                     );
                   },
                 ),
@@ -176,8 +153,7 @@ class _InputPageState extends State<InputPage> {
   Column statsCardContent(
       {final String text,
       final String unit,
-      final double
-          value, // To display the initial value depending on the metrics
+      final double value, // To display the initial value depending on the metrics
       final int min,
       final int max,
       final String toggleText}) {
@@ -197,7 +173,7 @@ class _InputPageState extends State<InputPage> {
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
             UnitToggleButton(
               // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
-              text: toggleText,
+              unitName: toggleText,
               onPress: () {
                 if (text == 'HEIGHT' && unit == 'centimeters') {
                   heightUnitStr = 'inches';
@@ -206,9 +182,7 @@ class _InputPageState extends State<InputPage> {
                   heightMax = inchMax;
                   cmIsDefault = false;
                   setState(() {
-                    heightDisplay = (height ~/ 12).toInt().toString() +
-                        ' ft, ' +
-                        (height % 12).toStringAsFixed(0);
+                    heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                   });
                 } else if (text == 'HEIGHT' && unit == 'inches') {
                   heightUnitStr = 'centimeters';
@@ -217,8 +191,7 @@ class _InputPageState extends State<InputPage> {
                   heightMax = cmMax;
                   cmIsDefault = true;
                   setState(() {
-                    heightDisplay =
-                        height.toStringAsFixed(0); // remove zero decimal
+                    heightDisplay = height.toStringAsFixed(0); // remove zero decimal
                   });
                 } else if (text == 'WEIGHT' && unit == 'kilograms') {
                   weightUnitStr = 'lbs';
@@ -227,8 +200,7 @@ class _InputPageState extends State<InputPage> {
                   weightMax = lbsMax;
                   lbsIsDefault = true;
                   setState(() {
-                    weightDisplay =
-                        weight.toStringAsFixed(0); // remove trailing zeros
+                    weightDisplay = weight.toStringAsFixed(0); // remove trailing zeros
                   });
                 } else if (text == 'WEIGHT' && unit == 'lbs') {
                   weightUnitStr = 'kilograms';
@@ -237,8 +209,7 @@ class _InputPageState extends State<InputPage> {
                   weightMax = kgMax;
                   lbsIsDefault = false;
                   setState(() {
-                    weightDisplay =
-                        weight.toStringAsFixed(0); // remove trailing zeros
+                    weightDisplay = weight.toStringAsFixed(0); // remove trailing zeros
                   });
                 }
               },
@@ -288,10 +259,7 @@ class _InputPageState extends State<InputPage> {
                           height = height.roundToDouble() - 1;
                           setState(() {
                             if (unit == 'inches') {
-                              heightDisplay =
-                                  (height ~/ 12).toInt().toString() +
-                                      ' ft, ' +
-                                      (height % 12).toStringAsFixed(0);
+                              heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                             } else {
                               heightDisplay = height.toStringAsFixed(0);
                             }
@@ -321,14 +289,10 @@ class _InputPageState extends State<InputPage> {
                         {
                           if (min + 1 < newValue && max - 1 > newValue) {
                             // deduct 1 in range for safety
-                            height = newValue
-                                .roundToDouble(); // Move fractions for now
+                            height = newValue.roundToDouble(); // Move fractions for now
                             setState(() {
                               if (unit == 'inches') {
-                                heightDisplay =
-                                    (height ~/ 12).toInt().toString() +
-                                        ' ft, ' +
-                                        (height % 12).toStringAsFixed(0);
+                                heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                               } else {
                                 heightDisplay = height.toStringAsFixed(0);
                               }
@@ -341,8 +305,7 @@ class _InputPageState extends State<InputPage> {
                         {
                           if (min + 1 < newValue && max - 1 > newValue) {
                             // deduct 1 in range for safety
-                            weight = newValue
-                                .roundToDouble(); // remove fractions for now
+                            weight = newValue.roundToDouble(); // remove fractions for now
                             setState(() {
                               weightDisplay = weight.toStringAsFixed(0);
                             });
@@ -380,10 +343,7 @@ class _InputPageState extends State<InputPage> {
                             height = height.roundToDouble() + 1;
                             setState(() {
                               if (unit == 'inches') {
-                                heightDisplay =
-                                    (height ~/ 12).toInt().toString() +
-                                        ' ft, ' +
-                                        (height % 12).toStringAsFixed(0);
+                                heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                               } else {
                                 heightDisplay = height.toStringAsFixed(0);
                               }

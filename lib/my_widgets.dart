@@ -73,9 +73,10 @@ class GenderCardContent extends StatelessWidget {
 
 // the unit toggle button inside the slider card
 class UnitToggleButton extends StatelessWidget {
-  UnitToggleButton({this.onPress, this.text});
+  UnitToggleButton({this.onPress, this.unitName, this.enabled});
   final Function onPress;
-  final String text;
+  final String unitName;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +93,16 @@ class UnitToggleButton extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Text(
-            text,
+            unitName,
             style: kUnitTextStyle,
             textAlign: TextAlign.center,
           ),
           SizedBox(width: 5),
-          Icon(FontAwesomeIcons.caretDown, size: 20),
+          Visibility(
+            // Hide toggle arrow if it's about age
+            visible: enabled,
+            child: Icon(FontAwesomeIcons.caretDown, size: 20),
+          ),
         ],
       ),
     );

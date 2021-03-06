@@ -239,8 +239,8 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               child: ReusableCard(
                 // AGE AGE AGE
                 colour: kInActiveButtonColor,
-                widgetContents: ageCardContent(
-                  // AGE AGE AGE
+                widgetContents: statsCardContent(
+                  // AGE AGE AGE currently merging this with statsCardContent
                   text: cAge.text,
                   unit: cAge.unit,
                   value: cAge.age,
@@ -439,90 +439,6 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
     );
   }
 
-  //AGE AGE AGE AGE AGE
-  // Widget inside the slider card FUNCTION
-  // Widget inside the slider card FUNCTION
-  Column ageCardContent(
-      {final String text,
-      final String unit,
-      final double value, // To display the initial value depending on the metrics
-      final int min,
-      final int max}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              // WEIGHT or HEIGHT TEXT
-              text,
-              style: kTextStyle,
-            ),
-            SizedBox(width: 10),
-            Text(
-              // SLIDER CURRENT VALUE NUMBER
-              cAge.ageDisplay,
-              style: kAgeTextStyle,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(unit, style: kUnitTextStyle),
-          ],
-        ),
-        Row(
-          // SLIDER ROW SLIDER ROW SLIDER ROW
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-              // Does not care if it is kgs or lbs
-              flex: 1,
-              child: SliderSideButton(
-                  icon: FontAwesomeIcons.minus,
-                  onPress: () {
-                    setState(() {
-                      cAge.decrementOne();
-                    });
-                  }),
-            ),
-            Expanded(
-              flex: 8,
-              // SLIDER SLIDER SLIDER SLIDER SLIDER
-              // SLIDER SLIDER SLIDER SLIDER SLIDER
-              child: Slider(
-                  value: value,
-                  min: min.toDouble(),
-                  max: max.toDouble(),
-                  activeColor: Color(0xFFEB1555),
-                  inactiveColor: Color(0xFF8D8E98),
-                  onChanged: (newValue) {
-                    setState(() {
-                      cAge.movingValue(newValue);
-                    });
-                  }),
-            ),
-            Expanded(
-                // INCREMENT INCREMENT INCREMENT INCREMENT
-                // INCREMENT INCREMENT INCREMENT INCREMENT
-                // Doesn't care if it's kgs or lbs
-                flex: 1,
-                child: SliderSideButton(
-                  icon: FontAwesomeIcons.plus,
-                  onPress: () {
-                    setState(() {
-                      cAge.incrementOne();
-                    });
-                  },
-                ))
-          ],
-        ),
-      ],
-    );
-  }
-
   // Widget inside the slider card FUNCTION
   // Widget inside the slider card FUNCTION
   // TODO add the ft with proper size
@@ -547,7 +463,6 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             SizedBox(width: 10),
             // tap to Add .1 decimal accuracy to the value
             GestureDetector(
-              // Todo Add column here to inlcude ft and inches
               child: Row(
                 children: [
                   Text(
@@ -556,12 +471,12 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                     style: kAgeTextStyle,
                   ),
                   Text(
-                    currentFeetText(text),
-                    style: kUnitTextStyle, // feet
+                    currentFeetText(text, unit),
+                    style: kUnitTextStyle, // show feet or not
                   ),
                   Text(
-                    currentInchesText(text),
-                    style: kAgeTextStyle, // inches fraction
+                    currentInchesText(text, unit),
+                    style: kAgeTextStyle, // show inch fraction or not
                   ),
                 ],
               ),
@@ -571,17 +486,17 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                 });
               },
             ),
-            /*          SizedBox(
-              width: 5,
+            /*           SizedBox(
+              width: 2,
             ),*/
 //            Text(unit, style: kUnitTextStyle),
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-            // TODO Change unit label to Toggle Button
             UnitToggleButton(
               // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
               //text: toggleText,
-              text: unit,
+              unitName: unit,
+              enabled: disableToggleOnAge(text),
               onPress: () {
                 setState(() {
                   toggleNow(text, unit); // Change the value after toggle
@@ -668,19 +583,26 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
       return '';
   }
 
-  // Process the inches display part
-  String currentInchesText(String text) {
-    return (text == 'HEIGHT') ? cHeight.inchesDisplay : '';
+  // Process the visibility of the feet text
+  String currentFeetText(String text, String unit) {
+    //return (text == 'HEIGHT') ? cHeight.feetText : '';
+    return (text == 'HEIGHT' && unit == 'in.') ? 'ft. ' : '';
   }
 
-  // Process the visibility of the feet text
-  String currentFeetText(String text) {
-    return (text == 'HEIGHT') ? cHeight.feetText : '';
+  // Process the inches display part
+  String currentInchesText(String text, unit) {
+    return (text == 'HEIGHT' && unit == 'in.') ? cHeight.inchesDisplay : '';
+  }
+
+  // no toggle arrow down on AGE
+  bool disableToggleOnAge(String text) {
+    return (text == 'AGE') ? false : true;
   }
 
   // The new value in text returned by the slider
   void newValueTxt(String text, double newValue) {
     // I've just changed this from STring to void
+    if (text == "AGE") cAge.movingValue(newValue);
     if (text == "HEIGHT")
       cHeight.movingValue(newValue);
     else if (text == "WEIGHT")
@@ -723,6 +645,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   }
 
   void decrementNow(String text) {
+    if (text == "AGE") cAge.decrementOne();
     if (text == "WEIGHT")
       cWeight.decrementOne();
     else if (text == "HEIGHT")
@@ -743,6 +666,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   }
 
   void incrementNow(String text) {
+    if (text == 'AGE') cAge.incrementOne();
     if (text == 'WEIGHT')
       cWeight.incrementOne();
     else if (text == 'HEIGHT')
@@ -763,6 +687,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   }
 
   // toggle text
+  // this is the only function with AGE is excuded
   void toggleNow(String text, unit) {
     if (text == 'HEIGHT' && unit == 'cm.')
       cHeight.toggleToInches();

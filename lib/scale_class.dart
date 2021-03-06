@@ -8,7 +8,7 @@ class AgeScale {
   int min, max;
   String ageDisplay;
   String text = 'AGE';
-  String unit = 'years';
+  String unit = 'yrs';
 
   AgeScale({this.min, this.max}) {
     // age = (min + max) / 2;
@@ -143,7 +143,7 @@ class LengthScale {
   int cmMin, cmMax;
   int inchMin, inchMax;
   String lengthDisplay;
-  String feetText;
+  //String feetText;
   String inchesDisplay; // the inches part of feet display computed differently from the rest
   String text;
   String unit = 'cm.';
@@ -157,14 +157,7 @@ class LengthScale {
     max = cmMax;
     // length = (cmMin + cmMax) / 2;
     length = cmMin.toDouble() + 1; // Start at the lowest value so that user will know that the value is not yet set.
-//    if (cmIsDefault) {
-//      toggleText = (text == 'HEIGHT') ? '<< switch feet' : '<< switch inches';
-//    } else {
-//      toggleText = '<< switch cm';
-//    }
     lengthDisplay = length.round().toString();
-    inchesDisplay = '';
-    feetText = '';
   }
 
   // This toogles to height
@@ -175,15 +168,11 @@ class LengthScale {
     max = inchMax;
     cmIsDefault = false;
     // SETSTATE this!!
-    // toggleText = '<< switch cm';
     if (text == 'HEIGHT') {
-      inchesDisplay = (length % 12).toStringAsFixed(1);
+      inchesDisplay = removeDecimalZero(length % 12);
       //inchesDisplay = ((length % 12)==0)?'':length.toStringAsFixed(1);
-      feetText = 'ft. ';
       lengthDisplay = (length ~/ 12).toInt().toString();
     } else {
-      inchesDisplay = '';
-      feetText = '';
       //lengthDisplay = length.toStringAsFixed(1);
       lengthDisplay = removeDecimalZero(length);
     }
@@ -196,12 +185,7 @@ class LengthScale {
     max = cmMax;
     cmIsDefault = true;
     // SETSTATE this
-    // toggleText = (text == 'HEIGHT') ? '<< switch feet' : '<< switch inches';
-    //lengthDisplay = length.toStringAsFixed(1); // remove zero decimal
     lengthDisplay = removeDecimalZero(length);
-
-    feetText = '';
-    inchesDisplay = '';
   }
 
   void decrementOne() {
@@ -210,12 +194,9 @@ class LengthScale {
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);
-        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
-        feetText = '';
-        inchesDisplay = '';
       }
     }
   }
@@ -226,30 +207,23 @@ class LengthScale {
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);
-        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
-        feetText = '';
-        inchesDisplay = '';
       }
     }
   }
 
   void incrementPointOne() {
     if (max - 1 > length + 1) {
-      length = length + 0.1;
+      length = length + 0.2;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(1);
-        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         //lengthDisplay = length.toStringAsFixed(1);
         lengthDisplay = removeDecimalZero(length);
-
-        feetText = '';
-        inchesDisplay = '';
       }
     }
   }
@@ -261,12 +235,9 @@ class LengthScale {
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);
-        feetText = 'ft. ';
         lengthDisplay = (length ~/ 12).toInt().toString();
       } else {
         lengthDisplay = length.toStringAsFixed(0);
-        feetText = '';
-        inchesDisplay = '';
       }
     }
   }

@@ -165,6 +165,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
               tabs: _kTabs,
             ),
             Container(
+              // margin: const EdgeInsets.all(3.0),
+              padding: const EdgeInsets.all(3.0),
+              decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+              // color: kInActiveButtonColor,
               height: 200,
               child: TabBarView(
                 controller: _tabController,
@@ -193,45 +197,48 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             ),
 
             // GENDER GENDER
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: AspectRatio(
-                    aspectRatio: 2 / 1,
-                    child: ButtonCard(
-                      onPressedMy: () {
-                        setState(() {
-                          selectedGender = Gender.male;
-                          isFemale = false;
-                        });
-                      },
-                      colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
-                      widgetContents: GenderCardContent(
-                        label: 'MALE',
-                        iconGender: FontAwesomeIcons.mars,
+            Visibility(
+              visible: isMYMCA | isUSNAVY | isCOVERTBAILEY,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 2 / 1,
+                      child: ButtonCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedGender = Gender.male;
+                            isFemale = false;
+                          });
+                        },
+                        colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: GenderCardContent(
+                          label: 'MALE',
+                          iconGender: FontAwesomeIcons.mars,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: AspectRatio(
-                    aspectRatio: 2 / 1,
-                    child: ButtonCard(
-                      onPressedMy: () {
-                        setState(() {
-                          selectedGender = Gender.female;
-                          isFemale = true;
-                        });
-                      },
-                      colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
-                      widgetContents: GenderCardContent(
-                        label: 'FEMALE',
-                        iconGender: FontAwesomeIcons.venus,
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 2 / 1,
+                      child: ButtonCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedGender = Gender.female;
+                            isFemale = true;
+                          });
+                        },
+                        colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: GenderCardContent(
+                          label: 'FEMALE',
+                          iconGender: FontAwesomeIcons.venus,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
             Visibility(

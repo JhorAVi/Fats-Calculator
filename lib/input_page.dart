@@ -19,7 +19,7 @@ String genderPath;
 //Metric selectedMetric;
 
 String weightUnitStr = 'lbs';
-String heightUnitStr = 'centimeters';
+String heightUnitStr = 'cm.';
 
 bool lbsIsDefault = true;
 bool cmIsDefault = true; // lbs and centimeters are default metric
@@ -57,7 +57,7 @@ class _InputPageState extends State<InputPage> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: <Widget>[Text('BMI CALCULATOR   '), Text('by jhoravi', style: kAuthorTextStyle)],
+          children: <Widget>[Text('BMI CALCULATOR   '), Text('by J', style: kAuthorTextStyle)],
         ),
       ),
       body: Column(
@@ -108,8 +108,8 @@ class _InputPageState extends State<InputPage> {
             // WEIGHT SLIDER CARD
             child: ReusableCard(
               colour: kInActiveButtonColor,
-              widgetContents: statsCardContent(
-                  text: 'WEIGHT', unit: weightUnitStr, value: weight, min: weightMin, max: weightMax, toggleText: 'toggle lbs or kilogram'),
+              widgetContents:
+                  statsCardContent(text: 'WEIGHT', unit: weightUnitStr, value: weight, min: weightMin, max: weightMax, toggleText: 'toggle'),
             ),
           ),
           Expanded(
@@ -117,7 +117,7 @@ class _InputPageState extends State<InputPage> {
               child: ReusableCard(
             colour: kInActiveButtonColor,
             widgetContents:
-                statsCardContent(text: 'HEIGHT', unit: heightUnitStr, value: height, min: heightMin, max: heightMax, toggleText: 'toggle cm or feet'),
+                statsCardContent(text: 'HEIGHT', unit: heightUnitStr, value: height, min: heightMin, max: heightMax, toggleText: 'toggle'),
           )),
           BottomButton(
             // CALCULATE CALCULATE CALCULATE CALCULATE
@@ -175,8 +175,8 @@ class _InputPageState extends State<InputPage> {
               // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
               unitName: toggleText,
               onPress: () {
-                if (text == 'HEIGHT' && unit == 'centimeters') {
-                  heightUnitStr = 'inches';
+                if (text == 'HEIGHT' && unit == 'cm.') {
+                  heightUnitStr = 'in.';
                   height = centimetersToInches(height); // temp
                   heightMin = inchMin;
                   heightMax = inchMax;
@@ -184,8 +184,8 @@ class _InputPageState extends State<InputPage> {
                   setState(() {
                     heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                   });
-                } else if (text == 'HEIGHT' && unit == 'inches') {
-                  heightUnitStr = 'centimeters';
+                } else if (text == 'HEIGHT' && unit == 'in.') {
+                  heightUnitStr = 'cm.';
                   height = inchesToCentimeters(height); // Do conversion here
                   heightMin = cmMin;
                   heightMax = cmMax;
@@ -193,7 +193,7 @@ class _InputPageState extends State<InputPage> {
                   setState(() {
                     heightDisplay = height.toStringAsFixed(0); // remove zero decimal
                   });
-                } else if (text == 'WEIGHT' && unit == 'kilograms') {
+                } else if (text == 'WEIGHT' && unit == 'kgs') {
                   weightUnitStr = 'lbs';
                   weight = kilogramsToLbs(weight); // round off
                   weightMin = lbsMin;
@@ -203,7 +203,7 @@ class _InputPageState extends State<InputPage> {
                     weightDisplay = weight.toStringAsFixed(0); // remove trailing zeros
                   });
                 } else if (text == 'WEIGHT' && unit == 'lbs') {
-                  weightUnitStr = 'kilograms';
+                  weightUnitStr = 'kgs';
                   weight = lbsToKilograms(weight); //  Do conversion here
                   weightMin = kgMin;
                   weightMax = kgMax;
@@ -258,7 +258,7 @@ class _InputPageState extends State<InputPage> {
                         if (min + 1 < height - 1 && max - 1 > height - 1) {
                           height = height.roundToDouble() - 1;
                           setState(() {
-                            if (unit == 'inches') {
+                            if (unit == 'in.') {
                               heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                             } else {
                               heightDisplay = height.toStringAsFixed(0);
@@ -291,7 +291,7 @@ class _InputPageState extends State<InputPage> {
                             // deduct 1 in range for safety
                             height = newValue.roundToDouble(); // Move fractions for now
                             setState(() {
-                              if (unit == 'inches') {
+                              if (unit == 'in.') {
                                 heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                               } else {
                                 heightDisplay = height.toStringAsFixed(0);
@@ -342,7 +342,7 @@ class _InputPageState extends State<InputPage> {
                           if (min + 1 < height + 1 && max - 1 > height + 1) {
                             height = height.roundToDouble() + 1;
                             setState(() {
-                              if (unit == 'inches') {
+                              if (unit == 'in.') {
                                 heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
                               } else {
                                 heightDisplay = height.toStringAsFixed(0);

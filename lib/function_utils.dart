@@ -364,7 +364,9 @@ class CalculatorBrain {
   final bool cmIsDefault;
   CalculatorBrain({this.height, this.weight, this.lbsIsDefault, this.cmIsDefault}) {
     if (lbsIsDefault) {
+      // The BMI formula uses kilograms
       weight = lbsToKilograms(weight);
+      // weight = kilogramsToLbs(weight);
     }
     if (!cmIsDefault) {
       height = inchesToCentimeters(height);
@@ -415,6 +417,10 @@ class CalculatorBrain {
   String shortSummaryStr, longSummaryStr;
 
   String calculateBMI() {
+    print("cmIsDefault = $cmIsDefault");
+    print("lbsIsDefault = $lbsIsDefault");
+    print("weight = $weight");
+    print("height = $height");
     return _bmi.toStringAsFixed(1);
   }
 

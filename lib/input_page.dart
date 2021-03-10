@@ -4,47 +4,17 @@ import 'my_widgets.dart';
 import 'constants.dart';
 import 'result_page.dart';
 import 'function_utils.dart';
+import 'scale_class.dart';
 
 enum Gender { male, female }
 Gender selectedGender;
 String genderPath;
-//enum SelectedUnit { lb, kg, cm, inch }
-//enum WeightUnit { lb, kg }
-//enum HeightUnit { cm, inch }
-//enum Metric { height, weight }
+bool isFemale = false; // enable or disable additional slides for female
+/*bool lbsIsDefault = true;
+bool cmIsDefault = true; // lbs and centimeters are default metric*/
 
-//WeightUnit weightUnit = WeightUnit.lb;
-//HeightUnit heightUnit = HeightUnit.cm;
-//SelectedUnit selectedUnit;
-//Metric selectedMetric;
-
-String weightUnitStr = 'lbs';
-String heightUnitStr = 'cm.';
-
-bool lbsIsDefault = true;
-bool cmIsDefault = true; // lbs and centimeters are default metric
-
-// Weight slider properties
-// These are the 8 variables needed for each slider
-// Good thing is only the first two need values
-const int lbsMin = 50; // min slider range
-const int lbsMax = 300; // max slider range
-final int kgMin = lbsToKilograms(lbsMin.toDouble()).round(); // 23;
-final int kgMax = lbsToKilograms(lbsMax.toDouble()).round(); //136;
-int weightMin = lbsMin; // current metric used. lbs(default) or kgs
-int weightMax = lbsMax; // current metric used. lbs(default) or kgs
-double weight = (lbsMin + lbsMax) / 2; // initial weight at the center
-String heightDisplay = height.round().toString();
-
-// Height slider variables
-const int cmMin = 91; // needs a set for each slider
-const int cmMax = 228; //
-final int inchMin = centimetersToInches(cmMin.toDouble()).round(); // 36;
-final int inchMax = centimetersToInches(cmMax.toDouble()).round(); // 90;
-int heightMin = cmMin; // default used is cm value. Needs a set for each slider
-int heightMax = cmMax; // default used is cm value
-double height = (cmMin + cmMax) / 2; // height initially at the center of slider
-String weightDisplay = weight.round().toString();
+WeightScale cWeight = WeightScale(lbsMin: 50, lbsMax: 300);
+LengthScale cHeight = LengthScale(cmMin: 91, cmMax: 228, text: 'HEIGHT');
 
 class InputPage extends StatefulWidget {
   @override
@@ -52,27 +22,28 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: <Widget>[Text('BMI CALCULATOR   '), Text('by J', style: kAuthorTextStyle)],
+          children: <Widget>[Text('BMI CALCULATOR   '), Text('by jhorViente', style: kAuthorTextStyle)],
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            child: Row(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            // GENDER GENDER
+            Row(
               children: <Widget>[
                 Expanded(
                   child: AspectRatio(
-                    aspectRatio: 2 / 1.3,
+                    aspectRatio: 2 / 1,
                     child: ButtonCard(
                       onPressedMy: () {
                         setState(() {
                           selectedGender = Gender.male;
+                          isFemale = false;
                         });
                       },
                       colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
@@ -85,11 +56,12 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: AspectRatio(
-                    aspectRatio: 2 / 1.3,
+                    aspectRatio: 2 / 1,
                     child: ButtonCard(
                       onPressedMy: () {
                         setState(() {
                           selectedGender = Gender.female;
+                          isFemale = true;
                         });
                       },
                       colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
@@ -102,54 +74,67 @@ class _InputPageState extends State<InputPage> {
                 ),
               ],
             ),
-          ),
-          // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
-          Expanded(
-            // WEIGHT SLIDER CARD
-            child: ReusableCard(
+            // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
+            ReusableCard(
               colour: kInActiveButtonColor,
-              widgetContents:
-                  statsCardContent(text: 'WEIGHT', unit: weightUnitStr, value: weight, min: weightMin, max: weightMax, toggleText: 'toggle'),
+              widgetContents: statsCardContent(
+                  // HEIGHT HEIGHT HEIGHT
+                  text: cHeight.text,
+                  unit: cHeight.unit,
+                  value: cHeight.length,
+                  min: cHeight.min,
+                  max: cHeight.max,
+                  toggleText: cHeight.toggleText),
             ),
-          ),
-          Expanded(
-              // HEIGHT SLIDER CARD
-              child: ReusableCard(
-            colour: kInActiveButtonColor,
-            widgetContents:
-                statsCardContent(text: 'HEIGHT', unit: heightUnitStr, value: height, min: heightMin, max: heightMax, toggleText: 'toggle'),
-          )),
-          BottomButton(
-            // CALCULATE CALCULATE CALCULATE CALCULATE
-            // CALCULATE CALCULATE CALCULATE CALCULATE
-            text: 'CALCULATE',
-            onPress: () {
-              CalculatorBrain calc = CalculatorBrain(height: height, weight: weight, lbsIsDefault: lbsIsDefault, cmIsDefault: cmIsDefault);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ReportPage(
-                      bmiResult: calc.calculateBMI(),
-                      shortSummary: calc.shortSummary(),
-                      longSummary: calc.longSummary(),
-                      selFlex1: calc.getFlex1(),
-                      selFlex2: calc.getFlex2(),
-                      selFlex3: calc.getFlex3(),
-                      genderPath: (selectedGender == Gender.female) ? 'images/bmi females.jpg' : 'images/bmi males.jpg',
-                    );
-                  },
-                ),
+            ReusableCard(
+              colour: kInActiveButtonColor,
+              widgetContents: statsCardContent(
+                  // WEIGHT WEIGHT WEIGHT
+                  text: cWeight.text,
+                  unit: cWeight.unit,
+                  value: cWeight.weight,
+                  min: cWeight.min,
+                  max: cWeight.max,
+                  toggleText: cWeight.toggleText),
+            ),
+            buildBottomButton(context) // CALCULATE BUTTON
+          ],
+        ),
+      ),
+    );
+  }
+
+  BottomButton buildBottomButton(BuildContext context) {
+    return BottomButton(
+      // CALCULATE CALCULATE CALCULATE CALCULATE
+      // CALCULATE CALCULATE CALCULATE CALCULATE
+      text: 'CALCULATE',
+      onPress: () {
+        CalculatorBrain calc =
+            CalculatorBrain(height: cHeight.length, weight: cWeight.weight, lbsIsDefault: cWeight.lbsIsDefault, cmIsDefault: cHeight.cmIsDefault);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ReportPage(
+                bmiResult: calc.calculateBMI(),
+                shortSummary: calc.shortSummary(),
+                longSummary: calc.longSummary(),
+                selFlex1: calc.getFlex1(),
+                selFlex2: calc.getFlex2(),
+                selFlex3: calc.getFlex3(),
+                genderPath: (selectedGender == Gender.female) ? 'images/bmi females.jpg' : 'images/bmi males.jpg',
               );
             },
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   // Widget inside the slider card FUNCTION
   // Widget inside the slider card FUNCTION
+  // TODO add the ft with proper size
   Column statsCardContent(
       {final String text,
       final String unit,
@@ -158,7 +143,7 @@ class _InputPageState extends State<InputPage> {
       final int max,
       final String toggleText}) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -169,65 +154,48 @@ class _InputPageState extends State<InputPage> {
               style: kTextStyle,
             ),
             SizedBox(width: 10),
+            // tap to Add .1 decimal accuracy to the value
+            GestureDetector(
+              child: Row(
+                children: [
+                  Text(
+                    // SLIDER CURRENT VALUE NUMBER
+                    currentValueTxt(text),
+                    style: kAgeTextStyle,
+                  ),
+                  Text(
+                    currentFeetText(text, unit),
+                    style: kUnitTextStyle, // show feet or not
+                  ),
+                  Text(
+                    currentInchesText(text, unit),
+                    style: kAgeTextStyle, // show inch fraction or not
+                  ),
+                ],
+              ),
+              onTap: () {
+                setState(() {
+                  incrementFractionNow(text); // FRACTIONAL INCREMENT
+                });
+              },
+            ),
+            /*           SizedBox(
+              width: 2,
+            ),*/
+//            Text(unit, style: kUnitTextStyle),
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
             UnitToggleButton(
               // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
-              unitName: toggleText,
+              //text: toggleText,
+              unitName: unit,
+              enabled: disableToggleOnAge(text),
               onPress: () {
-                if (text == 'HEIGHT' && unit == 'cm.') {
-                  heightUnitStr = 'in.';
-                  height = centimetersToInches(height); // temp
-                  heightMin = inchMin;
-                  heightMax = inchMax;
-                  cmIsDefault = false;
-                  setState(() {
-                    heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
-                  });
-                } else if (text == 'HEIGHT' && unit == 'in.') {
-                  heightUnitStr = 'cm.';
-                  height = inchesToCentimeters(height); // Do conversion here
-                  heightMin = cmMin;
-                  heightMax = cmMax;
-                  cmIsDefault = true;
-                  setState(() {
-                    heightDisplay = height.toStringAsFixed(0); // remove zero decimal
-                  });
-                } else if (text == 'WEIGHT' && unit == 'kgs') {
-                  weightUnitStr = 'lbs';
-                  weight = kilogramsToLbs(weight); // round off
-                  weightMin = lbsMin;
-                  weightMax = lbsMax;
-                  lbsIsDefault = true;
-                  setState(() {
-                    weightDisplay = weight.toStringAsFixed(0); // remove trailing zeros
-                  });
-                } else if (text == 'WEIGHT' && unit == 'lbs') {
-                  weightUnitStr = 'kgs';
-                  weight = lbsToKilograms(weight); //  Do conversion here
-                  weightMin = kgMin;
-                  weightMax = kgMax;
-                  lbsIsDefault = false;
-                  setState(() {
-                    weightDisplay = weight.toStringAsFixed(0); // remove trailing zeros
-                  });
-                }
+                setState(() {
+                  toggleNow(text, unit); // Change the value after toggle
+                });
               },
             ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              // SLIDER CURRENT VALUE NUMBER
-              (text == 'WEIGHT') ? weightDisplay : heightDisplay,
-              style: kAgeTextStyle,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(unit, style: kUnitTextStyle),
           ],
         ),
         Row(
@@ -242,34 +210,9 @@ class _InputPageState extends State<InputPage> {
               child: SliderSideButton(
                 icon: FontAwesomeIcons.minus,
                 onPress: () {
-                  switch (text) {
-                    case "WEIGHT":
-                      {
-                        if (min + 1 < weight - 1 && max - 1 > weight - 1) {
-                          weight = weight.roundToDouble() - 1;
-                          setState(() {
-                            weightDisplay = weight.toStringAsFixed(0); // temp
-                          });
-                        }
-                      }
-                      break;
-                    case "HEIGHT":
-                      {
-                        if (min + 1 < height - 1 && max - 1 > height - 1) {
-                          height = height.roundToDouble() - 1;
-                          setState(() {
-                            if (unit == 'in.') {
-                              heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
-                            } else {
-                              heightDisplay = height.toStringAsFixed(0);
-                            }
-                          });
-                        }
-                      }
-                      break;
-                    default:
-                      break;
-                  }
+                  setState(() {
+                    decrementNow(text); // Decrement now!
+                  });
                 },
               ),
             ),
@@ -284,38 +227,9 @@ class _InputPageState extends State<InputPage> {
                   activeColor: Color(0xFFEB1555),
                   inactiveColor: Color(0xFF8D8E98),
                   onChanged: (newValue) {
-                    switch (text) {
-                      case "HEIGHT":
-                        {
-                          if (min + 1 < newValue && max - 1 > newValue) {
-                            // deduct 1 in range for safety
-                            height = newValue.roundToDouble(); // Move fractions for now
-                            setState(() {
-                              if (unit == 'in.') {
-                                heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
-                              } else {
-                                heightDisplay = height.toStringAsFixed(0);
-                              }
-                            });
-                            //print(height); // debug
-                          }
-                        }
-                        break;
-                      case "WEIGHT":
-                        {
-                          if (min + 1 < newValue && max - 1 > newValue) {
-                            // deduct 1 in range for safety
-                            weight = newValue.roundToDouble(); // remove fractions for now
-                            setState(() {
-                              weightDisplay = weight.toStringAsFixed(0);
-                            });
-                            //print(weight); // debug
-                          }
-                        }
-                        break;
-                      default:
-                        break;
-                    }
+                    setState(() {
+                      newValueTxt(text, newValue); // New value in text
+                    });
                   }),
             ),
             Expanded(
@@ -326,39 +240,79 @@ class _InputPageState extends State<InputPage> {
                 child: SliderSideButton(
                   icon: FontAwesomeIcons.plus,
                   onPress: () {
-                    switch (text) {
-                      case "WEIGHT":
-                        {
-                          if (min + 1 < weight + 1 && max - 1 > weight + 1) {
-                            weight = weight.roundToDouble() + 1;
-                            setState(() {
-                              weightDisplay = weight.toStringAsFixed(0);
-                            });
-                          }
-                        }
-                        break;
-                      case "HEIGHT":
-                        {
-                          if (min + 1 < height + 1 && max - 1 > height + 1) {
-                            height = height.roundToDouble() + 1;
-                            setState(() {
-                              if (unit == 'in.') {
-                                heightDisplay = (height ~/ 12).toInt().toString() + ' ft, ' + (height % 12).toStringAsFixed(0);
-                              } else {
-                                heightDisplay = height.toStringAsFixed(0);
-                              }
-                            });
-                          }
-                        }
-                        break;
-                      default:
-                        break;
-                    }
+                    setState(() {
+                      incrementNow(text); // perform increment
+                    });
                   },
                 ))
           ],
         ),
       ],
     );
+  }
+
+  // The actual value depending on the text
+  String currentValueTxt(String text) {
+    if (text == 'WEIGHT')
+      return cWeight.weightDisplay;
+    else if (text == 'HEIGHT')
+      return cHeight.lengthDisplay;
+    else
+      return '';
+  }
+
+  // Process the visibility of the feet text
+  String currentFeetText(String text, String unit) {
+    //return (text == 'HEIGHT') ? cHeight.feetText : '';
+    return (text == 'HEIGHT' && unit == 'in.') ? 'ft. ' : '';
+  }
+
+  // Process the inches display part
+  String currentInchesText(String text, unit) {
+    return (text == 'HEIGHT' && unit == 'in.') ? cHeight.inchesDisplay : '';
+  }
+
+  // The new value in text returned by the slider
+  void newValueTxt(String text, double newValue) {
+    // I've just changed this from STring to void
+    if (text == "HEIGHT")
+      cHeight.movingValue(newValue);
+    else if (text == "WEIGHT") cWeight.movingValue(newValue);
+  }
+
+  // increment by fraction
+  void incrementFractionNow(String text) {
+    if (text == 'WEIGHT')
+      cWeight.incrementPointOne();
+    else if (text == 'HEIGHT') cHeight.incrementPointOne();
+  }
+
+  void decrementNow(String text) {
+    if (text == "WEIGHT")
+      cWeight.decrementOne();
+    else if (text == "HEIGHT") cHeight.decrementOne();
+  }
+
+  void incrementNow(String text) {
+    if (text == 'WEIGHT')
+      cWeight.incrementOne();
+    else if (text == 'HEIGHT') cHeight.incrementOne();
+  }
+
+  // toggle text
+  // this is the only function with AGE is excuded
+  void toggleNow(String text, unit) {
+    if (text == 'HEIGHT' && unit == 'cm.')
+      cHeight.toggleToInches();
+    else if (text == 'HEIGHT' && unit == 'in.')
+      cHeight.toggleToCentimeters();
+    else if (text == 'WEIGHT' && unit == 'kgs')
+      cWeight.toggleToLbs();
+    else if (text == 'WEIGHT' && unit == 'lbs') cWeight.toggleToKilograms();
+  }
+
+  // no toggle arrow down on AGE
+  bool disableToggleOnAge(String text) {
+    return (text == 'AGE') ? false : true;
   }
 }

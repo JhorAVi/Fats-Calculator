@@ -56,7 +56,7 @@ const kYMCAFormula = 'if (isFemale)\n'
     '     _fatsYMCA = ((0.268 * weight - 0.318 * wrist + 0.157 * waist\n'
     '     + 0.245 * hips - 0.434 * forearm - 8.987) / weight) * 100;\n'
     'else\n'
-    '     _fatsYMCA = ((4.15 * waist - 0.082 * weight - 94.42) / weight)\n'
+    '     _fatsYMCA = ((-0.082 * weight + 4.15 * waist - 94.42) / weight)\n'
     '     * 100;';
 
 const kUSNAVYDescription =

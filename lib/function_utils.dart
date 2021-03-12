@@ -62,10 +62,12 @@ class CalcBodyFats {
     //print('calcYMCA result = ' + calcYMCA().toString());
   }
   void calcYMCA() {
+    // MODIFIED YMCA
     if (isFemale)
       _fatsYMCA = ((0.268 * weight - 0.318 * wrist + 0.157 * waist + 0.245 * hips - 0.434 * forearm - 8.987) / weight) * 100;
     else
-      _fatsYMCA = ((4.15 * waist - 0.082 * weight - 94.42) / weight) * 100;
+      // _fatsYMCA = ((4.15 * waist - 0.082 * weight - 94.42) / weight) * 100; // Not modified
+      _fatsYMCA = ((-0.082 * weight + 4.15 * waist - 94.42) / weight) * 100; // modified
 
     _fats = _fatsYMCA;
   }
@@ -84,11 +86,13 @@ class CalcBodyFats {
 
   void calcCOVERTBAILEY() {
     if (isFemale) {
+      // FEMALE
       if (age <= 30)
         _fatsCOVERTBAILEY = hips + (0.8 * thigh) - (2 * calf) - wrist;
       else
         _fatsCOVERTBAILEY = hips + thigh - (2 * calf) - wrist;
     } else {
+      // MALE
       if (age <= 30)
         _fatsCOVERTBAILEY = waist + (0.5 * hips) - (3 * forearm) - wrist;
       else
@@ -356,6 +360,7 @@ class CalcBodyFats {
   }
 }
 
+// For BMI calculation
 class CalculatorBrain {
   // Variable declarations here
   double height;

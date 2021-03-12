@@ -41,8 +41,9 @@
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/function_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/function_utils.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/input_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/input_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/scale_class.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/scale_class.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615304263288</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fixed the input page bug with bmi conversion">
+      <created>1615377114789</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615377114789</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -193,7 +201,8 @@
     <MESSAGE value="Splified the classes and display. Preparing for merging Age Widget with the rest of the length Widget" />
     <MESSAGE value="Cleaned up the code a bit" />
     <MESSAGE value="Before modifying input page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Before modifying input page" />
+    <MESSAGE value="Fixed the input page bug with bmi conversion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed the input page bug with bmi conversion" />
   </component>
   <component name="WindowStateProjectService">
     <state x="653" y="274" width="454" height="475" key="#Notifications" timestamp="1614058006304">
@@ -216,10 +225,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="79" y="57" width="1336" height="624" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1614785462192" />
-    <state x="394" y="0" key="CommitChangelistDialog2" timestamp="1615304227270">
+    <state x="394" y="0" key="CommitChangelistDialog2" timestamp="1615377096180">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="394" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1615304227270" />
+    <state x="394" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1615377096180" />
     <state x="100" y="100" width="1336" height="624" key="DiffContextDialog" timestamp="1614762649245">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -228,22 +237,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="533" y="177" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1614763344049" />
-    <state width="1489" height="166" key="GridCell.Tab.0.bottom" timestamp="1615376103360">
+    <state width="1489" height="154" key="GridCell.Tab.0.bottom" timestamp="1615532018415">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1489" height="166" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1615376103360" />
-    <state width="1489" height="166" key="GridCell.Tab.0.center" timestamp="1615376103360">
+    <state width="1489" height="154" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1615532018415" />
+    <state width="1489" height="154" key="GridCell.Tab.0.center" timestamp="1615532018415">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1489" height="166" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1615376103360" />
-    <state width="1489" height="166" key="GridCell.Tab.0.left" timestamp="1615376103359">
+    <state width="1489" height="154" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1615532018415" />
+    <state width="1489" height="154" key="GridCell.Tab.0.left" timestamp="1615532018415">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1489" height="166" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1615376103359" />
-    <state width="1489" height="166" key="GridCell.Tab.0.right" timestamp="1615376103360">
+    <state width="1489" height="154" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1615532018415" />
+    <state width="1489" height="154" key="GridCell.Tab.0.right" timestamp="1615532018415">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1489" height="166" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1615376103360" />
+    <state width="1489" height="154" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1615532018415" />
     <state x="348" y="154" key="IDE.errors.dialog" timestamp="1613887286926">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -252,10 +261,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="275" y="112" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1615302922392" />
-    <state x="360" y="144" key="Vcs.Push.Dialog.v2" timestamp="1614945519391">
+    <state x="360" y="144" key="Vcs.Push.Dialog.v2" timestamp="1615377119822">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="360" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1614945519391" />
+    <state x="360" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1615377119822" />
     <state x="100" y="100" width="1336" height="624" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1614010371160">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

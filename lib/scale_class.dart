@@ -33,7 +33,7 @@ class AgeScale {
   // New
   void incrementPointOne() {
     if (max - 1 > age + 1) {
-      age = age + 0.2;
+      age = age + 0.1;
       // SETSTATE this
       ageDisplay = removeDecimalZero(age);
       // print(removeDecimalZero(weight));
@@ -216,7 +216,7 @@ class LengthScale {
 
   void incrementPointOne() {
     if (max - 1 > length + 1) {
-      length = length + 0.2;
+      length = length + 0.1;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(1);

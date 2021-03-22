@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const kActiveButtonColor = Colors.white30;
+const kActiveButtonColor = Color(0xFF334033);
 const kInActiveButtonColor = Color(0xFF111328);
 
 const kAuthorTextStyle = TextStyle(

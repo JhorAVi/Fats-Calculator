@@ -12,7 +12,8 @@ class ButtonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5),
       child: RawMaterialButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         fillColor: colour,
@@ -25,22 +26,29 @@ class ButtonCard extends StatelessWidget {
 }
 
 // Main card widget
+// Now almost thesame as ButtonCard
 class ReusableCard extends StatelessWidget {
-  ReusableCard({this.colour, this.widgetContents});
+  ReusableCard({this.onPressedMy, this.colour, this.widgetContents});
 
+  final Function onPressedMy;
   final Color colour;
   final Widget widgetContents;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10.0),
-      padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(5.0),
+      padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: colour,
       ),
-      child: widgetContents,
+      child: RawMaterialButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        fillColor: colour,
+        child: widgetContents,
+        onPressed: onPressedMy,
+      ),
     );
   }
 }

@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'function_utils.dart';
 
+// values used for the slider
+class SliderValues {
+  int min = 1;
+  int max = 10;
+  String text = '';
+  double value = 10.0;
+}
+
 // AGE CLASS AGE CLASS AGE CLASS
 // AGE CLASS AGE CLASS AGE CLASS
 class AgeScale {

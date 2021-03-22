@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'my_widgets.dart';
@@ -8,8 +9,12 @@ import 'bf_tape_results_page.dart';
 import 'dart:io';
 
 enum Gender { male, female }
+enum ButtonScale { age, weight, height, waist, hip, wrist, forearm, thigh, calf, neck }
 Gender selectedGender;
+ButtonScale selectedButtonScale;
+
 String genderPath;
+SliderValues sliderValues = SliderValues();
 
 // the default formulas
 FatFormula selectedFatFormula = FatFormula.MYMCA;
@@ -151,297 +156,437 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: <Widget>[Text('BMI CALCULATOR   '), Text('by jhorViente', style: kAuthorTextStyle)],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // TABS start here!!!!!
-            TabBar(
-              // tabs
-              controller: _tabController,
-              tabs: _kTabs,
-            ),
-            Container(
-              // margin: const EdgeInsets.all(3.0),
-              padding: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-              // color: kInActiveButtonColor,
-              height: 200,
-              child: TabBarView(
-                controller: _tabController,
-                children: _kTabPages,
-              ),
-            ),
-            // Tab results Tab results Tab results
-            Container(
-              padding: EdgeInsets.only(top: 10),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(_fatsYMCA.toStringAsFixed(1), textAlign: TextAlign.center),
-                  ),
-                  Expanded(
-                    child: Text(_fatsUSNAVY.toStringAsFixed(1), textAlign: TextAlign.center),
-                  ),
-                  Expanded(
-                    child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1), textAlign: TextAlign.center),
-                  ),
-                  Expanded(
-                    child: Text(_fatsHERITAGE.toStringAsFixed(1), textAlign: TextAlign.center),
-                  )
-                ],
-              ),
-            ),
-
-            // GENDER GENDER
-            Visibility(
-              visible: isMYMCA | isUSNAVY | isCOVERTBAILEY,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 2 / 1,
-                      child: ButtonCard(
-                        onPressedMy: () {
-                          setState(() {
-                            selectedGender = Gender.male;
-                            isFemale = false;
-                          });
-                        },
-                        colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: GenderCardContent(
-                          label: 'MALE',
-                          iconGender: FontAwesomeIcons.mars,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 2 / 1,
-                      child: ButtonCard(
-                        onPressedMy: () {
-                          setState(() {
-                            selectedGender = Gender.female;
-                            isFemale = true;
-                          });
-                        },
-                        colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: GenderCardContent(
-                          label: 'FEMALE',
-                          iconGender: FontAwesomeIcons.venus,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
-            Visibility(
-              visible: isCOVERTBAILEY | isHERITAGE,
-              child: ReusableCard(
-                // AGE AGE AGE
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                  // AGE AGE AGE currently merging this with statsCardContent
-                  text: cAge.text,
-                  unit: cAge.unit,
-                  value: cAge.age,
-                  min: cAge.min,
-                  max: cAge.max,
-                ),
-              ),
-            ),
-            Visibility(
-              visible: isUSNAVY | isHERITAGE,
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                    // HEIGHT HEIGHT HEIGHT
-                    text: cHeight.text,
-                    unit: cHeight.unit,
-                    value: cHeight.length,
-                    min: cHeight.min,
-                    max: cHeight.max,
-                    toggleText: cHeight.toggleText),
-              ),
-            ),
-
-            Visibility(
-              visible: isMYMCA | isHERITAGE,
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                    // WEIGHT WEIGHT WEIGHT
-                    text: cWeight.text,
-                    unit: cWeight.unit,
-                    value: cWeight.weight,
-                    min: cWeight.min,
-                    max: cWeight.max,
-                    toggleText: cWeight.toggleText),
-              ),
-            ),
-
-            Visibility(
-              visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                  text: cWaist.text,
-                  unit: cWaist.unit,
-                  value: cWaist.length,
-                  min: cWaist.min,
-                  max: cWaist.max,
-                  toggleText: cWaist.toggleText,
-                ),
-              ),
-            ),
-            Visibility(
-              visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                  text: cHips.text,
-                  unit: cHips.unit,
-                  value: cHips.length,
-                  min: cHips.min,
-                  max: cHips.max,
-                  toggleText: cHips.toggleText,
-                ),
-              ),
-            ),
-            Visibility(
-              visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                    text: cForearm.text,
-                    unit: cForearm.unit,
-                    value: cForearm.length,
-                    min: cForearm.min,
-                    max: cForearm.max,
-                    toggleText: cForearm.toggleText),
-              ),
-            ),
-            Visibility(
-              visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                  text: cWrist.text,
-                  unit: cWrist.unit,
-                  value: cWrist.length,
-                  min: cWrist.min,
-                  max: cWrist.max,
-                  toggleText: cWrist.toggleText,
-                ),
-              ),
-            ),
-
-            Visibility(
-              visible: (isCOVERTBAILEY & isFemale),
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                  text: cThigh.text,
-                  unit: cThigh.unit,
-                  value: cThigh.length,
-                  min: cThigh.min,
-                  max: cThigh.max,
-                  toggleText: cThigh.toggleText,
-                ),
-              ),
-            ),
-
-            Visibility(
-              visible: (isCOVERTBAILEY & isFemale),
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                  text: cCalf.text,
-                  unit: cCalf.unit,
-                  value: cCalf.length,
-                  min: cCalf.min,
-                  max: cCalf.max,
-                  toggleText: cCalf.toggleText,
-                ),
-              ),
-            ),
-            Visibility(
-              visible: isUSNAVY,
-              child: ReusableCard(
-                colour: kInActiveButtonColor,
-                widgetContents: statsCardContent(
-                  text: cNeck.text,
-                  unit: cNeck.unit,
-                  value: cNeck.length,
-                  min: cNeck.min,
-                  max: cNeck.max,
-                  toggleText: cNeck.toggleText,
-                ),
-              ),
-            ),
-
-            BottomButton(
-              // CALCULATE CALCULATE CALCULATE CALCULATE
-              // CALCULATE CALCULATE CALCULATE CALCULATE
-              text: 'CALCULATE',
-              onPress: () {
-                CalcBodyFats calcBF = CalcBodyFats(
-                    age: cAge.age,
-                    isFemale: isFemale,
-                    weight: cWeight.weight,
-                    height: cHeight.length,
-                    waist: cWaist.length,
-                    hips: cHips.length,
-                    forearm: cForearm.length,
-                    wrist: cWrist.length,
-                    thigh: cThigh.length,
-                    calf: cCalf.length,
-                    neck: cNeck.length,
-                    weightIsLbs: cWeight.lbsIsDefault,
-                    heightIsCm: cHeight.cmIsDefault,
-                    waistIsCm: cWaist.cmIsDefault,
-                    hipsIsCm: cHips.cmIsDefault,
-                    forearmIsCm: cForearm.cmIsDefault,
-                    wristIsCm: cWrist.cmIsDefault,
-                    thighIsCm: cThigh.cmIsDefault,
-                    calfIsCm: cCalf.cmIsDefault,
-                    neckIsCm: cNeck.cmIsDefault,
-                    selectedFatFormula: selectedFatFormula);
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      // Put the values below the tab
-                      double bodyFats = calcBF.valueFats();
-                      if (isMYMCA)
-                        _fatsYMCA = bodyFats;
-                      else if (isUSNAVY)
-                        _fatsUSNAVY = bodyFats;
-                      else if (isCOVERTBAILEY)
-                        _fatsCOVERTBAILEY = bodyFats;
-                      else if (isHERITAGE) _fatsHERITAGE = bodyFats;
-
-                      return BFTapeResultPage(
-                        isFemale: isFemale,
-                        bodyFats: bodyFats,
-                        genderPath: isFemale ? 'images/bodyFatsWomen.jpg' : 'images/bodyFatsMen.jpg',
-                        shortSummary: calcBF.shortSummary(),
-                        longSummary: calcBF.longSummary(),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+            Text('BMI CALCULATOR   '),
+            Text('by jhorViente', style: kAuthorTextStyle),
           ],
         ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // TABS start here!!!!!
+          TabBar(
+            // tabs
+            controller: _tabController,
+            tabs: _kTabs,
+          ),
+          /*  Container(  // TAB VIEW
+            // margin: const EdgeInsets.all(3.0),
+            padding: const EdgeInsets.all(3.0),
+            decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+            // color: kInActiveButtonColor,
+            height: 200,
+            child: TabBarView(
+              controller: _tabController,
+              children: _kTabPages,
+            ),
+          ),*/
+          // Tab results Tab results Tab results
+          Container(
+            padding: EdgeInsets.only(top: 10),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(_fatsYMCA.toStringAsFixed(1), textAlign: TextAlign.center),
+                ),
+                Expanded(
+                  child: Text(_fatsUSNAVY.toStringAsFixed(1), textAlign: TextAlign.center),
+                ),
+                Expanded(
+                  child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1), textAlign: TextAlign.center),
+                ),
+                Expanded(
+                  child: Text(_fatsHERITAGE.toStringAsFixed(1), textAlign: TextAlign.center),
+                )
+              ],
+            ),
+          ),
+
+          // This separates the value displays to the left and slider to the right
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 7,
+                // The column of all measurement widgets
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // GENDER GENDER
+                    Visibility(
+                      // visible: isMYMCA | isUSNAVY | isCOVERTBAILEY,
+                      visible: true,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: AspectRatio(
+                              aspectRatio: 2 / 1,
+                              child: ButtonCard(
+                                onPressedMy: () {
+                                  setState(() {
+                                    selectedGender = Gender.male;
+                                    isFemale = false;
+                                  });
+                                },
+                                colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
+                                widgetContents: GenderCardContent(
+                                  label: 'MALE',
+                                  iconGender: FontAwesomeIcons.mars,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: AspectRatio(
+                              aspectRatio: 2 / 1,
+                              child: ButtonCard(
+                                onPressedMy: () {
+                                  setState(() {
+                                    selectedGender = Gender.female;
+                                    isFemale = true;
+                                  });
+                                },
+                                colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
+                                widgetContents: GenderCardContent(
+                                  label: 'FEMALE',
+                                  iconGender: FontAwesomeIcons.venus,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
+                    Visibility(
+                      visible: isCOVERTBAILEY | isHERITAGE,
+                      child: ReusableCard(
+                        // AGE AGE AGE
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.age;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          // AGE AGE AGE currently merging this with statsCardContent
+                          text: cAge.text,
+                          unit: cAge.unit,
+                          value: cAge.age,
+                          min: cAge.min,
+                          max: cAge.max,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isUSNAVY | isHERITAGE,
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.height;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                            // HEIGHT HEIGHT HEIGHT
+                            text: cHeight.text,
+                            unit: cHeight.unit,
+                            value: cHeight.length,
+                            min: cHeight.min,
+                            max: cHeight.max,
+                            toggleText: cHeight.toggleText),
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: isMYMCA | isHERITAGE,
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.weight;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                            // WEIGHT WEIGHT WEIGHT
+                            text: cWeight.text,
+                            unit: cWeight.unit,
+                            value: cWeight.weight,
+                            min: cWeight.min,
+                            max: cWeight.max,
+                            toggleText: cWeight.toggleText),
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.waist;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cWaist.text,
+                          unit: cWaist.unit,
+                          value: cWaist.length,
+                          min: cWaist.min,
+                          max: cWaist.max,
+                          toggleText: cWaist.toggleText,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.hip;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cHips.text,
+                          unit: cHips.unit,
+                          value: cHips.length,
+                          min: cHips.min,
+                          max: cHips.max,
+                          toggleText: cHips.toggleText,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.forearm;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                            text: cForearm.text,
+                            unit: cForearm.unit,
+                            value: cForearm.length,
+                            min: cForearm.min,
+                            max: cForearm.max,
+                            toggleText: cForearm.toggleText),
+                      ),
+                    ),
+                    Visibility(
+                      visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.wrist;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cWrist.text,
+                          unit: cWrist.unit,
+                          value: cWrist.length,
+                          min: cWrist.min,
+                          max: cWrist.max,
+                          toggleText: cWrist.toggleText,
+                        ),
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: (isCOVERTBAILEY & isFemale),
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.thigh;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cThigh.text,
+                          unit: cThigh.unit,
+                          value: cThigh.length,
+                          min: cThigh.min,
+                          max: cThigh.max,
+                          toggleText: cThigh.toggleText,
+                        ),
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: (isCOVERTBAILEY & isFemale),
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.calf;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cCalf.text,
+                          unit: cCalf.unit,
+                          value: cCalf.length,
+                          min: cCalf.min,
+                          max: cCalf.max,
+                          toggleText: cCalf.toggleText,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isUSNAVY,
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            selectedButtonScale = ButtonScale.neck;
+                          });
+                        },
+                        colour: (selectedButtonScale == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cNeck.text,
+                          unit: cNeck.unit,
+                          value: cNeck.length,
+                          min: cNeck.min,
+                          max: cNeck.max,
+                          toggleText: cNeck.toggleText,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // slider here
+              Container(
+                height: 300,
+                child: ReusableCard(
+                  colour: kInActiveButtonColor,
+                  widgetContents: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                          // INCREMENT INCREMENT INCREMENT INCREMENT
+                          // INCREMENT INCREMENT INCREMENT INCREMENT
+                          // Doesn't care if it's kgs or lbs
+                          flex: 1,
+                          child: SliderSideButton(
+                            icon: FontAwesomeIcons.plus,
+                            onPress: () {
+                              setState(() {
+                                incrementNow(sliderValues.text); // perform increment
+                              });
+                            },
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                          // DECIMAL DECIMAL DECIMAL
+                          // DECIMAL DECIMAL DECIMAL
+                          flex: 1,
+                          child: SliderSideButton(
+                            icon: FontAwesomeIcons.dotCircle,
+                            onPress: () {
+                              setState(() {
+                                incrementNow(sliderValues.text); // perform increment
+                              });
+                            },
+                          )),
+                      Expanded(
+                        flex: 7,
+                        // SLIDER SLIDER SLIDER SLIDER SLIDER
+                        // SLIDER SLIDER SLIDER SLIDER SLIDER
+                        child: RotatedBox(
+                          quarterTurns: 3,
+                          child: Slider(
+                              value: sliderValues.value,
+                              min: sliderValues.min.toDouble(),
+                              max: sliderValues.max.toDouble(),
+                              activeColor: Color(0xFFEB1555),
+                              inactiveColor: Color(0xFF8D8E98),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  newValueTxt(sliderValues.text, newValue); // New value in text
+                                });
+                              }),
+                        ),
+                      ),
+                      Expanded(
+                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                        // Does not care if it is kgs or lbs
+                        flex: 1,
+                        child: SliderSideButton(
+                          icon: FontAwesomeIcons.minus,
+                          onPress: () {
+                            setState(() {
+                              decrementNow(sliderValues.text); // Decrement now!
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          BottomButton(
+            // CALCULATE CALCULATE CALCULATE CALCULATE
+            // CALCULATE CALCULATE CALCULATE CALCULATE
+            text: 'CALCULATE',
+            onPress: () {
+              CalcBodyFats calcBF = CalcBodyFats(
+                  age: cAge.age,
+                  isFemale: isFemale,
+                  weight: cWeight.weight,
+                  height: cHeight.length,
+                  waist: cWaist.length,
+                  hips: cHips.length,
+                  forearm: cForearm.length,
+                  wrist: cWrist.length,
+                  thigh: cThigh.length,
+                  calf: cCalf.length,
+                  neck: cNeck.length,
+                  weightIsLbs: cWeight.lbsIsDefault,
+                  heightIsCm: cHeight.cmIsDefault,
+                  waistIsCm: cWaist.cmIsDefault,
+                  hipsIsCm: cHips.cmIsDefault,
+                  forearmIsCm: cForearm.cmIsDefault,
+                  wristIsCm: cWrist.cmIsDefault,
+                  thighIsCm: cThigh.cmIsDefault,
+                  calfIsCm: cCalf.cmIsDefault,
+                  neckIsCm: cNeck.cmIsDefault,
+                  selectedFatFormula: selectedFatFormula);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    // Put the values below the tab
+                    double bodyFats = calcBF.valueFats();
+                    if (isMYMCA)
+                      _fatsYMCA = bodyFats;
+                    else if (isUSNAVY)
+                      _fatsUSNAVY = bodyFats;
+                    else if (isCOVERTBAILEY)
+                      _fatsCOVERTBAILEY = bodyFats;
+                    else if (isHERITAGE) _fatsHERITAGE = bodyFats;
+
+                    return BFTapeResultPage(
+                      isFemale: isFemale,
+                      bodyFats: bodyFats,
+                      genderPath: isFemale ? 'images/bodyFatsWomen.jpg' : 'images/bodyFatsMen.jpg',
+                      shortSummary: calcBF.shortSummary(),
+                      longSummary: calcBF.longSummary(),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -449,120 +594,76 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   // Widget inside the slider card FUNCTION
   // Widget inside the slider card FUNCTION
   // TODO add the ft with proper size
-  Column statsCardContent(
+  Row statsCardContent(
       {final String text,
       final String unit,
       final double value, // To display the initial value depending on the metrics
       final int min,
       final int max,
       final String toggleText}) {
-    return Column(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              // WEIGHT or HEIGHT TEXT
-              text,
-              style: kTextStyle,
-            ),
-            SizedBox(width: 10),
-            // tap to Add .1 decimal accuracy to the value
-            GestureDetector(
-              child: Row(
-                children: [
-                  Text(
-                    // SLIDER CURRENT VALUE NUMBER
-                    currentValueTxt(text),
-                    style: kAgeTextStyle,
-                  ),
-                  Text(
-                    currentFeetText(text, unit),
-                    style: kUnitTextStyle, // show feet or not
-                  ),
-                  Text(
-                    currentInchesText(text, unit),
-                    style: kAgeTextStyle, // show inch fraction or not
-                  ),
-                ],
-              ),
-              onTap: () {
-                setState(() {
-                  incrementFractionNow(text); // FRACTIONAL INCREMENT
-                });
-              },
-            ),
-            /*           SizedBox(
-              width: 2,
-            ),*/
-//            Text(unit, style: kUnitTextStyle),
-            // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-            // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-            UnitToggleButton(
-              // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
-              //text: toggleText,
-              unitName: unit,
-              enabled: disableToggleOnAge(text),
-              onPress: () {
-                setState(() {
-                  toggleNow(text, unit); // Change the value after toggle
-                });
-              },
-            ),
-          ],
+        Text(
+          // WEIGHT or HEIGHT TEXT
+          text,
+          style: kTextStyle,
         ),
-        Row(
-          // SLIDER ROW SLIDER ROW SLIDER ROW
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-              // Does not care if it is kgs or lbs
-              flex: 1,
-              child: SliderSideButton(
-                icon: FontAwesomeIcons.minus,
-                onPress: () {
-                  setState(() {
-                    decrementNow(text); // Decrement now!
-                  });
-                },
+        SizedBox(width: 10),
+        // tap to Add .1 decimal accuracy to the value
+        GestureDetector(
+          child: Row(
+            children: [
+              Text(
+                // SLIDER CURRENT VALUE NUMBER
+                currentValueTxt(text),
+                style: kAgeTextStyle,
               ),
-            ),
-            Expanded(
-              flex: 8,
-              // SLIDER SLIDER SLIDER SLIDER SLIDER
-              // SLIDER SLIDER SLIDER SLIDER SLIDER
-              child: Slider(
-                  value: value,
-                  min: min.toDouble(),
-                  max: max.toDouble(),
-                  activeColor: Color(0xFFEB1555),
-                  inactiveColor: Color(0xFF8D8E98),
-                  onChanged: (newValue) {
-                    setState(() {
-                      newValueTxt(text, newValue); // New value in text
-                    });
-                  }),
-            ),
-            Expanded(
-                // INCREMENT INCREMENT INCREMENT INCREMENT
-                // INCREMENT INCREMENT INCREMENT INCREMENT
-                // Doesn't care if it's kgs or lbs
-                flex: 1,
-                child: SliderSideButton(
-                  icon: FontAwesomeIcons.plus,
-                  onPress: () {
-                    setState(() {
-                      incrementNow(text); // perform increment
-                    });
-                  },
-                ))
-          ],
+              Text(
+                currentFeetText(text, unit),
+                style: kUnitTextStyle, // show feet or not
+              ),
+              Text(
+                currentInchesText(text, unit),
+                style: kAgeTextStyle, // show inch fraction or not
+              ),
+            ],
+          ),
+          onTap: () {
+            setState(() {
+              incrementFractionNow(text); // FRACTIONAL INCREMENT
+            });
+          },
+        ),
+        /*           SizedBox(
+          width: 2,
+        ),*/
+//            Text(unit, style: kUnitTextStyle),
+        // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+        // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+        UnitToggleButton(
+          // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
+          //text: toggleText,
+          unitName: unit,
+          enabled: disableToggleOnAge(text),
+          onPress: () {
+            setState(() {
+              toggleNow(text, unit); // Change the value after toggle
+            });
+          },
         ),
       ],
     );
+  }
+
+  // assign the slider to the pressed button
+  void sliderForAll({String text, double value, int min, int max, String unit}) {
+    setState(() {
+      sliderValues.text = text;
+      sliderValues.value = value;
+      sliderValues.min = min;
+      sliderValues.max = max;
+    });
   }
 
   // The actual value depending on the text

@@ -7,6 +7,7 @@ class SliderValues {
   int max = 10;
   String text = '';
   double value = 10.0;
+  String unit = '';
 }
 
 // AGE CLASS AGE CLASS AGE CLASS

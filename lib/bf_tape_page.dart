@@ -266,17 +266,23 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.age;
+                            sliderForAll(
+                                // AGE AGE AGE currently merging this with statsCardContent
+                                text: cAge.text,
+                                unit: cAge.unit,
+                                value: cAge.age,
+                                min: cAge.min,
+                                max: cAge.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
-                          // AGE AGE AGE currently merging this with statsCardContent
-                          text: cAge.text,
-                          unit: cAge.unit,
-                          value: cAge.age,
-                          min: cAge.min,
-                          max: cAge.max,
-                        ),
+                            // AGE AGE AGE currently merging this with statsCardContent
+                            text: cAge.text,
+                            unit: cAge.unit,
+                            value: cAge.age,
+                            min: cAge.min,
+                            max: cAge.max),
                       ),
                     ),
                     Visibility(
@@ -285,6 +291,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.height;
+                            sliderForAll(
+                                // HEIGHT HEIGHT HEIGHT
+                                text: cHeight.text,
+                                unit: cHeight.unit,
+                                value: cHeight.length,
+                                min: cHeight.min,
+                                max: cHeight.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
@@ -305,6 +318,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.weight;
+                            sliderForAll(
+                                // WEIGHT WEIGHT WEIGHT
+                                text: cWeight.text,
+                                unit: cWeight.unit,
+                                value: cWeight.weight,
+                                min: cWeight.min,
+                                max: cWeight.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
@@ -325,6 +345,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.waist;
+                            sliderForAll(text: cWaist.text, unit: cWaist.unit, value: cWaist.length, min: cWaist.min, max: cWaist.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
@@ -344,6 +365,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.hip;
+                            sliderForAll(text: cHips.text, unit: cHips.unit, value: cHips.length, min: cHips.min, max: cHips.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
@@ -363,6 +385,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.forearm;
+                            sliderForAll(text: cForearm.text, unit: cForearm.unit, value: cForearm.length, min: cForearm.min, max: cForearm.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
@@ -381,6 +404,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.wrist;
+                            sliderForAll(text: cWrist.text, unit: cWrist.unit, value: cWrist.length, min: cWrist.min, max: cWrist.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
@@ -401,6 +425,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.thigh;
+                            sliderForAll(text: cThigh.text, unit: cThigh.unit, value: cThigh.length, min: cThigh.min, max: cThigh.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
@@ -421,6 +446,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.calf;
+                            sliderForAll(text: cCalf.text, unit: cCalf.unit, value: cCalf.length, min: cCalf.min, max: cCalf.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
@@ -440,6 +466,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         onPressedMy: () {
                           setState(() {
                             selectedButtonScale = ButtonScale.neck;
+                            sliderForAll(text: cNeck.text, unit: cNeck.unit, value: cNeck.length, min: cNeck.min, max: cNeck.max);
                           });
                         },
                         colour: (selectedButtonScale == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
@@ -658,12 +685,11 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   // assign the slider to the pressed button
   void sliderForAll({String text, double value, int min, int max, String unit}) {
-    setState(() {
-      sliderValues.text = text;
-      sliderValues.value = value;
-      sliderValues.min = min;
-      sliderValues.max = max;
-    });
+    sliderValues.text = text;
+    sliderValues.value = value;
+    sliderValues.min = min;
+    sliderValues.max = max;
+    sliderValues.unit = unit;
   }
 
   // The actual value depending on the text

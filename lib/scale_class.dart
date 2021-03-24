@@ -4,9 +4,9 @@ import 'function_utils.dart';
 // values used for the slider
 class SliderValues {
   int min = 1;
-  int max = 10;
+  int max = 100;
   String text = '';
-  double value = 10.0;
+  double value = 50;
   String unit = '';
 }
 

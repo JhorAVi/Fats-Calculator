@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+enum Gender { male, female }
+enum ButtonScale { age, weight, height, waist, hip, wrist, forearm, thigh, calf, neck, none }
+
 const kActiveButtonColor = Color(0xFF334033);
 const kInActiveButtonColor = Color(0xFF111328);
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'function_utils.dart';
+import 'constants.dart';
 
 // values used for the slider
 class SliderValues {
@@ -8,6 +9,7 @@ class SliderValues {
   String text = '';
   double value = 50;
   String unit = '';
+  ButtonScale selectedButton = ButtonScale.none;
 }
 
 // AGE CLASS AGE CLASS AGE CLASS

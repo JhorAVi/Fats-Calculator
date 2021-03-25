@@ -8,10 +8,7 @@ import 'scale_class.dart';
 import 'bf_tape_results_page.dart';
 import 'dart:io';
 
-enum Gender { male, female }
-enum ButtonScale { age, weight, height, waist, hip, wrist, forearm, thigh, calf, neck, none }
 Gender selectedGender;
-ButtonScale selectedButton;
 
 String genderPath;
 SliderValues sliderValues = SliderValues();
@@ -173,7 +170,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             onTap: (index) {
               // Clears all button selection and link to slider
               setState(() {
-                selectedButton = ButtonScale.none;
+                sliderValues.selectedButton = ButtonScale.none;
               });
             },
           ),
@@ -214,7 +211,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                flex: 7,
+                flex: 8,
                 // The column of all measurement widgets
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.start,
@@ -271,10 +268,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         // AGE AGE AGE
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.age;
+                            sliderValues.selectedButton = ButtonScale.age;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                             // AGE AGE AGE currently merging this with statsCardContent
                             text: cAge.text,
@@ -282,7 +279,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                             value: cAge.age,
                             min: cAge.min,
                             max: cAge.max,
-                            selected: (selectedButton == ButtonScale.age)),
+                            selected: (sliderValues.selectedButton == ButtonScale.age)),
                       ),
                     ),
                     Visibility(
@@ -290,10 +287,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.height;
+                            sliderValues.selectedButton = ButtonScale.height;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                             // HEIGHT HEIGHT HEIGHT
                             text: cHeight.text,
@@ -302,7 +299,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                             min: cHeight.min,
                             max: cHeight.max,
                             toggleText: cHeight.toggleText,
-                            selected: (selectedButton == ButtonScale.height)),
+                            selected: (sliderValues.selectedButton == ButtonScale.height)),
                       ),
                     ),
 
@@ -311,10 +308,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.weight;
+                            sliderValues.selectedButton = ButtonScale.weight;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           // WEIGHT WEIGHT WEIGHT
                           text: cWeight.text,
@@ -322,7 +319,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           value: cWeight.weight,
                           min: cWeight.min,
                           max: cWeight.max,
-                          toggleText: cWeight.toggleText, selected: (selectedButton == ButtonScale.weight),
+                          toggleText: cWeight.toggleText, selected: (sliderValues.selectedButton == ButtonScale.weight),
                         ),
                       ),
                     ),
@@ -332,10 +329,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.waist;
+                            sliderValues.selectedButton = ButtonScale.waist;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cWaist.text,
                           unit: cWaist.unit,
@@ -343,7 +340,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cWaist.min,
                           max: cWaist.max,
                           toggleText: cWaist.toggleText,
-                          selected: (selectedButton == ButtonScale.waist),
+                          selected: (sliderValues.selectedButton == ButtonScale.waist),
                         ),
                       ),
                     ),
@@ -352,10 +349,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.hip;
+                            sliderValues.selectedButton = ButtonScale.hip;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cHips.text,
                           unit: cHips.unit,
@@ -363,7 +360,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cHips.min,
                           max: cHips.max,
                           toggleText: cHips.toggleText,
-                          selected: (selectedButton == ButtonScale.hip),
+                          selected: (sliderValues.selectedButton == ButtonScale.hip),
                         ),
                       ),
                     ),
@@ -372,10 +369,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.forearm;
+                            sliderValues.selectedButton = ButtonScale.forearm;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cForearm.text,
                           unit: cForearm.unit,
@@ -383,7 +380,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cForearm.min,
                           max: cForearm.max,
                           toggleText: cForearm.toggleText,
-                          selected: (selectedButton == ButtonScale.forearm),
+                          selected: (sliderValues.selectedButton == ButtonScale.forearm),
                         ),
                       ),
                     ),
@@ -392,10 +389,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.wrist;
+                            sliderValues.selectedButton = ButtonScale.wrist;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cWrist.text,
                           unit: cWrist.unit,
@@ -403,7 +400,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cWrist.min,
                           max: cWrist.max,
                           toggleText: cWrist.toggleText,
-                          selected: (selectedButton == ButtonScale.wrist),
+                          selected: (sliderValues.selectedButton == ButtonScale.wrist),
                         ),
                       ),
                     ),
@@ -413,10 +410,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.thigh;
+                            sliderValues.selectedButton = ButtonScale.thigh;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cThigh.text,
                           unit: cThigh.unit,
@@ -424,7 +421,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cThigh.min,
                           max: cThigh.max,
                           toggleText: cThigh.toggleText,
-                          selected: (selectedButton == ButtonScale.thigh),
+                          selected: (sliderValues.selectedButton == ButtonScale.thigh),
                         ),
                       ),
                     ),
@@ -434,10 +431,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.calf;
+                            sliderValues.selectedButton = ButtonScale.calf;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cCalf.text,
                           unit: cCalf.unit,
@@ -445,7 +442,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cCalf.min,
                           max: cCalf.max,
                           toggleText: cCalf.toggleText,
-                          selected: (selectedButton == ButtonScale.calf),
+                          selected: (sliderValues.selectedButton == ButtonScale.calf),
                         ),
                       ),
                     ),
@@ -454,10 +451,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButton = ButtonScale.neck;
+                            sliderValues.selectedButton = ButtonScale.neck;
                           });
                         },
-                        colour: (selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (sliderValues.selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cNeck.text,
                           unit: cNeck.unit,
@@ -465,7 +462,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cNeck.min,
                           max: cNeck.max,
                           toggleText: cNeck.toggleText,
-                          selected: (selectedButton == ButtonScale.neck),
+                          selected: (sliderValues.selectedButton == ButtonScale.neck),
                         ),
                       ),
                     ),
@@ -473,80 +470,83 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                 ),
               ),
               // slider here
-              Container(
-                height: 300,
-                child: ReusableCard(
-                  colour: kInActiveButtonColor,
-                  widgetContents: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                          // INCREMENT INCREMENT INCREMENT INCREMENT
-                          // INCREMENT INCREMENT INCREMENT INCREMENT
-                          // Doesn't care if it's kgs or lbs
-                          flex: 1,
-                          child: SliderSideButton(
-                            icon: FontAwesomeIcons.plus,
-                            onPress: () {
-                              setState(() {
-                                incrementNow(sliderValues.text); // perform increment
-                              });
-                            },
-                          )),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                          // DECIMAL DECIMAL DECIMAL
-                          // DECIMAL DECIMAL DECIMAL
-                          flex: 1,
-                          child: SliderSideButton(
-                            icon: FontAwesomeIcons.dotCircle,
-                            onPress: () {
-                              setState(() {
-                                incrementNow(sliderValues.text); // perform increment
-                              });
-                            },
-                          )),
-                      Expanded(
-                        flex: 7,
-                        // SLIDER SLIDER SLIDER SLIDER SLIDER
-                        // SLIDER SLIDER SLIDER SLIDER SLIDER
-                        child: RotatedBox(
-                          quarterTurns: 3,
-                          child: Slider(
-                              value: sliderValues.value,
-                              min: sliderValues.min.toDouble(),
-                              max: sliderValues.max.toDouble(),
-                              activeColor: Color(0xFFEB1555),
-                              inactiveColor: Color(0xFF8D8E98),
-                              onChanged: (newValue) {
+              Expanded(
+                flex: 2,
+                child: Container(
+                  height: 300,
+                  child: ReusableCard(
+                    colour: kInActiveButtonColor,
+                    widgetContents: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                            // INCREMENT INCREMENT INCREMENT INCREMENT
+                            // INCREMENT INCREMENT INCREMENT INCREMENT
+                            // Doesn't care if it's kgs or lbs
+                            flex: 1,
+                            child: SliderSideButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
                                 setState(() {
-                                  newValueTxt(sliderValues.text, newValue); // New value in text
-                                  sliderValues.value = newValue;
-/*                                  print('value = ' + sliderValues.value.toString());
-                                  print('newValue = ' + newValue.toString());
-                                  print('min = ' + sliderValues.min.toString());
-                                  print('max = ' + sliderValues.max.toString());*/
+                                  incrementNow(); // perform increment
                                 });
-                              }),
+                              },
+                            )),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Expanded(
-                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                        // Does not care if it is kgs or lbs
-                        flex: 1,
-                        child: SliderSideButton(
-                          icon: FontAwesomeIcons.minus,
-                          onPress: () {
-                            setState(() {
-                              decrementNow(sliderValues.text); // Decrement now!
-                            });
-                          },
+                        Expanded(
+                            // DECIMAL DECIMAL DECIMAL
+                            // DECIMAL DECIMAL DECIMAL
+                            flex: 1,
+                            child: SliderSideButton(
+                              icon: FontAwesomeIcons.dotCircle,
+                              onPress: () {
+                                setState(() {
+                                  incrementFractionNow(); // perform increment
+                                });
+                              },
+                            )),
+                        Expanded(
+                          flex: 7,
+                          // SLIDER SLIDER SLIDER SLIDER SLIDER
+                          // SLIDER SLIDER SLIDER SLIDER SLIDER
+                          child: RotatedBox(
+                            quarterTurns: 3,
+                            child: Slider(
+                                value: sliderValues.value,
+                                min: sliderValues.min.toDouble(),
+                                max: sliderValues.max.toDouble(),
+                                activeColor: Color(0xFFEB1555),
+                                inactiveColor: Color(0xFF8D8E98),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    newValueTxt(newValue); // New value in text
+                                    sliderValues.value = newValue;
+/*                                  print('value = ' + sliderValues.value.toString());
+                                    print('newValue = ' + newValue.toString());
+                                    print('min = ' + sliderValues.min.toString());
+                                    print('max = ' + sliderValues.max.toString());*/
+                                  });
+                                }),
+                          ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                          // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                          // Does not care if it is kgs or lbs
+                          flex: 1,
+                          child: SliderSideButton(
+                            icon: FontAwesomeIcons.minus,
+                            onPress: () {
+                              setState(() {
+                                decrementNow(); // Decrement now!
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -623,7 +623,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
       final int max,
       final String toggleText,
       final bool selected}) {
-    if (selected) sliderForAll(text: text, unit: unit, value: value, min: min, max: max); // Links current button to slider
+    if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -634,29 +634,22 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
         ),
         SizedBox(width: 10),
         // tap to Add .1 decimal accuracy to the value
-        GestureDetector(
-          child: Row(
-            children: [
-              Text(
-                // SLIDER CURRENT VALUE NUMBER
-                currentValueTxt(text),
-                style: kAgeTextStyle,
-              ),
-              Text(
-                currentFeetText(text, unit),
-                style: kUnitTextStyle, // show feet or not
-              ),
-              Text(
-                currentInchesText(text, unit),
-                style: kAgeTextStyle, // show inch fraction or not
-              ),
-            ],
-          ),
-          onTap: () {
-            setState(() {
-              incrementFractionNow(text); // FRACTIONAL INCREMENT
-            });
-          },
+        Row(
+          children: [
+            Text(
+              // SLIDER CURRENT VALUE NUMBER
+              currentValueTxt(text),
+              style: kAgeTextStyle,
+            ),
+            Text(
+              currentFeetText(text, unit),
+              style: kUnitTextStyle, // show feet or not
+            ),
+            Text(
+              currentInchesText(text, unit),
+              style: kAgeTextStyle, // show inch fraction or not
+            ),
+          ],
         ),
         /*           SizedBox(
           width: 2,
@@ -680,15 +673,16 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   }
 
   // assign the slider to the pressed button
-  void sliderForAll({String text, double value, int min, int max, String unit}) {
-    sliderValues.text = text;
+  void sliderForAll({double value, int min, int max}) {
+    //sliderValues.text = text;
     sliderValues.value = value;
     sliderValues.min = min;
     sliderValues.max = max;
-    sliderValues.unit = unit;
+    //sliderValues.unit = unit;
   }
 
   // The actual value depending on the text
+  // text is passed insead of sliderValue because there are many individual buttons
   String currentValueTxt(String text) {
     if (text == 'AGE') return cAge.ageDisplay;
     if (text == 'WEIGHT')
@@ -730,7 +724,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   }
 
   // The new value in text returned by the slider
-  void newValueTxt(String text, double newValue) {
+  /* void newValueTxt(String text, double newValue) {
     // I've just changed this from STring to void
     if (text == "AGE") cAge.movingValue(newValue);
     if (text == "HEIGHT")
@@ -750,109 +744,218 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
     else if (text == "CALF")
       cCalf.movingValue(newValue);
     else if (text == "NECK") cNeck.movingValue(newValue);
+  }*/
+
+  // The new value in text returned by the slider
+  void newValueTxt(double newValue) {
+    switch (sliderValues.selectedButton) {
+      case ButtonScale.age:
+        cAge.movingValue(newValue);
+        break;
+      case ButtonScale.weight:
+        cWeight.movingValue(newValue);
+        break;
+      case ButtonScale.height:
+        cHeight.movingValue(newValue);
+        break;
+      case ButtonScale.waist:
+        cWaist.movingValue(newValue);
+        break;
+      case ButtonScale.hip:
+        cHips.movingValue(newValue);
+        break;
+      case ButtonScale.forearm:
+        cForearm.movingValue(newValue);
+        break;
+      case ButtonScale.wrist:
+        cWrist.movingValue(newValue);
+        break;
+      case ButtonScale.thigh:
+        cThigh.movingValue(newValue);
+        break;
+      case ButtonScale.calf:
+        cCalf.movingValue(newValue);
+        break;
+      case ButtonScale.neck:
+        cNeck.movingValue(newValue);
+        break;
+      default:
+        break;
+    }
   }
 
   // increment by fraction
-  void incrementFractionNow(String text) {
-    if (text == 'AGE') cAge.incrementPointOne();
-    if (text == 'WEIGHT')
-      cWeight.incrementPointOne();
-    else if (text == 'HEIGHT')
-      cHeight.incrementPointOne();
-    else if (text == 'WAIST')
-      cWaist.incrementPointOne();
-    else if (text == 'HIP')
-      cHips.incrementPointOne();
-    else if (text == 'FOREARM')
-      cForearm.incrementPointOne();
-    else if (text == 'WRIST')
-      cWrist.incrementPointOne();
-    else if (text == 'THIGH') {
-      cThigh.incrementPointOne();
-    } else if (text == 'CALF')
-      cCalf.incrementPointOne();
-    else if (text == 'NECK') cNeck.incrementPointOne();
+  void incrementFractionNow() {
+    switch (sliderValues.selectedButton) {
+      case ButtonScale.age:
+        cAge.incrementPointOne();
+        break;
+      case ButtonScale.weight:
+        cWeight.incrementPointOne();
+        break;
+      case ButtonScale.height:
+        cHeight.incrementPointOne();
+        break;
+      case ButtonScale.waist:
+        cWaist.incrementPointOne();
+        break;
+      case ButtonScale.hip:
+        cHips.incrementPointOne();
+        break;
+      case ButtonScale.forearm:
+        cForearm.incrementPointOne();
+        break;
+      case ButtonScale.wrist:
+        cWrist.incrementPointOne();
+        break;
+      case ButtonScale.thigh:
+        cThigh.incrementPointOne();
+        break;
+      case ButtonScale.calf:
+        cCalf.incrementPointOne();
+        break;
+      case ButtonScale.neck:
+        cNeck.incrementPointOne();
+        break;
+      default:
+        break;
+    }
   }
 
-  void decrementNow(String text) {
-    if (text == "AGE") cAge.decrementOne();
-    if (text == "WEIGHT")
-      cWeight.decrementOne();
-    else if (text == "HEIGHT")
-      cHeight.decrementOne();
-    else if (text == "WAIST")
-      cWaist.decrementOne();
-    else if (text == "HIP")
-      cHips.decrementOne();
-    else if (text == "FOREARM")
-      cForearm.decrementOne();
-    else if (text == "WRIST")
-      cWrist.decrementOne();
-    else if (text == "THIGH")
-      cThigh.decrementOne();
-    else if (text == "CALF")
-      cCalf.decrementOne();
-    else if (text == "NECK") cNeck.decrementOne();
+  void decrementNow() {
+    switch (sliderValues.selectedButton) {
+      case ButtonScale.age:
+        cAge.decrementOne();
+        break;
+      case ButtonScale.weight:
+        cWeight.decrementOne();
+        break;
+      case ButtonScale.height:
+        cHeight.decrementOne();
+        break;
+      case ButtonScale.waist:
+        cWaist.decrementOne();
+        break;
+      case ButtonScale.hip:
+        cHips.decrementOne();
+        break;
+      case ButtonScale.forearm:
+        cForearm.decrementOne();
+        break;
+      case ButtonScale.wrist:
+        cWrist.decrementOne();
+        break;
+      case ButtonScale.thigh:
+        cThigh.decrementOne();
+        break;
+      case ButtonScale.calf:
+        cCalf.decrementOne();
+        break;
+      case ButtonScale.neck:
+        cNeck.decrementOne();
+        break;
+      default:
+        break;
+    }
   }
 
-  void incrementNow(String text) {
-    if (text == 'AGE') cAge.incrementOne();
-    if (text == 'WEIGHT')
-      cWeight.incrementOne();
-    else if (text == 'HEIGHT')
-      cHeight.incrementOne();
-    else if (text == 'WAIST')
-      cWaist.incrementOne();
-    else if (text == 'HIP')
-      cHips.incrementOne();
-    else if (text == 'FOREARM')
-      cForearm.incrementOne();
-    else if (text == 'WRIST')
-      cWrist.incrementOne();
-    else if (text == 'THIGH')
-      cThigh.incrementOne();
-    else if (text == 'CALF')
-      cCalf.incrementOne();
-    else if (text == 'NECK') cNeck.incrementOne();
+  void incrementNow() {
+    switch (sliderValues.selectedButton) {
+      case ButtonScale.age:
+        cAge.incrementOne();
+        break;
+      case ButtonScale.weight:
+        cWeight.incrementOne();
+        break;
+      case ButtonScale.height:
+        cHeight.incrementOne();
+        break;
+      case ButtonScale.waist:
+        cWaist.incrementOne();
+        break;
+      case ButtonScale.hip:
+        cHips.incrementOne();
+        break;
+      case ButtonScale.forearm:
+        cForearm.incrementOne();
+        break;
+      case ButtonScale.wrist:
+        cWrist.incrementOne();
+        break;
+      case ButtonScale.thigh:
+        cThigh.incrementOne();
+        break;
+      case ButtonScale.calf:
+        cCalf.incrementOne();
+        break;
+      case ButtonScale.neck:
+        cNeck.incrementOne();
+        break;
+      default:
+        break;
+    }
   }
 
   // toggle text
   // this is the only function with AGE is excuded
-  void toggleNow(String text, unit) {
+  // Todo automatically select the button too
+  void toggleNow(String text, String unit) {
     if (text == 'HEIGHT' && unit == 'cm.') {
       cHeight.toggleToInches();
-    } else if (text == 'HEIGHT' && unit == 'in.')
+      sliderValues.selectedButton = ButtonScale.height;
+    } else if (text == 'HEIGHT' && unit == 'in.') {
       cHeight.toggleToCentimeters();
-    else if (text == 'WEIGHT' && unit == 'kgs')
+      sliderValues.selectedButton = ButtonScale.height;
+    } else if (text == 'WEIGHT' && unit == 'kgs') {
       cWeight.toggleToLbs();
-    else if (text == 'WEIGHT' && unit == 'lbs')
+      sliderValues.selectedButton = ButtonScale.weight;
+    } else if (text == 'WEIGHT' && unit == 'lbs') {
       cWeight.toggleToKilograms();
-    else if (text == 'WAIST' && unit == 'cm.')
+      sliderValues.selectedButton = ButtonScale.weight;
+    } else if (text == 'WAIST' && unit == 'cm.') {
       cWaist.toggleToInches();
-    else if (text == 'WAIST' && unit == 'in.')
+      sliderValues.selectedButton = ButtonScale.waist;
+    } else if (text == 'WAIST' && unit == 'in.') {
       cWaist.toggleToCentimeters();
-    else if (text == 'HIP' && unit == 'cm.')
+      sliderValues.selectedButton = ButtonScale.waist;
+    } else if (text == 'HIP' && unit == 'cm.') {
       cHips.toggleToInches();
-    else if (text == 'HIP' && unit == 'in.')
+      sliderValues.selectedButton = ButtonScale.hip;
+    } else if (text == 'HIP' && unit == 'in.') {
       cHips.toggleToCentimeters();
-    else if (text == 'FOREARM' && unit == 'cm.')
+      sliderValues.selectedButton = ButtonScale.hip;
+    } else if (text == 'FOREARM' && unit == 'cm.') {
       cForearm.toggleToInches();
-    else if (text == 'FOREARM' && unit == 'in.')
+      sliderValues.selectedButton = ButtonScale.forearm;
+    } else if (text == 'FOREARM' && unit == 'in.') {
       cForearm.toggleToCentimeters();
-    else if (text == 'WRIST' && unit == 'cm.')
+      sliderValues.selectedButton = ButtonScale.forearm;
+    } else if (text == 'WRIST' && unit == 'cm.') {
       cWrist.toggleToInches();
-    else if (text == 'WRIST' && unit == 'in.')
+      sliderValues.selectedButton = ButtonScale.wrist;
+    } else if (text == 'WRIST' && unit == 'in.') {
       cWrist.toggleToCentimeters();
-    else if (text == 'THIGH' && unit == 'cm.')
+      sliderValues.selectedButton = ButtonScale.wrist;
+    } else if (text == 'THIGH' && unit == 'cm.') {
       cThigh.toggleToInches();
-    else if (text == 'THIGH' && unit == 'in.')
+      sliderValues.selectedButton = ButtonScale.thigh;
+    } else if (text == 'THIGH' && unit == 'in.') {
       cThigh.toggleToCentimeters();
-    else if (text == 'CALF' && unit == 'cm.')
+      sliderValues.selectedButton = ButtonScale.thigh;
+    } else if (text == 'CALF' && unit == 'cm.') {
       cCalf.toggleToInches();
-    else if (text == 'CALF' && unit == 'in.')
+      sliderValues.selectedButton = ButtonScale.calf;
+    } else if (text == 'CALF' && unit == 'in.') {
       cCalf.toggleToCentimeters();
-    else if (text == 'NECK' && unit == 'cm.')
+      sliderValues.selectedButton = ButtonScale.calf;
+    } else if (text == 'NECK' && unit == 'cm.') {
       cNeck.toggleToInches();
-    else if (text == 'NECK' && unit == 'in.') cNeck.toggleToCentimeters();
+      sliderValues.selectedButton = ButtonScale.neck;
+    } else if (text == 'NECK' && unit == 'in.') {
+      cNeck.toggleToCentimeters();
+      sliderValues.selectedButton = ButtonScale.neck;
+    }
+
+    // sliderForAll(value: value, min: min, max: max); // updates slider to the current button
   }
 }

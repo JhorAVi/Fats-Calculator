@@ -9,9 +9,9 @@ import 'bf_tape_results_page.dart';
 import 'dart:io';
 
 enum Gender { male, female }
-enum ButtonScale { age, weight, height, waist, hip, wrist, forearm, thigh, calf, neck }
+enum ButtonScale { age, weight, height, waist, hip, wrist, forearm, thigh, calf, neck, none }
 Gender selectedGender;
-ButtonScale selectedButtonScale;
+ButtonScale selectedButton;
 
 String genderPath;
 SliderValues sliderValues = SliderValues();
@@ -170,6 +170,12 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             // tabs
             controller: _tabController,
             tabs: _kTabs,
+            onTap: (index) {
+              // Clears all button selection and link to slider
+              setState(() {
+                selectedButton = ButtonScale.none;
+              });
+            },
           ),
           /*  Container(  // TAB VIEW
             // margin: const EdgeInsets.all(3.0),
@@ -265,10 +271,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         // AGE AGE AGE
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.age;
+                            selectedButton = ButtonScale.age;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                             // AGE AGE AGE currently merging this with statsCardContent
                             text: cAge.text,
@@ -276,7 +282,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                             value: cAge.age,
                             min: cAge.min,
                             max: cAge.max,
-                            selected: (selectedButtonScale == ButtonScale.age)),
+                            selected: (selectedButton == ButtonScale.age)),
                       ),
                     ),
                     Visibility(
@@ -284,10 +290,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.height;
+                            selectedButton = ButtonScale.height;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                             // HEIGHT HEIGHT HEIGHT
                             text: cHeight.text,
@@ -296,7 +302,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                             min: cHeight.min,
                             max: cHeight.max,
                             toggleText: cHeight.toggleText,
-                            selected: (selectedButtonScale == ButtonScale.height)),
+                            selected: (selectedButton == ButtonScale.height)),
                       ),
                     ),
 
@@ -305,10 +311,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.weight;
+                            selectedButton = ButtonScale.weight;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           // WEIGHT WEIGHT WEIGHT
                           text: cWeight.text,
@@ -316,7 +322,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           value: cWeight.weight,
                           min: cWeight.min,
                           max: cWeight.max,
-                          toggleText: cWeight.toggleText, selected: (selectedButtonScale == ButtonScale.weight),
+                          toggleText: cWeight.toggleText, selected: (selectedButton == ButtonScale.weight),
                         ),
                       ),
                     ),
@@ -326,10 +332,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.waist;
+                            selectedButton = ButtonScale.waist;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cWaist.text,
                           unit: cWaist.unit,
@@ -337,7 +343,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cWaist.min,
                           max: cWaist.max,
                           toggleText: cWaist.toggleText,
-                          selected: (selectedButtonScale == ButtonScale.waist),
+                          selected: (selectedButton == ButtonScale.waist),
                         ),
                       ),
                     ),
@@ -346,10 +352,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.hip;
+                            selectedButton = ButtonScale.hip;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cHips.text,
                           unit: cHips.unit,
@@ -357,7 +363,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cHips.min,
                           max: cHips.max,
                           toggleText: cHips.toggleText,
-                          selected: (selectedButtonScale == ButtonScale.hip),
+                          selected: (selectedButton == ButtonScale.hip),
                         ),
                       ),
                     ),
@@ -366,10 +372,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.forearm;
+                            selectedButton = ButtonScale.forearm;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cForearm.text,
                           unit: cForearm.unit,
@@ -377,7 +383,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cForearm.min,
                           max: cForearm.max,
                           toggleText: cForearm.toggleText,
-                          selected: (selectedButtonScale == ButtonScale.forearm),
+                          selected: (selectedButton == ButtonScale.forearm),
                         ),
                       ),
                     ),
@@ -386,10 +392,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.wrist;
+                            selectedButton = ButtonScale.wrist;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cWrist.text,
                           unit: cWrist.unit,
@@ -397,7 +403,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cWrist.min,
                           max: cWrist.max,
                           toggleText: cWrist.toggleText,
-                          selected: (selectedButtonScale == ButtonScale.wrist),
+                          selected: (selectedButton == ButtonScale.wrist),
                         ),
                       ),
                     ),
@@ -407,10 +413,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.thigh;
+                            selectedButton = ButtonScale.thigh;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cThigh.text,
                           unit: cThigh.unit,
@@ -418,7 +424,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cThigh.min,
                           max: cThigh.max,
                           toggleText: cThigh.toggleText,
-                          selected: (selectedButtonScale == ButtonScale.thigh),
+                          selected: (selectedButton == ButtonScale.thigh),
                         ),
                       ),
                     ),
@@ -428,10 +434,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.calf;
+                            selectedButton = ButtonScale.calf;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cCalf.text,
                           unit: cCalf.unit,
@@ -439,7 +445,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cCalf.min,
                           max: cCalf.max,
                           toggleText: cCalf.toggleText,
-                          selected: (selectedButtonScale == ButtonScale.calf),
+                          selected: (selectedButton == ButtonScale.calf),
                         ),
                       ),
                     ),
@@ -448,10 +454,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
-                            selectedButtonScale = ButtonScale.neck;
+                            selectedButton = ButtonScale.neck;
                           });
                         },
-                        colour: (selectedButtonScale == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cNeck.text,
                           unit: cNeck.unit,
@@ -459,7 +465,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           min: cNeck.min,
                           max: cNeck.max,
                           toggleText: cNeck.toggleText,
-                          selected: (selectedButtonScale == ButtonScale.neck),
+                          selected: (selectedButton == ButtonScale.neck),
                         ),
                       ),
                     ),

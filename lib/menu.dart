@@ -22,17 +22,14 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: <Widget>[
-            Text('BMI CALCULATOR   '),
-            Text('by jhoravi', style: kAuthorTextStyle)
-          ],
+          children: <Widget>[Text('BMI CALCULATOR   '), Text('by jhoravi', style: kAuthorTextStyle)],
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            ButtonCard(
+            ReusableCard(
               onPressedMy: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return InputPage();
@@ -44,7 +41,7 @@ class _MenuState extends State<Menu> {
                 iconGender: FontAwesomeIcons.mars,
               ),
             ),
-            ButtonCard(
+            ReusableCard(
               onPressedMy: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return FatsTape();
@@ -56,7 +53,7 @@ class _MenuState extends State<Menu> {
                 iconGender: FontAwesomeIcons.venus,
               ),
             ),
-            ButtonCard(
+            ReusableCard(
               onPressedMy: () {
                 setState(() {
                   selectedGender = Gender.male;
@@ -68,7 +65,7 @@ class _MenuState extends State<Menu> {
                 iconGender: FontAwesomeIcons.mars,
               ),
             ),
-            ButtonCard(
+            ReusableCard(
               onPressedMy: () {
                 setState(() {
                   selectedGender = Gender.female;
@@ -80,7 +77,7 @@ class _MenuState extends State<Menu> {
                 iconGender: FontAwesomeIcons.venus,
               ),
             ),
-            ButtonCard(
+            ReusableCard(
               onPressedMy: () {
                 setState(() {
                   selectedGender = Gender.male;
@@ -92,7 +89,7 @@ class _MenuState extends State<Menu> {
                 iconGender: FontAwesomeIcons.mars,
               ),
             ),
-            ButtonCard(
+            ReusableCard(
               onPressedMy: () {
                 setState(() {
                   selectedGender = Gender.female;

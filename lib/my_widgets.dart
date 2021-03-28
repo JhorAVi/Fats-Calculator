@@ -2,29 +2,6 @@ import 'package:bmicalculator/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ButtonCard extends StatelessWidget {
-  ButtonCard({this.onPressedMy, this.colour, this.widgetContents});
-
-  final Function onPressedMy;
-  final Color colour;
-  final Widget widgetContents;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.all(5),
-      child: RawMaterialButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        fillColor: colour,
-        //color: Colors.black,
-        onPressed: onPressedMy,
-        child: widgetContents,
-      ),
-    );
-  }
-}
-
 // Main card widget
 // Now almost thesame as ButtonCard
 class ReusableCard extends StatelessWidget {
@@ -72,7 +49,7 @@ class GenderCardContent extends StatelessWidget {
         ),
         Icon(
           iconGender,
-          size: 50.0,
+          size: 40.0,
         ),
       ],
     );
@@ -125,16 +102,19 @@ class BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPress,
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.only(bottom: 20),
-        child: Text(text, style: kLargeButtonTextStyle),
-        color: kBottomContainerColor,
-        height: kBottomContainerHeight,
-        // margin: EdgeInsets.only(top: 10),
-        width: double.infinity,
+    return Container(
+      margin: EdgeInsets.only(top: 5),
+      child: GestureDetector(
+        onTap: onPress,
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(bottom: 20),
+          child: Text(text, style: kLargeButtonTextStyle),
+          color: kBottomContainerColor,
+          height: kBottomContainerHeight,
+          // margin: EdgeInsets.only(top: 10),
+          width: double.infinity,
+        ),
       ),
     );
   }

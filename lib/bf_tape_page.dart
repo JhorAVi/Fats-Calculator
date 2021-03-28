@@ -80,6 +80,8 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
+    selectedGender = Gender.male; // set male as default
+    sliderValues.selectedButton = ButtonScale.age; // set age as default
     _tabController = new TabController(vsync: this, length: _kTabs.length)
       ..addListener(() {
         setState(() {
@@ -150,6 +152,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    // selectedGender = Gender.male;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -170,7 +173,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             onTap: (index) {
               // Clears all button selection and link to slider
               setState(() {
-                sliderValues.selectedButton = ButtonScale.none;
+                sliderValues.selectedButton = ButtonScale.age;
               });
             },
           ),
@@ -206,82 +209,65 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             ),
           ),
 
+          // This row contains the Age followed by Gender. The two scales exist in all formula type.
+          Row(
+            children: [
+              Expanded(
+                flex: 6,
+                child: ReusableCard(
+                  // AGE AGE AGE
+                  onPressedMy: () {
+                    setState(() {
+                      sliderValues.selectedButton = ButtonScale.age;
+                    });
+                  },
+                  colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
+                  widgetContents: statsCardContent(
+                      // AGE AGE AGE currently merging this with statsCardContent
+                      text: cAge.text,
+                      unit: cAge.unit,
+                      value: cAge.age,
+                      min: cAge.min,
+                      max: cAge.max,
+                      selected: (sliderValues.selectedButton == ButtonScale.age)),
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: ReusableCard(
+                  onPressedMy: () {
+                    setState(() {
+                      if (selectedGender == Gender.male) {
+                        selectedGender = Gender.female;
+                        isFemale = true;
+                      } else if (selectedGender == Gender.female) {
+                        selectedGender = Gender.male;
+                        isFemale = false;
+                      }
+                    });
+                  },
+                  colour: kInActiveButtonColor,
+                  widgetContents: GenderCardContent(
+                      label: (selectedGender == Gender.male) ? 'MALE' : 'FEMALE',
+                      iconGender: (selectedGender == Gender.male) ? FontAwesomeIcons.mars : FontAwesomeIcons.venus),
+                ),
+              )
+            ],
+          ),
+
           // This separates the value displays to the left and slider to the right
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                flex: 8,
+                // flex: 8,
                 // The column of all measurement widgets
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     // GENDER GENDER
-                    Visibility(
-                      // visible: isMYMCA | isUSNAVY | isCOVERTBAILEY,
-                      visible: true,
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: AspectRatio(
-                              aspectRatio: 2 / 1,
-                              child: ButtonCard(
-                                onPressedMy: () {
-                                  setState(() {
-                                    selectedGender = Gender.male;
-                                    isFemale = false;
-                                  });
-                                },
-                                colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
-                                widgetContents: GenderCardContent(
-                                  label: 'MALE',
-                                  iconGender: FontAwesomeIcons.mars,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: AspectRatio(
-                              aspectRatio: 2 / 1,
-                              child: ButtonCard(
-                                onPressedMy: () {
-                                  setState(() {
-                                    selectedGender = Gender.female;
-                                    isFemale = true;
-                                  });
-                                },
-                                colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
-                                widgetContents: GenderCardContent(
-                                  label: 'FEMALE',
-                                  iconGender: FontAwesomeIcons.venus,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+
                     // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
-                    Visibility(
-                      visible: isCOVERTBAILEY | isHERITAGE,
-                      child: ReusableCard(
-                        // AGE AGE AGE
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.age;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                            // AGE AGE AGE currently merging this with statsCardContent
-                            text: cAge.text,
-                            unit: cAge.unit,
-                            value: cAge.age,
-                            min: cAge.min,
-                            max: cAge.max,
-                            selected: (sliderValues.selectedButton == ButtonScale.age)),
-                      ),
-                    ),
                     Visibility(
                       visible: isUSNAVY | isHERITAGE,
                       child: ReusableCard(
@@ -470,83 +456,81 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                 ),
               ),
               // slider here
-              Expanded(
-                flex: 2,
-                child: Container(
-                  height: 300,
-                  child: ReusableCard(
-                    colour: kInActiveButtonColor,
-                    widgetContents: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                            // INCREMENT INCREMENT INCREMENT INCREMENT
-                            // INCREMENT INCREMENT INCREMENT INCREMENT
-                            // Doesn't care if it's kgs or lbs
-                            flex: 1,
-                            child: SliderSideButton(
-                              icon: FontAwesomeIcons.plus,
-                              onPress: () {
-                                setState(() {
-                                  incrementNow(); // perform increment
-                                });
-                              },
-                            )),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                            // DECIMAL DECIMAL DECIMAL
-                            // DECIMAL DECIMAL DECIMAL
-                            flex: 1,
-                            child: SliderSideButton(
-                              icon: FontAwesomeIcons.dotCircle,
-                              onPress: () {
-                                setState(() {
-                                  incrementFractionNow(); // perform increment
-                                });
-                              },
-                            )),
-                        Expanded(
-                          flex: 7,
-                          // SLIDER SLIDER SLIDER SLIDER SLIDER
-                          // SLIDER SLIDER SLIDER SLIDER SLIDER
-                          child: RotatedBox(
-                            quarterTurns: 3,
-                            child: Slider(
-                                value: sliderValues.value,
-                                min: sliderValues.min.toDouble(),
-                                max: sliderValues.max.toDouble(),
-                                activeColor: Color(0xFFEB1555),
-                                inactiveColor: Color(0xFF8D8E98),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    newValueTxt(newValue); // New value in text
-                                    sliderValues.value = newValue;
-/*                                  print('value = ' + sliderValues.value.toString());
-                                    print('newValue = ' + newValue.toString());
-                                    print('min = ' + sliderValues.min.toString());
-                                    print('max = ' + sliderValues.max.toString());*/
-                                  });
-                                }),
-                          ),
-                        ),
-                        Expanded(
-                          // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                          // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                          // Does not care if it is kgs or lbs
+              Container(
+                width: 70,
+                height: 340,
+                child: ReusableCard(
+                  colour: kActiveButtonColor,
+                  widgetContents: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                          // INCREMENT INCREMENT INCREMENT INCREMENT
+                          // INCREMENT INCREMENT INCREMENT INCREMENT
+                          // Doesn't care if it's kgs or lbs
                           flex: 1,
                           child: SliderSideButton(
-                            icon: FontAwesomeIcons.minus,
+                            icon: FontAwesomeIcons.plus,
                             onPress: () {
                               setState(() {
-                                decrementNow(); // Decrement now!
+                                incrementNow(); // perform increment
                               });
                             },
-                          ),
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                          // DECIMAL DECIMAL DECIMAL
+                          // DECIMAL DECIMAL DECIMAL
+                          flex: 1,
+                          child: SliderSideButton(
+                            icon: FontAwesomeIcons.dotCircle,
+                            onPress: () {
+                              setState(() {
+                                incrementFractionNow(); // perform increment
+                              });
+                            },
+                          )),
+                      Expanded(
+                        flex: 7,
+                        // SLIDER SLIDER SLIDER SLIDER SLIDER
+                        // SLIDER SLIDER SLIDER SLIDER SLIDER
+                        child: RotatedBox(
+                          quarterTurns: 3,
+                          child: Slider(
+                              value: sliderValues.value,
+                              min: sliderValues.min.toDouble(),
+                              max: sliderValues.max.toDouble(),
+                              activeColor: Color(0xFFEB1555),
+                              inactiveColor: Color(0xFF8D8E98),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  newValueTxt(newValue); // New value in text
+                                  sliderValues.value = newValue;
+                                  print('value = ' + sliderValues.value.toString());
+                                  print('newValue = ' + newValue.toString());
+                                  print('min = ' + sliderValues.min.toString());
+                                  print('max = ' + sliderValues.max.toString());
+                                });
+                              }),
                         ),
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                        // Does not care if it is kgs or lbs
+                        flex: 1,
+                        child: SliderSideButton(
+                          icon: FontAwesomeIcons.minus,
+                          onPress: () {
+                            setState(() {
+                              decrementNow(); // Decrement now!
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

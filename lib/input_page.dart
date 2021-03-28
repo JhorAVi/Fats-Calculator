@@ -39,7 +39,7 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: AspectRatio(
                     aspectRatio: 2 / 1,
-                    child: ButtonCard(
+                    child: ReusableCard(
                       onPressedMy: () {
                         setState(() {
                           selectedGender = Gender.male;
@@ -57,7 +57,7 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: AspectRatio(
                     aspectRatio: 2 / 1,
-                    child: ButtonCard(
+                    child: ReusableCard(
                       onPressedMy: () {
                         setState(() {
                           selectedGender = Gender.female;

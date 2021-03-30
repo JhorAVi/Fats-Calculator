@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'function_utils.dart';
 import 'constants.dart';
 
+class IntroData {
+  var title = ['Modified YMCA', 'Department of Defense a.k.a. US Navy', 'Covert Bailey', 'Heritage'];
+  var description = [kYMCADescription, kUSNAVYDescription, kCovertBaileyDescription, kHeritageDescription];
+  var formula = [kYMCAFormula, kUSNAVYFormula, kCoverBaileyFormula, kHeritageFormula];
+}
+
 // values used for the slider
 class SliderValues {
   int min = 1;

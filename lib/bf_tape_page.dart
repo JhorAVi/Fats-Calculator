@@ -8,7 +8,13 @@ import 'scale_class.dart';
 import 'bf_tape_results_page.dart';
 import 'dart:io';
 
+// Trying a declaration here
+IntroData introData = IntroData();
+bool introVisible = true;
+bool scalesVisible = false;
+
 Gender selectedGender;
+int introIndex = 0;
 
 String genderPath;
 SliderValues sliderValues = SliderValues();
@@ -95,6 +101,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                   isCOVERTBAILEY = false;
                   isHERITAGE = false;
                   selectedFatFormula = FatFormula.MYMCA;
+                  introIndex = 0;
                 });
               }
               break;
@@ -108,6 +115,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                   isCOVERTBAILEY = false;
                   isHERITAGE = false;
                   selectedFatFormula = FatFormula.USNAVY;
+                  introIndex = 1;
                 });
               }
               break;
@@ -121,6 +129,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                   isCOVERTBAILEY = true;
                   isHERITAGE = false;
                   selectedFatFormula = FatFormula.COVERTBAILEY;
+                  introIndex = 2;
                 });
               }
               break;
@@ -134,6 +143,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                   isCOVERTBAILEY = false;
                   isHERITAGE = true;
                   selectedFatFormula = FatFormula.HERIGATE;
+                  introIndex = 3;
                 });
               }
               break;
@@ -173,423 +183,449 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             onTap: (index) {
               // Clears all button selection and link to slider
               setState(() {
-                sliderValues.selectedButton = ButtonScale.age;
+                introVisible = true;
+                scalesVisible = false;
               });
             },
           ),
-          /*  Container(  // TAB VIEW
-            // margin: const EdgeInsets.all(3.0),
-            padding: const EdgeInsets.all(3.0),
-            decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-            // color: kInActiveButtonColor,
-            height: 200,
-            child: TabBarView(
-              controller: _tabController,
-              children: _kTabPages,
-            ),
-          ),*/
-          // Tab results Tab results Tab results
-          Container(
-            padding: EdgeInsets.only(top: 10),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(_fatsYMCA.toStringAsFixed(1), textAlign: TextAlign.center),
+          // Tab INTRO before showing the scale buttons
+          Visibility(
+            visible: introVisible,
+            child: Column(
+              children: [
+                Container(
+                  // TAB VIEW
+                  // margin: const EdgeInsets.all(3.0),
+                  padding: const EdgeInsets.all(3.0),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                  // color: kInActiveButtonColor,
+                  child: TabWidget(
+                    title: introData.title[introIndex],
+                    description: introData.description[introIndex],
+                    formula: introData.formula[introIndex],
+                  ),
                 ),
-                Expanded(
-                  child: Text(_fatsUSNAVY.toStringAsFixed(1), textAlign: TextAlign.center),
-                ),
-                Expanded(
-                  child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1), textAlign: TextAlign.center),
-                ),
-                Expanded(
-                  child: Text(_fatsHERITAGE.toStringAsFixed(1), textAlign: TextAlign.center),
-                )
+                MaterialButton(
+                    color: kBottomContainerColor,
+                    onPressed: () {
+                      setState(() {
+                        introVisible = false;
+                        scalesVisible = true;
+                      });
+                    },
+                    child: Text(
+                      'START',
+                    ))
               ],
             ),
           ),
-
-          // This row contains the Age followed by Gender. The two scales exist in all formula type.
-          Row(
-            children: [
-              Expanded(
-                flex: 6,
-                child: ReusableCard(
-                  // AGE AGE AGE
-                  onPressedMy: () {
-                    setState(() {
-                      sliderValues.selectedButton = ButtonScale.age;
-                    });
-                  },
-                  colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
-                  widgetContents: statsCardContent(
-                      // AGE AGE AGE currently merging this with statsCardContent
-                      text: cAge.text,
-                      unit: cAge.unit,
-                      value: cAge.age,
-                      min: cAge.min,
-                      max: cAge.max,
-                      selected: (sliderValues.selectedButton == ButtonScale.age)),
+          // Make all the scale buttons Invisible while on tab intro
+          Visibility(
+            visible: scalesVisible,
+            child: Column(
+              children: [
+                // Tab results Tab results Tab results
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(_fatsYMCA.toStringAsFixed(1), textAlign: TextAlign.center),
+                    ),
+                    Expanded(
+                      child: Text(_fatsUSNAVY.toStringAsFixed(1), textAlign: TextAlign.center),
+                    ),
+                    Expanded(
+                      child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1), textAlign: TextAlign.center),
+                    ),
+                    Expanded(
+                      child: Text(_fatsHERITAGE.toStringAsFixed(1), textAlign: TextAlign.center),
+                    )
+                  ],
                 ),
-              ),
-              Expanded(
-                flex: 4,
-                child: ReusableCard(
-                  onPressedMy: () {
-                    setState(() {
-                      if (selectedGender == Gender.male) {
-                        selectedGender = Gender.female;
-                        isFemale = true;
-                      } else if (selectedGender == Gender.female) {
-                        selectedGender = Gender.male;
-                        isFemale = false;
-                      }
-                    });
-                  },
-                  colour: kInActiveButtonColor,
-                  widgetContents: GenderCardContent(
-                      label: (selectedGender == Gender.male) ? 'MALE' : 'FEMALE',
-                      iconGender: (selectedGender == Gender.male) ? FontAwesomeIcons.mars : FontAwesomeIcons.venus),
-                ),
-              )
-            ],
-          ),
 
-          // This separates the value displays to the left and slider to the right
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                // flex: 8,
-                // The column of all measurement widgets
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
+                // This row contains the Age followed by Gender. The two scales exist in all formula type.
+                Row(
                   children: [
-                    // GENDER GENDER
+                    Expanded(
+                      flex: 6,
+                      child: ReusableCard(
+                        // AGE AGE AGE
+                        onPressedMy: () {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.age;
+                          });
+                        },
+                        colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                            // AGE AGE AGE currently merging this with statsCardContent
+                            text: cAge.text,
+                            unit: cAge.unit,
+                            value: cAge.age,
+                            min: cAge.min,
+                            max: cAge.max,
+                            selected: (sliderValues.selectedButton == ButtonScale.age)),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            if (selectedGender == Gender.male) {
+                              selectedGender = Gender.female;
+                              isFemale = true;
+                            } else if (selectedGender == Gender.female) {
+                              selectedGender = Gender.male;
+                              isFemale = false;
+                            }
+                          });
+                        },
+                        colour: kInActiveButtonColor,
+                        widgetContents: GenderCardContent(
+                            label: (selectedGender == Gender.male) ? 'MALE' : 'FEMALE',
+                            iconGender: (selectedGender == Gender.male) ? FontAwesomeIcons.mars : FontAwesomeIcons.venus),
+                      ),
+                    )
+                  ],
+                ),
 
-                    // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
-                    Visibility(
-                      visible: isUSNAVY | isHERITAGE,
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.height;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                            // HEIGHT HEIGHT HEIGHT
-                            text: cHeight.text,
-                            unit: cHeight.unit,
-                            value: cHeight.length,
-                            min: cHeight.min,
-                            max: cHeight.max,
-                            toggleText: cHeight.toggleText,
-                            selected: (sliderValues.selectedButton == ButtonScale.height)),
-                      ),
-                    ),
+                // This separates the value displays to the left and slider to the right
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      // flex: 8,
+                      // The column of all measurement widgets
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          // GENDER GENDER
 
-                    Visibility(
-                      visible: isMYMCA | isHERITAGE,
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.weight;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          // WEIGHT WEIGHT WEIGHT
-                          text: cWeight.text,
-                          unit: cWeight.unit,
-                          value: cWeight.weight,
-                          min: cWeight.min,
-                          max: cWeight.max,
-                          toggleText: cWeight.toggleText, selected: (sliderValues.selectedButton == ButtonScale.weight),
-                        ),
-                      ),
-                    ),
+                          // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
+                          Visibility(
+                            visible: isUSNAVY | isHERITAGE,
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.height;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                  // HEIGHT HEIGHT HEIGHT
+                                  text: cHeight.text,
+                                  unit: cHeight.unit,
+                                  value: cHeight.length,
+                                  min: cHeight.min,
+                                  max: cHeight.max,
+                                  toggleText: cHeight.toggleText,
+                                  selected: (sliderValues.selectedButton == ButtonScale.height)),
+                            ),
+                          ),
 
-                    Visibility(
-                      visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.waist;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          text: cWaist.text,
-                          unit: cWaist.unit,
-                          value: cWaist.length,
-                          min: cWaist.min,
-                          max: cWaist.max,
-                          toggleText: cWaist.toggleText,
-                          selected: (sliderValues.selectedButton == ButtonScale.waist),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.hip;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          text: cHips.text,
-                          unit: cHips.unit,
-                          value: cHips.length,
-                          min: cHips.min,
-                          max: cHips.max,
-                          toggleText: cHips.toggleText,
-                          selected: (sliderValues.selectedButton == ButtonScale.hip),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.forearm;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          text: cForearm.text,
-                          unit: cForearm.unit,
-                          value: cForearm.length,
-                          min: cForearm.min,
-                          max: cForearm.max,
-                          toggleText: cForearm.toggleText,
-                          selected: (sliderValues.selectedButton == ButtonScale.forearm),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.wrist;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          text: cWrist.text,
-                          unit: cWrist.unit,
-                          value: cWrist.length,
-                          min: cWrist.min,
-                          max: cWrist.max,
-                          toggleText: cWrist.toggleText,
-                          selected: (sliderValues.selectedButton == ButtonScale.wrist),
-                        ),
-                      ),
-                    ),
+                          Visibility(
+                            visible: isMYMCA | isHERITAGE,
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.weight;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                // WEIGHT WEIGHT WEIGHT
+                                text: cWeight.text,
+                                unit: cWeight.unit,
+                                value: cWeight.weight,
+                                min: cWeight.min,
+                                max: cWeight.max,
+                                toggleText: cWeight.toggleText, selected: (sliderValues.selectedButton == ButtonScale.weight),
+                              ),
+                            ),
+                          ),
 
-                    Visibility(
-                      visible: (isCOVERTBAILEY & isFemale),
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.thigh;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          text: cThigh.text,
-                          unit: cThigh.unit,
-                          value: cThigh.length,
-                          min: cThigh.min,
-                          max: cThigh.max,
-                          toggleText: cThigh.toggleText,
-                          selected: (sliderValues.selectedButton == ButtonScale.thigh),
-                        ),
-                      ),
-                    ),
+                          Visibility(
+                            visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.waist;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cWaist.text,
+                                unit: cWaist.unit,
+                                value: cWaist.length,
+                                min: cWaist.min,
+                                max: cWaist.max,
+                                toggleText: cWaist.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.waist),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.hip;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cHips.text,
+                                unit: cHips.unit,
+                                value: cHips.length,
+                                min: cHips.min,
+                                max: cHips.max,
+                                toggleText: cHips.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.hip),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.forearm;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cForearm.text,
+                                unit: cForearm.unit,
+                                value: cForearm.length,
+                                min: cForearm.min,
+                                max: cForearm.max,
+                                toggleText: cForearm.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.forearm),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.wrist;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cWrist.text,
+                                unit: cWrist.unit,
+                                value: cWrist.length,
+                                min: cWrist.min,
+                                max: cWrist.max,
+                                toggleText: cWrist.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.wrist),
+                              ),
+                            ),
+                          ),
 
-                    Visibility(
-                      visible: (isCOVERTBAILEY & isFemale),
-                      child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.calf;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          text: cCalf.text,
-                          unit: cCalf.unit,
-                          value: cCalf.length,
-                          min: cCalf.min,
-                          max: cCalf.max,
-                          toggleText: cCalf.toggleText,
-                          selected: (sliderValues.selectedButton == ButtonScale.calf),
-                        ),
+                          Visibility(
+                            visible: (isCOVERTBAILEY & isFemale),
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.thigh;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cThigh.text,
+                                unit: cThigh.unit,
+                                value: cThigh.length,
+                                min: cThigh.min,
+                                max: cThigh.max,
+                                toggleText: cThigh.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.thigh),
+                              ),
+                            ),
+                          ),
+
+                          Visibility(
+                            visible: (isCOVERTBAILEY & isFemale),
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.calf;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cCalf.text,
+                                unit: cCalf.unit,
+                                value: cCalf.length,
+                                min: cCalf.min,
+                                max: cCalf.max,
+                                toggleText: cCalf.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.calf),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: isUSNAVY,
+                            child: ReusableCard(
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.neck;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cNeck.text,
+                                unit: cNeck.unit,
+                                value: cNeck.length,
+                                min: cNeck.min,
+                                max: cNeck.max,
+                                toggleText: cNeck.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.neck),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Visibility(
-                      visible: isUSNAVY,
+                    // slider here
+                    Container(
+                      width: 70,
+                      height: 340,
                       child: ReusableCard(
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.neck;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                          text: cNeck.text,
-                          unit: cNeck.unit,
-                          value: cNeck.length,
-                          min: cNeck.min,
-                          max: cNeck.max,
-                          toggleText: cNeck.toggleText,
-                          selected: (sliderValues.selectedButton == ButtonScale.neck),
+                        colour: kActiveButtonColor,
+                        widgetContents: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(
+                                // INCREMENT INCREMENT INCREMENT INCREMENT
+                                // INCREMENT INCREMENT INCREMENT INCREMENT
+                                // Doesn't care if it's kgs or lbs
+                                flex: 1,
+                                child: SliderSideButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPress: () {
+                                    setState(() {
+                                      incrementNow(); // perform increment
+                                    });
+                                  },
+                                )),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Expanded(
+                                // DECIMAL DECIMAL DECIMAL
+                                // DECIMAL DECIMAL DECIMAL
+                                flex: 1,
+                                child: SliderSideButton(
+                                  icon: FontAwesomeIcons.dotCircle,
+                                  onPress: () {
+                                    setState(() {
+                                      incrementFractionNow(); // perform increment
+                                    });
+                                  },
+                                )),
+                            Expanded(
+                              flex: 7,
+                              // SLIDER SLIDER SLIDER SLIDER SLIDER
+                              // SLIDER SLIDER SLIDER SLIDER SLIDER
+                              child: RotatedBox(
+                                quarterTurns: 3,
+                                child: Slider(
+                                    value: sliderValues.value,
+                                    min: sliderValues.min.toDouble(),
+                                    max: sliderValues.max.toDouble(),
+                                    activeColor: Color(0xFFEB1555),
+                                    inactiveColor: Color(0xFF8D8E98),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        newValueTxt(newValue); // New value in text
+                                        sliderValues.value = newValue;
+                                        print('value = ' + sliderValues.value.toString());
+                                        print('newValue = ' + newValue.toString());
+                                        print('min = ' + sliderValues.min.toString());
+                                        print('max = ' + sliderValues.max.toString());
+                                      });
+                                    }),
+                              ),
+                            ),
+                            Expanded(
+                              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                              // Does not care if it is kgs or lbs
+                              flex: 1,
+                              child: SliderSideButton(
+                                icon: FontAwesomeIcons.minus,
+                                onPress: () {
+                                  setState(() {
+                                    decrementNow(); // Decrement now!
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              // slider here
-              Container(
-                width: 70,
-                height: 340,
-                child: ReusableCard(
-                  colour: kActiveButtonColor,
-                  widgetContents: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                          // INCREMENT INCREMENT INCREMENT INCREMENT
-                          // INCREMENT INCREMENT INCREMENT INCREMENT
-                          // Doesn't care if it's kgs or lbs
-                          flex: 1,
-                          child: SliderSideButton(
-                            icon: FontAwesomeIcons.plus,
-                            onPress: () {
-                              setState(() {
-                                incrementNow(); // perform increment
-                              });
-                            },
-                          )),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Expanded(
-                          // DECIMAL DECIMAL DECIMAL
-                          // DECIMAL DECIMAL DECIMAL
-                          flex: 1,
-                          child: SliderSideButton(
-                            icon: FontAwesomeIcons.dotCircle,
-                            onPress: () {
-                              setState(() {
-                                incrementFractionNow(); // perform increment
-                              });
-                            },
-                          )),
-                      Expanded(
-                        flex: 7,
-                        // SLIDER SLIDER SLIDER SLIDER SLIDER
-                        // SLIDER SLIDER SLIDER SLIDER SLIDER
-                        child: RotatedBox(
-                          quarterTurns: 3,
-                          child: Slider(
-                              value: sliderValues.value,
-                              min: sliderValues.min.toDouble(),
-                              max: sliderValues.max.toDouble(),
-                              activeColor: Color(0xFFEB1555),
-                              inactiveColor: Color(0xFF8D8E98),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  newValueTxt(newValue); // New value in text
-                                  sliderValues.value = newValue;
-                                  print('value = ' + sliderValues.value.toString());
-                                  print('newValue = ' + newValue.toString());
-                                  print('min = ' + sliderValues.min.toString());
-                                  print('max = ' + sliderValues.max.toString());
-                                });
-                              }),
-                        ),
-                      ),
-                      Expanded(
-                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                        // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                        // Does not care if it is kgs or lbs
-                        flex: 1,
-                        child: SliderSideButton(
-                          icon: FontAwesomeIcons.minus,
-                          onPress: () {
-                            setState(() {
-                              decrementNow(); // Decrement now!
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
 
-          BottomButton(
-            // CALCULATE CALCULATE CALCULATE CALCULATE
-            // CALCULATE CALCULATE CALCULATE CALCULATE
-            text: 'CALCULATE',
-            onPress: () {
-              CalcBodyFats calcBF = CalcBodyFats(
-                  age: cAge.age,
-                  isFemale: isFemale,
-                  weight: cWeight.weight,
-                  height: cHeight.length,
-                  waist: cWaist.length,
-                  hips: cHips.length,
-                  forearm: cForearm.length,
-                  wrist: cWrist.length,
-                  thigh: cThigh.length,
-                  calf: cCalf.length,
-                  neck: cNeck.length,
-                  weightIsLbs: cWeight.lbsIsDefault,
-                  heightIsCm: cHeight.cmIsDefault,
-                  waistIsCm: cWaist.cmIsDefault,
-                  hipsIsCm: cHips.cmIsDefault,
-                  forearmIsCm: cForearm.cmIsDefault,
-                  wristIsCm: cWrist.cmIsDefault,
-                  thighIsCm: cThigh.cmIsDefault,
-                  calfIsCm: cCalf.cmIsDefault,
-                  neckIsCm: cNeck.cmIsDefault,
-                  selectedFatFormula: selectedFatFormula);
+                BottomButton(
+                  // CALCULATE CALCULATE CALCULATE CALCULATE
+                  // CALCULATE CALCULATE CALCULATE CALCULATE
+                  text: 'CALCULATE',
+                  onPress: () {
+                    CalcBodyFats calcBF = CalcBodyFats(
+                        age: cAge.age,
+                        isFemale: isFemale,
+                        weight: cWeight.weight,
+                        height: cHeight.length,
+                        waist: cWaist.length,
+                        hips: cHips.length,
+                        forearm: cForearm.length,
+                        wrist: cWrist.length,
+                        thigh: cThigh.length,
+                        calf: cCalf.length,
+                        neck: cNeck.length,
+                        weightIsLbs: cWeight.lbsIsDefault,
+                        heightIsCm: cHeight.cmIsDefault,
+                        waistIsCm: cWaist.cmIsDefault,
+                        hipsIsCm: cHips.cmIsDefault,
+                        forearmIsCm: cForearm.cmIsDefault,
+                        wristIsCm: cWrist.cmIsDefault,
+                        thighIsCm: cThigh.cmIsDefault,
+                        calfIsCm: cCalf.cmIsDefault,
+                        neckIsCm: cNeck.cmIsDefault,
+                        selectedFatFormula: selectedFatFormula);
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    // Put the values below the tab
-                    double bodyFats = calcBF.valueFats();
-                    if (isMYMCA)
-                      _fatsYMCA = bodyFats;
-                    else if (isUSNAVY)
-                      _fatsUSNAVY = bodyFats;
-                    else if (isCOVERTBAILEY)
-                      _fatsCOVERTBAILEY = bodyFats;
-                    else if (isHERITAGE) _fatsHERITAGE = bodyFats;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          // Put the values below the tab
+                          double bodyFats = calcBF.valueFats();
+                          if (isMYMCA)
+                            _fatsYMCA = bodyFats;
+                          else if (isUSNAVY)
+                            _fatsUSNAVY = bodyFats;
+                          else if (isCOVERTBAILEY)
+                            _fatsCOVERTBAILEY = bodyFats;
+                          else if (isHERITAGE) _fatsHERITAGE = bodyFats;
 
-                    return BFTapeResultPage(
-                      isFemale: isFemale,
-                      bodyFats: bodyFats,
-                      genderPath: isFemale ? 'images/bodyFatsWomen.jpg' : 'images/bodyFatsMen.jpg',
-                      shortSummary: calcBF.shortSummary(),
-                      longSummary: calcBF.longSummary(),
+                          return BFTapeResultPage(
+                            isFemale: isFemale,
+                            bodyFats: bodyFats,
+                            genderPath: isFemale ? 'images/bodyFatsWomen.jpg' : 'images/bodyFatsMen.jpg',
+                            shortSummary: calcBF.shortSummary(),
+                            longSummary: calcBF.longSummary(),
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
-              );
-            },
+              ],
+            ),
           ),
         ],
       ),

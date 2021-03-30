@@ -170,8 +170,8 @@ class TabWidget extends StatelessWidget {
             ),
             Text(
               formula,
-              style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
-            )
+              style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green, fontSize: 14),
+            ),
           ],
         ),
       ),

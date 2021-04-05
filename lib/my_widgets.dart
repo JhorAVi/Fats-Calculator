@@ -146,35 +146,49 @@ class SliderSideButton extends StatelessWidget {
 // Tabs Tabs Tabs
 class TabWidget extends StatelessWidget {
   final String title, description, formula;
-  TabWidget({this.title, this.description, this.formula});
+  final int introIndex;
+  final Function onPressed;
+  TabWidget({this.title, this.description, this.formula, this.introIndex, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 5, top: 5, right: 5),
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Text(
-              title,
-              textAlign: TextAlign.center,
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  description,
+                  textAlign: TextAlign.left,
+                ),
+                // Image.asset('images/CodeYMCA.png', height: 100, fit: BoxFit.fill)
+                Text(
+                  'Formula:',
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  formula,
+                  style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green, fontSize: 14),
+                ),
+              ],
             ),
-            Text(
-              description,
-              textAlign: TextAlign.left,
-            ),
-            // Image.asset('images/CodeYMCA.png', height: 100, fit: BoxFit.fill)
-            Text(
-              'Formula:',
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              formula,
-              style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green, fontSize: 14),
-            ),
-          ],
+          ),
         ),
-      ),
+        MaterialButton(
+          color: kBottomContainerColor,
+          onPressed: onPressed,
+          child: Text(
+            'MEASURE NOW',
+            style: kLargeButtonTextStyle,
+          ),
+        )
+      ],
     );
   }
 }

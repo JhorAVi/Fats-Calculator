@@ -34,10 +34,7 @@ class ReportPage extends StatelessWidget {
               //height: 230,
               decoration: BoxDecoration(
                 color: Colors.red,
-                image: DecorationImage(
-                    image: AssetImage(genderPath),
-                    fit: BoxFit.fill,
-                    alignment: Alignment.topCenter),
+                image: DecorationImage(image: AssetImage(genderPath), fit: BoxFit.fill, alignment: Alignment.topCenter),
               ),
               child: HumanPointerLayout(selFlex1, selFlex2, selFlex3),
             ),
@@ -82,6 +79,7 @@ class ReportPage extends StatelessWidget {
 class HumanPointerLayout extends StatelessWidget {
   HumanPointerLayout(this.selFlex1, this.selFlex2, this.selFlex3);
 
+  // the flexes from left, center, right
   final int selFlex1, selFlex2, selFlex3;
 
   @override
@@ -89,20 +87,27 @@ class HumanPointerLayout extends StatelessWidget {
     return Column(
       // the indicator of the body image is defined here
       children: <Widget>[
-        Expanded(flex: 60, child: Container(width: double.infinity)),
+        // space above the pointer
+        Expanded(
+          flex: 60,
+          child: Container(width: double.infinity),
+        ),
+        // the whole row where the pointer belongs
         Expanded(
           flex: 29,
           child: Row(
-            //mainAxisAlignment: MainAxisAlignment.start,
-            //crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Expanded(flex: selFlex1, child: Container()),
-              Expanded(flex: selFlex2, child: HumanPointer()),
-              Expanded(flex: selFlex3, child: Container()),
+              Expanded(flex: selFlex1, child: Container()), // left of pointer
+              Expanded(flex: selFlex2, child: HumanPointer()), // the three sided pointer
+              Expanded(flex: selFlex3, child: Container()), // right of the pointer
             ],
           ),
         ),
-        Expanded(flex: 16, child: Container(width: double.infinity))
+        // space below the pointer
+        Expanded(
+          flex: 16,
+          child: Container(width: double.infinity),
+        )
       ],
     );
   }

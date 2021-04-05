@@ -14,6 +14,7 @@ class CalcBodyFats {
   double _fats = 0.0;
   String _shortSummary = ' ';
   String _longSummary = ' ';
+  int selFlex1, selFlex2, selFlex3;
 
   CalcBodyFats(
       {this.age,
@@ -111,212 +112,213 @@ class CalcBodyFats {
   }
 
   void computeSummary() {
+    // Todo add Skinny
     // for short summary per age group
     //_fats = _fatsYMCA;
     // FEMALE FEMALE FEMALE FEMALE FEMALE
     if (isFemale) {
       if (age <= 20) {
         if (_fats >= 11 && _fats <= 18)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 18 && _fats <= 23)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 23 && _fats <= 30)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 30 && _fats <= 35)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 21 && age <= 25) {
         if (_fats >= 12 && _fats <= 19)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 19 && _fats <= 24)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 24 && _fats <= 30)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 30 && _fats <= 35)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 26 && age <= 30) {
         if (_fats >= 13 && _fats <= 20)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 21 && _fats <= 25)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 25 && _fats <= 31)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 31 && _fats <= 36)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 31 && age <= 35) {
         if (_fats >= 13 && _fats <= 21)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 21 && _fats <= 26)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 26 && _fats <= 33)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 33 && _fats <= 36)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 36 && age <= 40) {
         if (_fats >= 14 && _fats <= 22)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 22 && _fats <= 27)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 27 && _fats <= 34)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 34 && _fats <= 37)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 41 && age <= 45) {
         if (_fats >= 14 && _fats <= 23)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 23 && _fats <= 28)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 28 && _fats <= 35)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 35 && _fats <= 38)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 46 && age <= 50) {
         if (_fats >= 15 && _fats <= 24)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 24 && _fats <= 30)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 30 && _fats <= 36)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 36 && _fats <= 38)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 51 && age <= 55) {
         if (_fats >= 16 && _fats <= 26)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 26 && _fats <= 31)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 31 && _fats <= 36)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 36 && _fats <= 39)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 56) {
         if (_fats >= 16 && _fats <= 27)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 27 && _fats <= 32)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 32 && _fats <= 37)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 37 && _fats <= 40)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       }
     }
     // MALE MALE MALE MALE MALE MALE MALE
     else {
       if (age <= 20) {
         if (_fats >= 2 && _fats <= 8)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 8 && _fats <= 14)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 14 && _fats <= 21)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 21 && _fats <= 25)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 21 && age <= 25) {
         if (_fats >= 3 && _fats <= 10)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 10 && _fats <= 15)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 15 && _fats <= 22)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 23 && _fats <= 26)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 26 && age <= 30) {
         if (_fats >= 4 && _fats <= 11)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 11 && _fats <= 16)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 16 && _fats <= 21)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 21 && _fats <= 27)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 31 && age <= 35) {
         if (_fats >= 5 && _fats <= 13)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 13 && _fats <= 17)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 17 && _fats <= 25)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 25 && _fats <= 28)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 36 && age <= 40) {
         if (_fats >= 6 && _fats <= 15)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 15 && _fats <= 20)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 20 && _fats <= 26)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 26 && _fats <= 29)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 41 && age <= 45) {
         if (_fats >= 7 && _fats <= 16)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 16 && _fats <= 22)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 22 && _fats <= 27)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 27 && _fats <= 30)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 46 && age <= 50) {
         if (_fats >= 8 && _fats <= 17)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 17 && _fats <= 23)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 23 && _fats <= 29)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 29 && _fats <= 31)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 51 && age <= 55) {
         if (_fats >= 9 && _fats <= 19)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 20 && _fats <= 25)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 25 && _fats <= 30)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 31 && _fats <= 33)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       } else if (age >= 56) {
         if (_fats >= 10 && _fats <= 21)
-          _shortSummary = 'Lean';
+          displayLean();
         else if (_fats >= 21 && _fats <= 26)
-          _shortSummary = 'Ideal';
+          displayIdeal();
         else if (_fats >= 26 && _fats <= 31)
-          _shortSummary = 'Average';
+          displayAverage();
         else if (_fats >= 31 && _fats <= 34)
-          _shortSummary = 'OverFat';
+          displayOverFat();
         else
-          _shortSummary = 'Extremely Fat';
+          displayExtremelyFat();
       }
     }
 
@@ -358,6 +360,58 @@ class CalcBodyFats {
   String longSummary() {
     return _longSummary;
   }
+
+  int getFlex1() {
+    return selFlex1;
+  }
+
+  int getFlex2() {
+    return selFlex2;
+  }
+
+  int getFlex3() {
+    return selFlex3;
+  }
+
+  displayLean() {
+    selFlex1 = 19;
+    selFlex2 = 20;
+    selFlex3 = 61;
+    _shortSummary = 'Underweight';
+    _longSummary = 'You have a lower than normal bodyweight. Try to eat some more';
+  }
+
+  displayIdeal() {
+    selFlex1 = 37;
+    selFlex2 = 20;
+    selFlex3 = 43;
+    _shortSummary = 'Ideal';
+    _longSummary = 'You have a Normal body weight. Good job!';
+  }
+
+  displayAverage() {
+    selFlex1 = 56;
+    selFlex2 = 20;
+    selFlex3 = 24;
+    _shortSummary = 'Average';
+    _longSummary = 'You have a higher than normal body weight. Try to exercise & eat balanced diet';
+  }
+
+  displayOverFat() {
+    selFlex1 = 75;
+    selFlex2 = 25;
+    selFlex3 = 0;
+    _shortSummary = 'Obese';
+    _longSummary = 'Your body weight is too high. You should do exercise and diet control';
+  }
+
+  displayExtremelyFat() {
+    selFlex1 = 75;
+    selFlex2 = 25;
+    selFlex3 = 0;
+    _shortSummary = "Extremely Obese";
+    _longSummary = 'Your too much weight puts you at risk. You better see a doctor';
+  }
 }
 
 // For BMI calculation
@@ -383,43 +437,43 @@ class CalculatorBrain {
       selFlex1 = 0;
       selFlex2 = 20;
       selFlex3 = 80;
-      shortSummaryStr = 'Underweight';
-      longSummaryStr = 'You have a lower than normal bodyweight. Try to eat some more';
+      _shortSummary = 'Underweight';
+      _longSummary = 'You have a lower than normal bodyweight. Try to eat some more';
     } else if (_bmi < 25) {
       // normal
       selFlex1 = 19;
       selFlex2 = 20;
       selFlex3 = 61;
-      shortSummaryStr = 'Normal';
-      longSummaryStr = 'You have a Normal body weight. Good job!';
+      _shortSummary = 'Normal';
+      _longSummary = 'You have a Normal body weight. Good job!';
     } else if (_bmi < 29) {
       // overweight
       selFlex1 = 37;
       selFlex2 = 20;
       selFlex3 = 43;
-      shortSummaryStr = 'Overweight';
-      longSummaryStr = 'You have a higher than normal body weight. Try to exercise & eat balanced diet';
+      _shortSummary = 'Overweight';
+      _longSummary = 'You have a higher than normal body weight. Try to exercise & eat balanced diet';
     } else if (_bmi < 35) {
       // obese
       selFlex1 = 56;
       selFlex2 = 20;
       selFlex3 = 24;
-      shortSummaryStr = 'Obese';
-      longSummaryStr = 'Your body weight is too high. You should do exercise and diet control';
+      _shortSummary = 'Obese';
+      _longSummary = 'Your body weight is too high. You should do exercise and diet control';
     } else {
       // extremely obese
       selFlex1 = 75;
       selFlex2 = 25;
       selFlex3 = 0;
-      shortSummaryStr = "Extremely Obese";
-      longSummaryStr = 'Your too much weight puts you at risk. You better see a doctor';
+      _shortSummary = "Extremely Obese";
+      _longSummary = 'Your too much weight puts you at risk. You better see a doctor';
     }
   }
 
   double _bmi;
   int selFlex1, selFlex2, selFlex3;
 
-  String shortSummaryStr, longSummaryStr;
+  String _shortSummary, _longSummary;
 
   String calculateBMI() {
     print("cmIsDefault = $cmIsDefault");
@@ -442,11 +496,11 @@ class CalculatorBrain {
   }
 
   String shortSummary() {
-    return shortSummaryStr;
+    return _shortSummary;
   }
 
   String longSummary() {
-    return longSummaryStr;
+    return _longSummary;
   }
 }
 

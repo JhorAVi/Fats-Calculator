@@ -88,70 +88,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
     super.initState();
     selectedGender = Gender.male; // set male as default
     sliderValues.selectedButton = ButtonScale.age; // set age as default
-    _tabController = new TabController(vsync: this, length: _kTabs.length)
-      ..addListener(() {
-        setState(() {
-          switch (_tabController.index) {
-            // Modified YMCA selected // Modified YMCA selected
-            case 0:
-              {
-                setState(() {
-                  isMYMCA = true;
-                  isUSNAVY = false;
-                  isCOVERTBAILEY = false;
-                  isHERITAGE = false;
-                  selectedFatFormula = FatFormula.MYMCA;
-                  introIndex = 0;
-                });
-              }
-              break;
-            // US Navy selected US Navy selected
-            case 1:
-              {
-                // Modified YMCA selected
-                setState(() {
-                  isMYMCA = false;
-                  isUSNAVY = true;
-                  isCOVERTBAILEY = false;
-                  isHERITAGE = false;
-                  selectedFatFormula = FatFormula.USNAVY;
-                  introIndex = 1;
-                });
-              }
-              break;
-            // Convert Baily selected Covert Bailey selected
-            case 2:
-              {
-                // Modified YMCA selected
-                setState(() {
-                  isMYMCA = false;
-                  isUSNAVY = false;
-                  isCOVERTBAILEY = true;
-                  isHERITAGE = false;
-                  selectedFatFormula = FatFormula.COVERTBAILEY;
-                  introIndex = 2;
-                });
-              }
-              break;
-            // Heritage BMI selected Heritage selected
-            case 3:
-              {
-                // Modified YMCA selected
-                setState(() {
-                  isMYMCA = false;
-                  isUSNAVY = false;
-                  isCOVERTBAILEY = false;
-                  isHERITAGE = true;
-                  selectedFatFormula = FatFormula.HERIGATE;
-                  introIndex = 3;
-                });
-              }
-              break;
-            default:
-              break;
-          }
-        });
-      });
+    _tabController = new TabController(vsync: this, length: _kTabs.length);
   }
 
   @override
@@ -181,42 +118,98 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             controller: _tabController,
             tabs: _kTabs,
             onTap: (index) {
-              // Clears all button selection and link to slider
               setState(() {
                 introVisible = true;
                 scalesVisible = false;
+                switch (index) {
+                  // Modified YMCA selected // Modified YMCA selected
+                  case 0:
+                    introIndex = 0;
+                    break;
+                  // US Navy selected US Navy selected
+                  case 1:
+                    // Modified YMCA selected
+                    introIndex = 1;
+                    break;
+                  // Convert Baily selected Covert Bailey selected
+                  case 2:
+                    // Modified YMCA selected
+                    introIndex = 2;
+                    break;
+                  // Heritage BMI selected Heritage selected
+                  case 3:
+                    // Modified YMCA selected
+                    introIndex = 3;
+                    break;
+                  default:
+                    break;
+                }
               });
             },
+          ),
+          // Tab results Tab results Tab results
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(_fatsYMCA.toStringAsFixed(1), textAlign: TextAlign.center),
+              ),
+              Expanded(
+                child: Text(_fatsUSNAVY.toStringAsFixed(1), textAlign: TextAlign.center),
+              ),
+              Expanded(
+                child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1), textAlign: TextAlign.center),
+              ),
+              Expanded(
+                child: Text(_fatsHERITAGE.toStringAsFixed(1), textAlign: TextAlign.center),
+              )
+            ],
           ),
           // Tab INTRO before showing the scale buttons
           Visibility(
             visible: introVisible,
-            child: Column(
-              children: [
-                Container(
-                  // TAB VIEW
-                  // margin: const EdgeInsets.all(3.0),
-                  padding: const EdgeInsets.all(3.0),
-                  decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-                  // color: kInActiveButtonColor,
-                  child: TabWidget(
-                    title: introData.title[introIndex],
-                    description: introData.description[introIndex],
-                    formula: introData.formula[introIndex],
-                  ),
-                ),
-                MaterialButton(
-                    color: kBottomContainerColor,
-                    onPressed: () {
-                      setState(() {
-                        introVisible = false;
-                        scalesVisible = true;
-                      });
-                    },
-                    child: Text(
-                      'START',
-                    ))
-              ],
+            child: Container(
+              // TAB Contents VIEW
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(3.0),
+              decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+              // color: kInActiveButtonColor,
+              child: TabWidget(
+                  title: introData.title[introIndex],
+                  description: introData.description[introIndex],
+                  formula: introData.formula[introIndex],
+                  introIndex: introIndex,
+                  onPressed: () {
+                    // When the close intro button is pressed
+                    setState(() {
+                      introVisible = false;
+                      scalesVisible = true;
+                      if (introIndex == 0) {
+                        isMYMCA = true;
+                        isUSNAVY = false;
+                        isCOVERTBAILEY = false;
+                        isHERITAGE = false;
+                        selectedFatFormula = FatFormula.MYMCA;
+                      } else if (introIndex == 1) {
+                        isMYMCA = false;
+                        isUSNAVY = true;
+                        isCOVERTBAILEY = false;
+                        isHERITAGE = false;
+                        selectedFatFormula = FatFormula.USNAVY;
+                      } else if (introIndex == 2) {
+                        isMYMCA = false;
+                        isUSNAVY = false;
+                        isCOVERTBAILEY = true;
+                        isHERITAGE = false;
+                        selectedFatFormula = FatFormula.COVERTBAILEY;
+                      } else if (introIndex == 3) {
+                        isMYMCA = false;
+                        isUSNAVY = false;
+                        isCOVERTBAILEY = false;
+                        isHERITAGE = true;
+                        selectedFatFormula = FatFormula.HERIGATE;
+                      }
+                    });
+                  }),
             ),
           ),
           // Make all the scale buttons Invisible while on tab intro
@@ -224,24 +217,6 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             visible: scalesVisible,
             child: Column(
               children: [
-                // Tab results Tab results Tab results
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(_fatsYMCA.toStringAsFixed(1), textAlign: TextAlign.center),
-                    ),
-                    Expanded(
-                      child: Text(_fatsUSNAVY.toStringAsFixed(1), textAlign: TextAlign.center),
-                    ),
-                    Expanded(
-                      child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1), textAlign: TextAlign.center),
-                    ),
-                    Expanded(
-                      child: Text(_fatsHERITAGE.toStringAsFixed(1), textAlign: TextAlign.center),
-                    )
-                  ],
-                ),
-
                 // This row contains the Age followed by Gender. The two scales exist in all formula type.
                 Row(
                   children: [
@@ -613,11 +588,15 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                           else if (isHERITAGE) _fatsHERITAGE = bodyFats;
 
                           return BFTapeResultPage(
+                            // The page to show
                             isFemale: isFemale,
                             bodyFats: bodyFats,
                             genderPath: isFemale ? 'images/bodyFatsWomen.jpg' : 'images/bodyFatsMen.jpg',
                             shortSummary: calcBF.shortSummary(),
                             longSummary: calcBF.longSummary(),
+                            selFlex1: calcBF.getFlex1(),
+                            selFlex2: calcBF.getFlex2(),
+                            selFlex3: calcBF.getFlex3(),
                           );
                         },
                       ),

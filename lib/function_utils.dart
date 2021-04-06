@@ -118,7 +118,9 @@ class CalcBodyFats {
     // FEMALE FEMALE FEMALE FEMALE FEMALE
     if (isFemale) {
       if (age <= 20) {
-        if (_fats >= 11 && _fats <= 18)
+        if (_fats < 11)
+          displaySkinny();
+        else if (_fats >= 11 && _fats <= 18)
           displayLean();
         else if (_fats >= 18 && _fats <= 23)
           displayIdeal();
@@ -129,7 +131,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 21 && age <= 25) {
-        if (_fats >= 12 && _fats <= 19)
+        if (_fats < 12)
+          displaySkinny();
+        else if (_fats >= 12 && _fats <= 19)
           displayLean();
         else if (_fats >= 19 && _fats <= 24)
           displayIdeal();
@@ -140,7 +144,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 26 && age <= 30) {
-        if (_fats >= 13 && _fats <= 20)
+        if (_fats < 13)
+          displaySkinny();
+        else if (_fats >= 13 && _fats <= 20)
           displayLean();
         else if (_fats >= 21 && _fats <= 25)
           displayIdeal();
@@ -151,7 +157,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 31 && age <= 35) {
-        if (_fats >= 13 && _fats <= 21)
+        if (_fats < 11)
+          displaySkinny();
+        else if (_fats >= 13 && _fats <= 21)
           displayLean();
         else if (_fats >= 21 && _fats <= 26)
           displayIdeal();
@@ -162,7 +170,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 36 && age <= 40) {
-        if (_fats >= 14 && _fats <= 22)
+        if (_fats < 36)
+          displaySkinny();
+        else if (_fats >= 14 && _fats <= 22)
           displayLean();
         else if (_fats >= 22 && _fats <= 27)
           displayIdeal();
@@ -173,7 +183,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 41 && age <= 45) {
-        if (_fats >= 14 && _fats <= 23)
+        if (_fats < 14)
+          displaySkinny();
+        else if (_fats >= 14 && _fats <= 23)
           displayLean();
         else if (_fats >= 23 && _fats <= 28)
           displayIdeal();
@@ -184,7 +196,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 46 && age <= 50) {
-        if (_fats >= 15 && _fats <= 24)
+        if (_fats < 15)
+          displaySkinny();
+        else if (_fats >= 15 && _fats <= 24)
           displayLean();
         else if (_fats >= 24 && _fats <= 30)
           displayIdeal();
@@ -195,7 +209,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 51 && age <= 55) {
-        if (_fats >= 16 && _fats <= 26)
+        if (_fats < 16)
+          displaySkinny();
+        else if (_fats >= 16 && _fats <= 26)
           displayLean();
         else if (_fats >= 26 && _fats <= 31)
           displayIdeal();
@@ -206,7 +222,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 56) {
-        if (_fats >= 16 && _fats <= 27)
+        if (_fats < 16)
+          displaySkinny();
+        else if (_fats >= 16 && _fats <= 27)
           displayLean();
         else if (_fats >= 27 && _fats <= 32)
           displayIdeal();
@@ -221,7 +239,9 @@ class CalcBodyFats {
     // MALE MALE MALE MALE MALE MALE MALE
     else {
       if (age <= 20) {
-        if (_fats >= 2 && _fats <= 8)
+        if (_fats < 2)
+          displaySkinny();
+        else if (_fats >= 2 && _fats <= 8)
           displayLean();
         else if (_fats >= 8 && _fats <= 14)
           displayIdeal();
@@ -232,7 +252,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 21 && age <= 25) {
-        if (_fats >= 3 && _fats <= 10)
+        if (_fats < 3)
+          displaySkinny();
+        else if (_fats >= 3 && _fats <= 10)
           displayLean();
         else if (_fats >= 10 && _fats <= 15)
           displayIdeal();
@@ -243,7 +265,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 26 && age <= 30) {
-        if (_fats >= 4 && _fats <= 11)
+        if (_fats < 4)
+          displaySkinny();
+        else if (_fats >= 4 && _fats <= 11)
           displayLean();
         else if (_fats >= 11 && _fats <= 16)
           displayIdeal();
@@ -254,7 +278,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 31 && age <= 35) {
-        if (_fats >= 5 && _fats <= 13)
+        if (_fats < 5)
+          displaySkinny();
+        else if (_fats >= 5 && _fats <= 13)
           displayLean();
         else if (_fats >= 13 && _fats <= 17)
           displayIdeal();
@@ -265,7 +291,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 36 && age <= 40) {
-        if (_fats >= 6 && _fats <= 15)
+        if (_fats < 6)
+          displaySkinny();
+        else if (_fats >= 6 && _fats <= 15)
           displayLean();
         else if (_fats >= 15 && _fats <= 20)
           displayIdeal();
@@ -276,7 +304,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 41 && age <= 45) {
-        if (_fats >= 7 && _fats <= 16)
+        if (_fats < 7)
+          displaySkinny();
+        else if (_fats >= 7 && _fats <= 16)
           displayLean();
         else if (_fats >= 16 && _fats <= 22)
           displayIdeal();
@@ -287,7 +317,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 46 && age <= 50) {
-        if (_fats >= 8 && _fats <= 17)
+        if (_fats < 8)
+          displaySkinny();
+        else if (_fats >= 8 && _fats <= 17)
           displayLean();
         else if (_fats >= 17 && _fats <= 23)
           displayIdeal();
@@ -298,7 +330,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 51 && age <= 55) {
-        if (_fats >= 9 && _fats <= 19)
+        if (_fats < 9)
+          displaySkinny();
+        else if (_fats >= 9 && _fats <= 19)
           displayLean();
         else if (_fats >= 20 && _fats <= 25)
           displayIdeal();
@@ -309,7 +343,9 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 56) {
-        if (_fats >= 10 && _fats <= 21)
+        if (_fats < 10)
+          displaySkinny();
+        else if (_fats >= 10 && _fats <= 21)
           displayLean();
         else if (_fats >= 21 && _fats <= 26)
           displayIdeal();
@@ -373,42 +409,50 @@ class CalcBodyFats {
     return selFlex3;
   }
 
+  displaySkinny() {
+    selFlex1 = 0;
+    selFlex2 = 17;
+    selFlex3 = 83;
+    _shortSummary = 'Skinny';
+    _longSummary = 'You are too underweight. Eat more and see a doctor';
+  }
+
   displayLean() {
-    selFlex1 = 19;
-    selFlex2 = 20;
-    selFlex3 = 61;
+    selFlex1 = 16;
+    selFlex2 = 22;
+    selFlex3 = 62;
     _shortSummary = 'Underweight';
     _longSummary = 'You have a lower than normal bodyweight. Try to eat some more';
   }
 
   displayIdeal() {
     selFlex1 = 37;
-    selFlex2 = 20;
-    selFlex3 = 43;
+    selFlex2 = 22;
+    selFlex3 = 41;
     _shortSummary = 'Ideal';
     _longSummary = 'You have a Normal body weight. Good job!';
   }
 
   displayAverage() {
-    selFlex1 = 56;
-    selFlex2 = 20;
-    selFlex3 = 24;
+    selFlex1 = 57;
+    selFlex2 = 22;
+    selFlex3 = 21;
     _shortSummary = 'Average';
     _longSummary = 'You have a higher than normal body weight. Try to exercise & eat balanced diet';
   }
 
   displayOverFat() {
-    selFlex1 = 75;
-    selFlex2 = 25;
+    selFlex1 = 79;
+    selFlex2 = 20;
     selFlex3 = 0;
-    _shortSummary = 'Obese';
+    _shortSummary = 'Over Fat';
     _longSummary = 'Your body weight is too high. You should do exercise and diet control';
   }
 
   displayExtremelyFat() {
-    selFlex1 = 75;
-    selFlex2 = 25;
-    selFlex3 = 0;
+    selFlex1 = 1;
+    selFlex2 = 17;
+    selFlex3 = 82;
     _shortSummary = "Extremely Obese";
     _longSummary = 'Your too much weight puts you at risk. You better see a doctor';
   }

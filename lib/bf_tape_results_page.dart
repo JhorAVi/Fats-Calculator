@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'my_widgets.dart';
 import 'constants.dart';
@@ -93,12 +94,12 @@ class HumanPointerLayout extends StatelessWidget {
       children: <Widget>[
         // space above the pointer
         Expanded(
-          flex: 60,
+          flex: 9,
           child: Container(width: double.infinity),
         ),
         // the whole row where the pointer belongs
         Expanded(
-          flex: 29,
+          flex: 1,
           child: Row(
             children: <Widget>[
               Expanded(flex: selFlex1, child: Container()), // left of pointer
@@ -108,10 +109,10 @@ class HumanPointerLayout extends StatelessWidget {
           ),
         ),
         // space below the pointer
-        Expanded(
-          flex: 16,
+/*        Expanded(
+          // flex: 1,
           child: Container(width: double.infinity),
-        )
+        )*/
       ],
     );
   }
@@ -121,12 +122,42 @@ class HumanPointer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
-      decoration: const BoxDecoration(
+        height: 25,
+/*      decoration: const BoxDecoration(
           border: Border(
-              bottom: BorderSide(width: 10, color: Colors.red),
+              //   bottom: BorderSide(width: 10, color: Colors.red),
               right: BorderSide(width: 10, color: Colors.red),
-              left: BorderSide(width: 10, color: Colors.red))),
-    );
+              left: BorderSide(width: 10, color: Colors.red))),*/
+        child: Row(
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //Icon(Icons.arrow_back_ios, color: Colors.brown),
+            //SizedBox(width: 30),
+            //Icon(Icons.arrow_forward_ios, color: Colors.brown),
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.red,
+                //width: 5,
+              ),
+            ),
+            Expanded(
+              flex: 8,
+              child: Container(
+                color: Colors.red,
+                height: 5,
+                // width: 76,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.red,
+                //width: 5,
+              ),
+            )
+          ],
+        ));
   }
 }

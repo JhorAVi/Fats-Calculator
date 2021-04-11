@@ -257,7 +257,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         widgetContents: GenderCardContent(
                           label: 'MALE',
                           iconGender: FontAwesomeIcons.male,
-                          iconStatus: (!isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.notEqual,
+                          iconStatus: (!isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.times,
                         ),
                       ),
                     ),
@@ -280,7 +280,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         widgetContents: GenderCardContent(
                           label: 'FEMALE',
                           iconGender: FontAwesomeIcons.female,
-                          iconStatus: (isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.notEqual,
+                          iconStatus: (isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.times,
                         ),
                       ),
                     ),
@@ -537,7 +537,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 // DECIMAL DECIMAL DECIMAL
                                 flex: 1,
                                 child: SliderSideButton(
-                                  icon: FontAwesomeIcons.dotCircle,
+                                  icon: FontAwesomeIcons.chevronCircleUp,
                                   onPress: () {
                                     setState(() {
                                       incrementFractionNow(); // perform increment

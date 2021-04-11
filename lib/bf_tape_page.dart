@@ -217,49 +217,72 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             visible: scalesVisible,
             child: Column(
               children: [
-                // This row contains the Age followed by Gender. The two scales exist in all formula type.
+                // GENDER GENDER in separate column
+/*                ReusableCard(
+                  onPressedMy: () {
+                    setState(() {
+                      if (selectedGender == Gender.male) {
+                        selectedGender = Gender.female;
+                        isFemale = true;
+                      } else if (selectedGender == Gender.female) {
+                        selectedGender = Gender.male;
+                        isFemale = false;
+                      }
+                    });
+                  },
+                  colour: kInActiveButtonColor,
+                  widgetContents: GenderCardContent(
+                      label: (selectedGender == Gender.male) ? 'MALE' : 'FEMALE',
+                      iconGender: (selectedGender == Gender.male) ? FontAwesomeIcons.mars : FontAwesomeIcons.venus),
+                ),*/
                 Row(
-                  children: [
+                  children: <Widget>[
                     Expanded(
-                      flex: 6,
-                      child: ReusableCard(
-                        // AGE AGE AGE
-                        onPressedMy: () {
-                          setState(() {
-                            sliderValues.selectedButton = ButtonScale.age;
-                          });
-                        },
-                        colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
-                        widgetContents: statsCardContent(
-                            // AGE AGE AGE currently merging this with statsCardContent
-                            text: cAge.text,
-                            unit: cAge.unit,
-                            value: cAge.age,
-                            min: cAge.min,
-                            max: cAge.max,
-                            selected: (sliderValues.selectedButton == ButtonScale.age)),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
+                      flex: (!isFemale) ? 6 : 4,
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
                             if (selectedGender == Gender.male) {
                               selectedGender = Gender.female;
                               isFemale = true;
-                            } else if (selectedGender == Gender.female) {
+                            } else {
                               selectedGender = Gender.male;
                               isFemale = false;
                             }
                           });
                         },
-                        colour: kInActiveButtonColor,
+                        colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
+                        //colour: kInActiveButtonColor,
                         widgetContents: GenderCardContent(
-                            label: (selectedGender == Gender.male) ? 'MALE' : 'FEMALE',
-                            iconGender: (selectedGender == Gender.male) ? FontAwesomeIcons.mars : FontAwesomeIcons.venus),
+                          label: 'MALE',
+                          iconGender: FontAwesomeIcons.male,
+                          iconStatus: (!isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.notEqual,
+                        ),
                       ),
-                    )
+                    ),
+                    Expanded(
+                      flex: (isFemale) ? 6 : 4,
+                      child: ReusableCard(
+                        onPressedMy: () {
+                          setState(() {
+                            if (selectedGender == Gender.male) {
+                              selectedGender = Gender.female;
+                              isFemale = true;
+                            } else {
+                              selectedGender = Gender.male;
+                              isFemale = false;
+                            }
+                          });
+                        },
+                        colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
+                        //colour: kInActiveButtonColor,
+                        widgetContents: GenderCardContent(
+                          label: 'FEMALE',
+                          iconGender: FontAwesomeIcons.female,
+                          iconStatus: (isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.notEqual,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
 
@@ -273,9 +296,29 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: Column(
                         // mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          // GENDER GENDER
-
                           // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
+                          // AGE HERE
+                          Visibility(
+                            visible: true,
+                            child: ReusableCard(
+                              // AGE AGE AGE
+                              onPressedMy: () {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.age;
+                                });
+                              },
+                              colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                  // AGE AGE AGE currently merging this with statsCardContent
+                                  text: cAge.text,
+                                  unit: cAge.unit,
+                                  value: cAge.age,
+                                  min: cAge.min,
+                                  max: cAge.max,
+                                  selected: (sliderValues.selectedButton == ButtonScale.age)),
+                            ),
+                          ),
+
                           Visibility(
                             visible: isUSNAVY | isHERITAGE,
                             child: ReusableCard(
@@ -897,7 +940,6 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
   // toggle text
   // this is the only function with AGE is excuded
-  // Todo automatically select the button too
   void toggleNow(String text, String unit) {
     if (text == 'HEIGHT' && unit == 'cm.') {
       cHeight.toggleToInches();

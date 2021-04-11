@@ -21,7 +21,9 @@ class ReusableCard extends StatelessWidget {
         color: colour,
       ),
       child: RawMaterialButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         fillColor: colour,
         child: widgetContents,
         onPressed: onPressedMy,
@@ -32,16 +34,18 @@ class ReusableCard extends StatelessWidget {
 
 // the widget containing genders inside main widget
 class GenderCardContent extends StatelessWidget {
-  GenderCardContent({this.label, this.iconGender});
+  GenderCardContent({this.label, this.iconGender, this.iconStatus});
 
   final String label;
   final IconData iconGender;
+  final IconData iconStatus;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
+        Icon(iconStatus, size: 30.0),
         Text(
           label,
           style: kTextStyle,
@@ -49,7 +53,7 @@ class GenderCardContent extends StatelessWidget {
         ),
         Icon(
           iconGender,
-          size: 40.0,
+          size: 30.0,
         ),
       ],
     );
@@ -86,7 +90,7 @@ class UnitToggleButton extends StatelessWidget {
           Visibility(
             // Hide toggle arrow if it's about age
             visible: enabled,
-            child: Icon(FontAwesomeIcons.caretDown, size: 20),
+            child: Icon(FontAwesomeIcons.check, size: 20),
           ),
         ],
       ),

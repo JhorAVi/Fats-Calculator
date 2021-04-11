@@ -239,7 +239,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                 Row(
                   children: <Widget>[
                     Expanded(
-                      flex: (!isFemale) ? 6 : 4,
+                      // flex: (!isFemale) ? 6 : 4,
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {
@@ -262,7 +262,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       ),
                     ),
                     Expanded(
-                      flex: (isFemale) ? 6 : 4,
+                      //  flex: (isFemale) ? 6 : 4,
                       child: ReusableCard(
                         onPressedMy: () {
                           setState(() {

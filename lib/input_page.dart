@@ -46,10 +46,10 @@ class _InputPageState extends State<InputPage> {
                           isFemale = false;
                         });
                       },
-                      colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
+                      colour: (selectedGender == Gender.male) ? Color(0xFF4C4F5E) : kInActiveButtonColor,
                       widgetContents: GenderCardContent(
                         label: 'MALE',
-                        iconGender: FontAwesomeIcons.mars,
+                        iconGender: FontAwesomeIcons.male,
                       ),
                     ),
                   ),
@@ -64,10 +64,10 @@ class _InputPageState extends State<InputPage> {
                           isFemale = true;
                         });
                       },
-                      colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
+                      colour: (selectedGender == Gender.female) ? Color(0xFF4C4F5E) : kInActiveButtonColor,
                       widgetContents: GenderCardContent(
                         label: 'FEMALE',
-                        iconGender: FontAwesomeIcons.venus,
+                        iconGender: FontAwesomeIcons.female,
                       ),
                     ),
                   ),

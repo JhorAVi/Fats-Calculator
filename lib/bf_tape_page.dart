@@ -183,6 +183,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                     setState(() {
                       introVisible = false;
                       scalesVisible = true;
+                      sliderValues.selectedButton = ButtonScale.age;
                       if (introIndex == 0) {
                         isMYMCA = true;
                         isUSNAVY = false;
@@ -251,7 +252,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                             }
                           });
                         },
-                        colour: (selectedGender == Gender.male) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedGender == Gender.male) ? Color(0xFF4C4F5E) : kInActiveButtonColor,
                         //colour: kInActiveButtonColor,
                         widgetContents: GenderCardContent(
                           label: 'MALE',
@@ -274,7 +275,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                             }
                           });
                         },
-                        colour: (selectedGender == Gender.female) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (selectedGender == Gender.female) ? Color(0xFF4C4F5E) : kInActiveButtonColor,
                         //colour: kInActiveButtonColor,
                         widgetContents: GenderCardContent(
                           label: 'FEMALE',

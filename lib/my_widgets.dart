@@ -184,9 +184,14 @@ class TabWidget extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(
+          height: 10.0,
+        ),
         MaterialButton(
+          padding: EdgeInsets.all(15.0),
           color: kBottomContainerColor,
           onPressed: onPressed,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Text(
             'MEASURE NOW',
             style: kLargeButtonTextStyle,

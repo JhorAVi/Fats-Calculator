@@ -57,6 +57,15 @@ class AgeScale {
     }
   }
 
+  void decrementPointOne() {
+    if (min + 1 < age - 1) {
+      age = age - 0.1;
+      // SETSTATE this
+      ageDisplay = removeDecimalZero(age);
+      // print(removeDecimalZero(weight));
+    }
+  }
+
   void movingValue(double newValue) {
     if (min + 1 < newValue && max - 1 > newValue) {
       // deduct 1 in range for safety
@@ -135,6 +144,15 @@ class WeightScale {
   void incrementPointOne() {
     if (max - 1 > weight + 1) {
       weight = weight + 0.1;
+      // SETSTATE this
+      weightDisplay = removeDecimalZero(weight);
+      // print(removeDecimalZero(weight));
+    }
+  }
+
+  void decrementPointOne() {
+    if (min + 1 < weight - 1) {
+      weight = weight - 0.1;
       // SETSTATE this
       weightDisplay = removeDecimalZero(weight);
       // print(removeDecimalZero(weight));
@@ -234,6 +252,20 @@ class LengthScale {
   void incrementPointOne() {
     if (max - 1 > length + 1) {
       length = length + 0.1;
+      // SETSTATE this
+      if (text == 'HEIGHT' && unit == 'in.') {
+        inchesDisplay = (length % 12).toStringAsFixed(1);
+        lengthDisplay = (length ~/ 12).toInt().toString();
+      } else {
+        //lengthDisplay = length.toStringAsFixed(1);
+        lengthDisplay = removeDecimalZero(length);
+      }
+    }
+  }
+
+  void decrementPointOne() {
+    if (min + 1 < length - 1) {
+      length = length - 0.1;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(1);

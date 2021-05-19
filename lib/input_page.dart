@@ -183,12 +183,16 @@ class _InputPageState extends State<InputPage> {
               width: 2,
             ),*/
 //            Text(unit, style: kUnitTextStyle),
+            Text(
+              ' $unit',
+              style: kUnitTextStyle,
+              // textAlign: TextAlign.center,
+            ),
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
             // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
             UnitToggleButton(
               // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
               //text: toggleText,
-              unitName: unit,
               enabled: disableToggleOnAge(text),
               onPress: () {
                 setState(() {

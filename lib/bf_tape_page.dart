@@ -7,13 +7,16 @@ import 'function_utils.dart';
 import 'scale_class.dart';
 import 'bf_tape_results_page.dart';
 import 'dart:io';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class FatsTape extends StatefulWidget {
   @override
   _FatsTapeState createState() => _FatsTapeState();
 }
 
-class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin {
+class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
+  AnimationController animateSlider;
+
   // Trying all declarations here
   IntroData introData = IntroData();
   bool introVisible = true;
@@ -58,10 +61,12 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
   ];
 
   final _kTabPages = <Widget>[
+    // probably useless
     TabWidget(
       title: 'Modified YMCA',
       description: kYMCADescription,
       formula: kYMCAFormula,
+      //animate: animateButton,
     ),
     TabWidget(
       title: 'Department of Defense a.k.a. US Navy',
@@ -89,13 +94,25 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
     selectedGender = Gender.male; // set male as default
     sliderValues.selectedButton = ButtonScale.age; // set age as default
     _tabController = new TabController(vsync: this, length: _kTabs.length);
+
+    animateSlider = AnimationController(vsync: this, duration: Duration(seconds: 1), lowerBound: 1, upperBound: 407);
+
+/*    animateSlider.forward();
+    animateSlider.addListener(() {
+      print('This is from  animation ${animateSlider.value}');
+      setState(() {});
+    });
+    animateSlider.reset();*/
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    animateSlider.dispose();
     super.dispose();
   }
+
+  double sliderV = 50; // testing testing
 
   @override
   Widget build(BuildContext context) {
@@ -178,6 +195,13 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                   description: introData.description[introIndex],
                   formula: introData.formula[introIndex],
                   introIndex: introIndex,
+                  animate: (val) {
+                    val.forward();
+                    val.addListener(() {
+                      print(val.animate.value);
+                      setState(() {});
+                    });
+                  },
                   onPressed: () {
                     // When the close intro button is pressed
                     setState(() {
@@ -218,24 +242,6 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
             visible: scalesVisible,
             child: Column(
               children: [
-                // GENDER GENDER in separate column
-/*                ReusableCard(
-                  onPressedMy: () {
-                    setState(() {
-                      if (selectedGender == Gender.male) {
-                        selectedGender = Gender.female;
-                        isFemale = true;
-                      } else if (selectedGender == Gender.female) {
-                        selectedGender = Gender.male;
-                        isFemale = false;
-                      }
-                    });
-                  },
-                  colour: kInActiveButtonColor,
-                  widgetContents: GenderCardContent(
-                      label: (selectedGender == Gender.male) ? 'MALE' : 'FEMALE',
-                      iconGender: (selectedGender == Gender.male) ? FontAwesomeIcons.mars : FontAwesomeIcons.venus),
-                ),*/
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -287,7 +293,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                       child: Column(
                         // mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          // SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS SLIDERS
+                          // SCALES SCALES SCALES SCALES
                           // AGE HERE
                           Visibility(
                             visible: true,
@@ -297,6 +303,9 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.age;
                                 });
+                                // testing testing testing
+                                // BuildContext dialogContext;
+                                popupDialog(context);
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -338,6 +347,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.weight;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -359,6 +369,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.waist;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -379,6 +390,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.hip;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -399,6 +411,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.forearm;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -419,6 +432,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.wrist;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -440,6 +454,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.thigh;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -461,6 +476,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.calf;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -481,6 +497,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.neck;
                                 });
+                                // startAnimateSlider();
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -497,10 +514,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                         ],
                       ),
                     ),
-                    // slider here
+                    // SLIDER SLIDER SLIDER SLIDER SLIDER SLIDER
                     Container(
                       width: 70,
-                      height: 407,
+                      height: 407, // 407
                       child: ReusableCard(
                         colour: kActiveButtonColor,
                         widgetContents: Column(
@@ -536,8 +553,6 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                 )),
                             Expanded(
                               flex: 7,
-                              // SLIDER SLIDER SLIDER SLIDER SLIDER
-                              // SLIDER SLIDER SLIDER SLIDER SLIDER
                               child: RotatedBox(
                                 quarterTurns: 3,
                                 child: Slider(
@@ -550,10 +565,10 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
                                       setState(() {
                                         newValueTxt(newValue); // New value in text
                                         sliderValues.value = newValue;
-                                        print('value = ' + sliderValues.value.toString());
+/*                                        print('value = ' + sliderValues.value.toString());
                                         print('newValue = ' + newValue.toString());
                                         print('min = ' + sliderValues.min.toString());
-                                        print('max = ' + sliderValues.max.toString());
+                                        print('max = ' + sliderValues.max.toString());*/
                                       });
                                     }),
                               ),
@@ -658,6 +673,49 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
     );
   }
 
+  Future<dynamic> popupDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: Text('Weight ${sliderV.toInt()} kilograms'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Text('<<'),
+                  Slider(
+                    min: 1,
+                    max: 100,
+                    value: sliderV,
+                    onChanged: (val) {
+                      setState(() {
+                        sliderV = val;
+                      });
+                    },
+                  ),
+                  Text('>>')
+                ],
+              ),
+            ],
+          ),
+          actions: [
+            MaterialButton(
+              onPressed: () {},
+              child: Text('First button'),
+            ),
+            MaterialButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'))
+          ],
+        ),
+      ),
+    );
+  }
+
   // Widget inside the slider card FUNCTION
   // Widget inside the slider card FUNCTION
   // TODO add the ft with proper size
@@ -670,6 +728,7 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
       final String toggleText,
       final bool selected}) {
     if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -1037,4 +1096,22 @@ class _FatsTapeState extends State<FatsTape> with SingleTickerProviderStateMixin
 
     // sliderForAll(value: value, min: min, max: max); // updates slider to the current button
   }
+
+  // Simply animates slider
+/*  startAnimateSlider() {
+    animateSlider.forward();
+    animateSlider.addStatusListener((status) {
+      if (status == AnimationStatus.dismissed)
+        animateSlider.forward();
+      else if (status == AnimationStatus.completed) {
+        animateSlider.stop();
+        animateSlider.reset();
+      }
+      print('This is the status: $status');
+    });
+    animateSlider.addListener(() {
+      print('This is from  animation ${animateSlider.value}');
+      setState(() {});
+    });
+  }*/
 }

@@ -1,6 +1,7 @@
 import 'package:bmicalculator/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 // Main card widget
 // Now almost thesame as ButtonCard
@@ -136,11 +137,25 @@ class SliderSideButton extends StatelessWidget {
 }
 
 // Tabs Tabs Tabs
-class TabWidget extends StatelessWidget {
+class TabWidget extends StatefulWidget {
   final String title, description, formula;
   final int introIndex;
   final Function onPressed;
-  TabWidget({this.title, this.description, this.formula, this.introIndex, this.onPressed});
+  final Function animate;
+
+  TabWidget({this.title, this.description, this.formula, this.introIndex, this.onPressed, this.animate});
+
+  @override
+  _TabWidgetState createState() => _TabWidgetState();
+}
+
+class _TabWidgetState extends State<TabWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.animate;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,11 +167,11 @@ class TabWidget extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  title,
+                  widget.title,
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  description,
+                  widget.description,
                   textAlign: TextAlign.left,
                 ),
                 // Image.asset('images/CodeYMCA.png', height: 100, fit: BoxFit.fill)
@@ -165,7 +180,7 @@ class TabWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  formula,
+                  widget.formula,
                   style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green, fontSize: 14),
                 ),
               ],
@@ -178,7 +193,7 @@ class TabWidget extends StatelessWidget {
         MaterialButton(
           padding: EdgeInsets.all(15.0),
           color: kBottomContainerColor,
-          onPressed: onPressed,
+          onPressed: widget.onPressed,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Text(
             'MEASURE NOW',

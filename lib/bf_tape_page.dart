@@ -299,13 +299,21 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             visible: true,
                             child: ReusableCard(
                               // AGE AGE AGE
-                              onPressedMy: () {
+                              onPressedMy: () async {
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.age;
                                 });
                                 // testing testing testing
                                 // BuildContext dialogContext;
-                                popupDialog(context);
+                                await popupDialog(
+                                  context,
+                                  text: cAge.text,
+                                  unit: cAge.unit,
+                                  value: cAge.age,
+                                  min: cAge.min,
+                                  max: cAge.max,
+                                );
+                                setState(() {});
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -343,11 +351,21 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           Visibility(
                             visible: isMYMCA | isHERITAGE,
                             child: ReusableCard(
-                              onPressedMy: () {
+                              onPressedMy: () async {
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.weight;
                                 });
                                 // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cWeight.text,
+                                  unit: cWeight.unit,
+                                  value: cWeight.weight,
+                                  min: cWeight.min,
+                                  max: cWeight.max,
+                                  toggleText: cWeight.toggleText,
+                                );
+                                setState(() {});
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -365,11 +383,21 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           Visibility(
                             visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
                             child: ReusableCard(
-                              onPressedMy: () {
+                              onPressedMy: () async {
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.waist;
                                 });
                                 // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cWaist.text,
+                                  unit: cWaist.unit,
+                                  value: cWaist.length,
+                                  min: cWaist.min,
+                                  max: cWaist.max,
+                                  toggleText: cWaist.toggleText,
+                                );
+                                setState(() {});
                               },
                               colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
@@ -565,10 +593,10 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                       setState(() {
                                         newValueTxt(newValue); // New value in text
                                         sliderValues.value = newValue;
-/*                                        print('value = ' + sliderValues.value.toString());
+                                        print('value = ' + sliderValues.value.toString());
                                         print('newValue = ' + newValue.toString());
                                         print('min = ' + sliderValues.min.toString());
-                                        print('max = ' + sliderValues.max.toString());*/
+                                        print('max = ' + sliderValues.max.toString());
                                       });
                                     }),
                               ),
@@ -673,30 +701,150 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     );
   }
 
-  Future<dynamic> popupDialog(BuildContext context) {
+  Future<dynamic> popupDialog(
+    BuildContext context, {
+    final String text,
+    final String unit,
+    final double value, // To display the initial value depending on the metrics
+    final int min,
+    final int max,
+    final String toggleText,
+  }) {
+    sliderForAll(value: value, min: min, max: max); // Initial value for the dialog slider
     return showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text('Weight ${sliderV.toInt()} kilograms'),
+          contentPadding: EdgeInsets.zero,
+          // The TEXT above the slider
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                // WEIGHT or HEIGHT TEXT
+                text,
+                style: kTextStyle,
+              ),
+              SizedBox(width: 10),
+              // tap to Add .1 decimal accuracy to the value
+              Text(
+                // SLIDER CURRENT VALUE NUMBER
+                currentValueTxt(text),
+                style: kAgeTextStyle,
+              ),
+              Text(
+                currentFeetText(text, unit),
+                style: kUnitTextStyle, // show feet or not
+              ),
+              Text(
+                currentInchesText(text, unit),
+                style: kAgeTextStyle, // show inch fraction or not
+              ),
+              Text(
+                ' ${unitDisplay(text)}',
+                style: kUnitTextStyle,
+                // textAlign: TextAlign.center,
+              ),
+
+              // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+              // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+              UnitToggleButton(
+                // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
+                //text: toggleText,
+                enabled: disableToggleOnAge(text),
+                onPress: () {
+                  setState(() {
+                    toggleNow(text, unitDisplay(text)); // Change the value after toggle
+                  });
+                },
+              ),
+            ],
+          ),
+          // the SLIDER SLIDER
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  Text('<<'),
-                  Slider(
-                    min: 1,
-                    max: 100,
-                    value: sliderV,
-                    onChanged: (val) {
-                      setState(() {
-                        sliderV = val;
-                      });
-                    },
-                  ),
-                  Text('>>')
-                ],
+              ReusableCard(
+                colour: kActiveButtonColor,
+                widgetContents: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                        // INCREMENT INCREMENT INCREMENT INCREMENT
+                        // INCREMENT INCREMENT INCREMENT INCREMENT
+                        // Doesn't care if it's kgs or lbs
+                        flex: 1,
+                        child: SliderSideButton(
+                          icon: FontAwesomeIcons.chevronCircleUp,
+                          onPress: () {
+                            setState(() {
+                              incrementNow(); // perform increment
+                            });
+                          },
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                        // DECIMAL DECIMAL DECIMAL
+                        // DECIMAL DECIMAL DECIMAL
+                        flex: 1,
+                        child: SliderSideButton(
+                          icon: FontAwesomeIcons.plus,
+                          onPress: () {
+                            setState(() {
+                              incrementFractionNow(); // perform increment
+                            });
+                          },
+                        )),
+                    Expanded(
+                      flex: 7,
+                      child: Slider(
+                          value: sliderValues.value,
+                          min: sliderValues.min.toDouble(),
+                          max: sliderValues.max.toDouble(),
+                          activeColor: Color(0xFFEB1555),
+                          inactiveColor: Color(0xFF8D8E98),
+                          onChanged: (newValue) {
+                            setState(() {
+                              newValueTxt(newValue); // New value in text
+                              sliderValues.value = newValue;
+                              print('value from popup = ' + sliderValues.value.toString());
+                              print('newValue = ' + newValue.toString());
+                              print('min = ' + sliderValues.min.toString());
+                              print('max = ' + sliderValues.max.toString());
+                            });
+                          }),
+                    ),
+                    Expanded(
+                        // DECIMAL DECIMAL DECIMAL
+                        // DECIMAL DECIMAL DECIMAL
+                        flex: 1,
+                        child: SliderSideButton(
+                          icon: FontAwesomeIcons.minus,
+                          onPress: () {
+                            setState(() {
+                              decrementFractionNow(); // perform increment
+                            });
+                          },
+                        )),
+                    SizedBox(height: 10.0),
+                    Expanded(
+                      // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                      // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
+                      // Does not care if it is kgs or lbs
+                      flex: 1,
+                      child: SliderSideButton(
+                        icon: FontAwesomeIcons.chevronCircleDown,
+                        onPress: () {
+                          setState(() {
+                            decrementNow(); // Decrement now!
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -727,7 +875,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
       final int max,
       final String toggleText,
       final bool selected}) {
-    if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider
+    if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider.
+    // The above function executes all the time so it updates the slider values anytime you
+    // press the increment or decrement or any operation
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -753,7 +903,8 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
           style: kAgeTextStyle, // show inch fraction or not
         ),
         Text(
-          ' $unit',
+          ' $unit', // Displays Inches or cm etc.
+          // The value above executes all the time so it updates whenever the unit is toggled
           style: kUnitTextStyle,
           // textAlign: TextAlign.center,
         ),
@@ -784,7 +935,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   }
 
   // The actual value depending on the text
-  // text is passed insead of sliderValue because there are many individual buttons
+  // text is passed instead of sliderValue because there are many individual buttons
   String currentValueTxt(String text) {
     if (text == 'AGE') return cAge.ageDisplay;
     if (text == 'WEIGHT')
@@ -825,28 +976,30 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     return (text == 'AGE') ? false : true;
   }
 
-  // The new value in text returned by the slider
-  /* void newValueTxt(String text, double newValue) {
+  // Displays inches or cm
+  String unitDisplay(String text) {
     // I've just changed this from STring to void
-    if (text == "AGE") cAge.movingValue(newValue);
+    String unit = '';
+    if (text == "AGE") unit = cAge.unit;
     if (text == "HEIGHT")
-      cHeight.movingValue(newValue);
+      unit = cHeight.unit;
     else if (text == "WEIGHT")
-      cWeight.movingValue(newValue);
+      unit = cWeight.unit;
     else if (text == "WAIST")
-      cWaist.movingValue(newValue);
+      unit = cWaist.unit;
     else if (text == "HIP")
-      cHips.movingValue(newValue);
+      unit = cHips.unit;
     else if (text == "FOREARM")
-      cForearm.movingValue(newValue);
+      unit = cForearm.unit;
     else if (text == "WRIST")
-      cWrist.movingValue(newValue);
+      unit = cWrist.unit;
     else if (text == "THIGH")
-      cThigh.movingValue(newValue);
+      unit = cThigh.unit;
     else if (text == "CALF")
-      cCalf.movingValue(newValue);
-    else if (text == "NECK") cNeck.movingValue(newValue);
-  }*/
+      unit = cCalf.unit;
+    else if (text == "NECK") unit = cNeck.unit;
+    return unit;
+  }
 
   // The new value in text returned by the slider
   void newValueTxt(double newValue) {
@@ -890,34 +1043,64 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   void incrementFractionNow() {
     switch (sliderValues.selectedButton) {
       case ButtonScale.age:
-        cAge.incrementPointOne();
+        {
+          cAge.incrementPointOne();
+          sliderValues.value = cAge.age;
+        }
         break;
       case ButtonScale.weight:
-        cWeight.incrementPointOne();
+        {
+          cWeight.incrementPointOne();
+          sliderValues.value = cWeight.weight;
+        }
         break;
       case ButtonScale.height:
-        cHeight.incrementPointOne();
+        {
+          cHeight.incrementPointOne();
+          sliderValues.value = cHeight.length;
+        }
         break;
       case ButtonScale.waist:
-        cWaist.incrementPointOne();
+        {
+          cWaist.incrementPointOne();
+          sliderValues.value = cWaist.length;
+        }
         break;
       case ButtonScale.hip:
-        cHips.incrementPointOne();
+        {
+          cHips.incrementPointOne();
+          sliderValues.value = cHips.length;
+        }
         break;
       case ButtonScale.forearm:
-        cForearm.incrementPointOne();
+        {
+          cForearm.incrementPointOne();
+          sliderValues.value = cForearm.length;
+        }
         break;
       case ButtonScale.wrist:
-        cWrist.incrementPointOne();
+        {
+          cWrist.incrementPointOne();
+          sliderValues.value = cWrist.length;
+        }
         break;
       case ButtonScale.thigh:
-        cThigh.incrementPointOne();
+        {
+          cThigh.incrementPointOne();
+          sliderValues.value = cThigh.length;
+        }
         break;
       case ButtonScale.calf:
-        cCalf.incrementPointOne();
+        {
+          cCalf.incrementPointOne();
+          sliderValues.value = cCalf.length;
+        }
         break;
       case ButtonScale.neck:
-        cNeck.incrementPointOne();
+        {
+          cNeck.incrementPointOne();
+          sliderValues.value = cNeck.length;
+        }
         break;
       default:
         break;
@@ -927,34 +1110,64 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   void decrementFractionNow() {
     switch (sliderValues.selectedButton) {
       case ButtonScale.age:
-        cAge.decrementPointOne();
+        {
+          cAge.decrementPointOne();
+          sliderValues.value = cAge.age;
+        }
         break;
       case ButtonScale.weight:
-        cWeight.decrementPointOne();
+        {
+          cWeight.decrementPointOne();
+          sliderValues.value = cWeight.weight;
+        }
         break;
       case ButtonScale.height:
-        cHeight.decrementPointOne();
+        {
+          cHeight.decrementPointOne();
+          sliderValues.value = cHeight.length;
+        }
         break;
       case ButtonScale.waist:
-        cWaist.decrementPointOne();
+        {
+          cWaist.decrementPointOne();
+          sliderValues.value = cWaist.length;
+        }
         break;
       case ButtonScale.hip:
-        cHips.decrementPointOne();
+        {
+          cHips.decrementPointOne();
+          sliderValues.value = cHips.length;
+        }
         break;
       case ButtonScale.forearm:
-        cForearm.decrementPointOne();
+        {
+          cForearm.decrementPointOne();
+          sliderValues.value = cForearm.length;
+        }
         break;
       case ButtonScale.wrist:
-        cWrist.decrementPointOne();
+        {
+          cWrist.decrementPointOne();
+          sliderValues.value = cWrist.length;
+        }
         break;
       case ButtonScale.thigh:
-        cThigh.decrementPointOne();
+        {
+          cThigh.decrementPointOne();
+          sliderValues.value = cThigh.length;
+        }
         break;
       case ButtonScale.calf:
-        cCalf.decrementPointOne();
+        {
+          cCalf.decrementPointOne();
+          sliderValues.value = cCalf.length;
+        }
         break;
       case ButtonScale.neck:
-        cNeck.decrementPointOne();
+        {
+          cNeck.decrementPointOne();
+          sliderValues.value = cNeck.length;
+        }
         break;
       default:
         break;
@@ -964,34 +1177,65 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   void decrementNow() {
     switch (sliderValues.selectedButton) {
       case ButtonScale.age:
-        cAge.decrementOne();
+        {
+          cAge.decrementOne();
+          sliderValues.value = cAge.age;
+        }
         break;
       case ButtonScale.weight:
-        cWeight.decrementOne();
+        {
+          cWeight.decrementOne();
+          sliderValues.value = cWeight.weight;
+        }
         break;
       case ButtonScale.height:
-        cHeight.decrementOne();
+        {
+          cHeight.decrementOne();
+          sliderValues.value = cHeight.length;
+        }
+        ;
         break;
       case ButtonScale.waist:
-        cWaist.decrementOne();
+        {
+          cWaist.decrementOne();
+          sliderValues.value = cWaist.length;
+        }
         break;
       case ButtonScale.hip:
-        cHips.decrementOne();
+        {
+          cHips.decrementOne();
+          sliderValues.value = cHips.length;
+        }
         break;
       case ButtonScale.forearm:
-        cForearm.decrementOne();
+        {
+          cForearm.decrementOne();
+          sliderValues.value = cForearm.length;
+        }
         break;
       case ButtonScale.wrist:
-        cWrist.decrementOne();
+        {
+          cWrist.decrementOne();
+          sliderValues.value = cWrist.length;
+        }
         break;
       case ButtonScale.thigh:
-        cThigh.decrementOne();
+        {
+          cThigh.decrementOne();
+          sliderValues.value = cThigh.length;
+        }
         break;
       case ButtonScale.calf:
-        cCalf.decrementOne();
+        {
+          cCalf.decrementOne();
+          sliderValues.value = cCalf.length;
+        }
         break;
       case ButtonScale.neck:
-        cNeck.decrementOne();
+        {
+          cNeck.decrementOne();
+          sliderValues.value = cNeck.length;
+        }
         break;
       default:
         break;
@@ -1001,34 +1245,64 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   void incrementNow() {
     switch (sliderValues.selectedButton) {
       case ButtonScale.age:
-        cAge.incrementOne();
+        {
+          cAge.incrementOne();
+          sliderValues.value = cAge.age;
+        }
         break;
       case ButtonScale.weight:
-        cWeight.incrementOne();
+        {
+          cWeight.incrementOne();
+          sliderValues.value = cWeight.weight;
+        }
         break;
       case ButtonScale.height:
-        cHeight.incrementOne();
+        {
+          cHeight.incrementOne();
+          sliderValues.value = cHeight.length;
+        }
         break;
       case ButtonScale.waist:
-        cWaist.incrementOne();
+        {
+          cWaist.incrementOne();
+          sliderValues.value = cWaist.length;
+        }
         break;
       case ButtonScale.hip:
-        cHips.incrementOne();
+        {
+          cHips.incrementOne();
+          sliderValues.value = cHips.length;
+        }
         break;
       case ButtonScale.forearm:
-        cForearm.incrementOne();
+        {
+          cForearm.incrementOne();
+          sliderValues.value = cForearm.length;
+        }
         break;
       case ButtonScale.wrist:
-        cWrist.incrementOne();
+        {
+          cWrist.incrementOne();
+          sliderValues.value = cWrist.length;
+        }
         break;
       case ButtonScale.thigh:
-        cThigh.incrementOne();
+        {
+          cThigh.incrementOne();
+          sliderValues.value = cThigh.length;
+        }
         break;
       case ButtonScale.calf:
-        cCalf.incrementOne();
+        {
+          cCalf.incrementOne();
+          sliderValues.value = cCalf.length;
+        }
         break;
       case ButtonScale.neck:
-        cNeck.incrementOne();
+        {
+          cNeck.incrementOne();
+          sliderValues.value = cNeck.length;
+        }
         break;
       default:
         break;
@@ -1036,7 +1310,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   }
 
   // toggle text
-  // this is the only function with AGE is excuded
+  // this is the only function with AGE is excluded
   void toggleNow(String text, String unit) {
     if (text == 'HEIGHT' && unit == 'cm.') {
       cHeight.toggleToInches();

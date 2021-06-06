@@ -299,11 +299,21 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             visible: true,
                             child: ReusableCard(
                               // AGE AGE AGE
+                              colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                // AGE AGE AGE currently merging this with statsCardContent
+                                text: cAge.text,
+                                unit: cAge.unit,
+                                value: cAge.age,
+                                min: cAge.min,
+                                max: cAge.max,
+                                selected: (sliderValues.selectedButton == ButtonScale.age),
+                              ),
                               onPressedMy: () async {
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.age;
                                 });
-                                // testing testing testing
+
                                 // BuildContext dialogContext;
                                 await popupDialog(
                                   context,
@@ -315,42 +325,54 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 );
                                 setState(() {});
                               },
-                              colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                  // AGE AGE AGE currently merging this with statsCardContent
-                                  text: cAge.text,
-                                  unit: cAge.unit,
-                                  value: cAge.age,
-                                  min: cAge.min,
-                                  max: cAge.max,
-                                  selected: (sliderValues.selectedButton == ButtonScale.age)),
                             ),
                           ),
 
                           Visibility(
                             visible: isUSNAVY | isHERITAGE,
                             child: ReusableCard(
-                              onPressedMy: () {
+                              // HEIGHT HEIGHT HEIGHT
+                              colour: (sliderValues.selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cHeight.text,
+                                unit: cHeight.unit,
+                                value: cHeight.length,
+                                min: cHeight.min,
+                                max: cHeight.max,
+                                toggleText: cHeight.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.height),
+                              ),
+                              onPressedMy: () async {
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.height;
                                 });
-                              },
-                              colour: (sliderValues.selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                  // HEIGHT HEIGHT HEIGHT
+                                await popupDialog(
+                                  context,
                                   text: cHeight.text,
                                   unit: cHeight.unit,
                                   value: cHeight.length,
                                   min: cHeight.min,
                                   max: cHeight.max,
-                                  toggleText: cHeight.toggleText,
-                                  selected: (sliderValues.selectedButton == ButtonScale.height)),
+                                );
+                                setState(() {});
+                              },
                             ),
                           ),
 
                           Visibility(
                             visible: isMYMCA | isHERITAGE,
                             child: ReusableCard(
+                              // WEIGHT WEIGHT WEIGHT
+                              colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cWeight.text,
+                                unit: cWeight.unit,
+                                value: cWeight.weight,
+                                min: cWeight.min,
+                                max: cWeight.max,
+                                toggleText: cWeight.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.weight),
+                              ),
                               onPressedMy: () async {
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.weight;
@@ -367,22 +389,23 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 );
                                 setState(() {});
                               },
-                              colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                // WEIGHT WEIGHT WEIGHT
-                                text: cWeight.text,
-                                unit: cWeight.unit,
-                                value: cWeight.weight,
-                                min: cWeight.min,
-                                max: cWeight.max,
-                                toggleText: cWeight.toggleText, selected: (sliderValues.selectedButton == ButtonScale.weight),
-                              ),
                             ),
                           ),
 
                           Visibility(
                             visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
                             child: ReusableCard(
+                              // WAIST WAIST
+                              colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
+                              widgetContents: statsCardContent(
+                                text: cWaist.text,
+                                unit: cWaist.unit,
+                                value: cWaist.length,
+                                min: cWaist.min,
+                                max: cWaist.max,
+                                toggleText: cWaist.toggleText,
+                                selected: (sliderValues.selectedButton == ButtonScale.waist),
+                              ),
                               onPressedMy: () async {
                                 setState(() {
                                   sliderValues.selectedButton = ButtonScale.waist;
@@ -399,27 +422,12 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 );
                                 setState(() {});
                               },
-                              colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cWaist.text,
-                                unit: cWaist.unit,
-                                value: cWaist.length,
-                                min: cWaist.min,
-                                max: cWaist.max,
-                                toggleText: cWaist.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.waist),
-                              ),
                             ),
                           ),
                           Visibility(
                             visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
                             child: ReusableCard(
-                              onPressedMy: () {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.hip;
-                                });
-                                // startAnimateSlider();
-                              },
+                              // HIPS HIPS
                               colour: (sliderValues.selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
                                 text: cHips.text,
@@ -430,17 +438,28 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 toggleText: cHips.toggleText,
                                 selected: (sliderValues.selectedButton == ButtonScale.hip),
                               ),
+                              onPressedMy: () async {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.hip;
+                                });
+                                // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cHips.text,
+                                  unit: cHips.unit,
+                                  value: cHips.length,
+                                  min: cHips.min,
+                                  max: cHips.max,
+                                  toggleText: cHips.toggleText,
+                                );
+                                setState(() {});
+                              },
                             ),
                           ),
                           Visibility(
                             visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
                             child: ReusableCard(
-                              onPressedMy: () {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.forearm;
-                                });
-                                // startAnimateSlider();
-                              },
+                              // FOREARM FOREARM
                               colour: (sliderValues.selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
                                 text: cForearm.text,
@@ -451,17 +470,28 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 toggleText: cForearm.toggleText,
                                 selected: (sliderValues.selectedButton == ButtonScale.forearm),
                               ),
+                              onPressedMy: () async {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.forearm;
+                                });
+                                // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cForearm.text,
+                                  unit: cForearm.unit,
+                                  value: cForearm.length,
+                                  min: cForearm.min,
+                                  max: cForearm.max,
+                                  toggleText: cForearm.toggleText,
+                                );
+                                setState(() {});
+                              },
                             ),
                           ),
                           Visibility(
                             visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
                             child: ReusableCard(
-                              onPressedMy: () {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.wrist;
-                                });
-                                // startAnimateSlider();
-                              },
+                              // WRIST WRIST
                               colour: (sliderValues.selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
                                 text: cWrist.text,
@@ -472,18 +502,29 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 toggleText: cWrist.toggleText,
                                 selected: (sliderValues.selectedButton == ButtonScale.wrist),
                               ),
+                              onPressedMy: () async {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.wrist;
+                                });
+                                // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cWrist.text,
+                                  unit: cWrist.unit,
+                                  value: cWrist.length,
+                                  min: cWrist.min,
+                                  max: cWrist.max,
+                                  toggleText: cWrist.toggleText,
+                                );
+                                setState(() {});
+                              },
                             ),
                           ),
 
                           Visibility(
                             visible: (isCOVERTBAILEY & isFemale),
                             child: ReusableCard(
-                              onPressedMy: () {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.thigh;
-                                });
-                                // startAnimateSlider();
-                              },
+                              // THIGH THIGH
                               colour: (sliderValues.selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
                                 text: cThigh.text,
@@ -494,18 +535,29 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 toggleText: cThigh.toggleText,
                                 selected: (sliderValues.selectedButton == ButtonScale.thigh),
                               ),
+                              onPressedMy: () async {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.thigh;
+                                });
+                                // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cThigh.text,
+                                  unit: cThigh.unit,
+                                  value: cThigh.length,
+                                  min: cThigh.min,
+                                  max: cThigh.max,
+                                  toggleText: cThigh.toggleText,
+                                );
+                                setState(() {});
+                              },
                             ),
                           ),
 
                           Visibility(
                             visible: (isCOVERTBAILEY & isFemale),
                             child: ReusableCard(
-                              onPressedMy: () {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.calf;
-                                });
-                                // startAnimateSlider();
-                              },
+                              // CALF CALF
                               colour: (sliderValues.selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
                                 text: cCalf.text,
@@ -516,17 +568,28 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 toggleText: cCalf.toggleText,
                                 selected: (sliderValues.selectedButton == ButtonScale.calf),
                               ),
+                              onPressedMy: () async {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.calf;
+                                });
+                                // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cCalf.text,
+                                  unit: cCalf.unit,
+                                  value: cCalf.length,
+                                  min: cCalf.min,
+                                  max: cCalf.max,
+                                  toggleText: cCalf.toggleText,
+                                );
+                                setState(() {});
+                              },
                             ),
                           ),
                           Visibility(
                             visible: isUSNAVY,
                             child: ReusableCard(
-                              onPressedMy: () {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.neck;
-                                });
-                                // startAnimateSlider();
-                              },
+                              // NECK NECK
                               colour: (sliderValues.selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
                               widgetContents: statsCardContent(
                                 text: cNeck.text,
@@ -537,6 +600,22 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                                 toggleText: cNeck.toggleText,
                                 selected: (sliderValues.selectedButton == ButtonScale.neck),
                               ),
+                              onPressedMy: () async {
+                                setState(() {
+                                  sliderValues.selectedButton = ButtonScale.neck;
+                                });
+                                // startAnimateSlider();
+                                await popupDialog(
+                                  context,
+                                  text: cNeck.text,
+                                  unit: cNeck.unit,
+                                  value: cNeck.length,
+                                  min: cNeck.min,
+                                  max: cNeck.max,
+                                  toggleText: cNeck.toggleText,
+                                );
+                                setState(() {});
+                              },
                             ),
                           ),
                         ],
@@ -767,38 +846,21 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
               ReusableCard(
                 colour: kActiveButtonColor,
                 widgetContents: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
-                        // INCREMENT INCREMENT INCREMENT INCREMENT
-                        // INCREMENT INCREMENT INCREMENT INCREMENT
-                        // Doesn't care if it's kgs or lbs
-                        flex: 1,
-                        child: SliderSideButton(
-                          icon: FontAwesomeIcons.chevronCircleUp,
-                          onPress: () {
-                            setState(() {
-                              incrementNow(); // perform increment
-                            });
-                          },
-                        )),
-                    SizedBox(
-                      height: 10,
+                      flex: 1,
+                      child: SliderSideButton(
+                        icon: FontAwesomeIcons.chevronCircleLeft,
+                        onPress: () {
+                          setState(() {
+                            decrementNow(); // Decrement now!
+                          });
+                        },
+                      ),
                     ),
                     Expanded(
-                        // DECIMAL DECIMAL DECIMAL
-                        // DECIMAL DECIMAL DECIMAL
-                        flex: 1,
-                        child: SliderSideButton(
-                          icon: FontAwesomeIcons.plus,
-                          onPress: () {
-                            setState(() {
-                              incrementFractionNow(); // perform increment
-                            });
-                          },
-                        )),
-                    Expanded(
-                      flex: 7,
+                      flex: 8,
                       child: Slider(
                           value: sliderValues.value,
                           min: sliderValues.min.toDouble(),
@@ -817,28 +879,12 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           }),
                     ),
                     Expanded(
-                        // DECIMAL DECIMAL DECIMAL
-                        // DECIMAL DECIMAL DECIMAL
-                        flex: 1,
-                        child: SliderSideButton(
-                          icon: FontAwesomeIcons.minus,
-                          onPress: () {
-                            setState(() {
-                              decrementFractionNow(); // perform increment
-                            });
-                          },
-                        )),
-                    SizedBox(height: 10.0),
-                    Expanded(
-                      // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                      // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                      // Does not care if it is kgs or lbs
                       flex: 1,
                       child: SliderSideButton(
-                        icon: FontAwesomeIcons.chevronCircleDown,
+                        icon: FontAwesomeIcons.chevronCircleRight,
                         onPress: () {
                           setState(() {
-                            decrementNow(); // Decrement now!
+                            incrementNow(); // perform increment
                           });
                         },
                       ),
@@ -849,15 +895,34 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
             ],
           ),
           actions: [
-            MaterialButton(
-              onPressed: () {},
-              child: Text('First button'),
-            ),
-            MaterialButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      decrementFractionNow(); // perform increment
+                    });
+                  },
+                  child: Text('- 0.1'),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                  color: kBottomContainerColor,
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      incrementFractionNow(); // perform increment
+                    });
+                  },
+                  child: Text('+ 0.1'),
+                ),
+              ],
+            )
           ],
         ),
       ),

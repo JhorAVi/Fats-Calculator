@@ -5,10 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 enum Gender { male, female }
 enum ButtonScale { age, weight, height, waist, hip, wrist, forearm, thigh, calf, neck, none }
 
-//const kActiveButtonColor = Color(0xFF334033);
-const kActiveButtonColor = Colors.deepPurple;
+// const kActiveButtonColor = Color(0xFF334033);
+// const kActiveButtonColor = Colors.deepPurple;
+const kLightButtonColor = Color(0xFF4C4F5E);
+const kActiveButtonColor = Color(0xFF1D1E33);
 
 const kInActiveButtonColor = Color(0xFF111328);
+
+const kSmallButtonColor = Color(0xFF4C4F5E);
 
 const kAuthorTextStyle = TextStyle(
   fontSize: 15.0,

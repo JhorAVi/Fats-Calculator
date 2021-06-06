@@ -26,6 +26,7 @@ class AgeScale {
   String ageDisplay;
   String text = 'AGE';
   String unit = 'yrs';
+  bool changed = false;
 
   AgeScale({this.min, this.max}) {
     // age = (min + max) / 2;
@@ -37,6 +38,7 @@ class AgeScale {
     if (min + 1 < age - 1 && max - 1 > age - 1) {
       age--;
       ageDisplay = age.toStringAsFixed(0); // temp
+      changed = true;
     }
   }
 
@@ -44,6 +46,7 @@ class AgeScale {
     if (min + 1 < age + 1 && max - 1 > age + 1) {
       age++;
       ageDisplay = age.toStringAsFixed(0);
+      changed = true;
     }
   }
 
@@ -53,6 +56,7 @@ class AgeScale {
       age = age + 0.1;
       // SETSTATE this
       ageDisplay = removeDecimalZero(age);
+      changed = true;
       // print(removeDecimalZero(weight));
     }
   }
@@ -62,6 +66,7 @@ class AgeScale {
       age = age - 0.1;
       // SETSTATE this
       ageDisplay = removeDecimalZero(age);
+      changed = true;
       // print(removeDecimalZero(weight));
     }
   }
@@ -71,6 +76,7 @@ class AgeScale {
       // deduct 1 in range for safety
       age = newValue.roundToDouble(); // remove fractions for now
       ageDisplay = age.toStringAsFixed(0);
+      changed = true;
       //print(weight); // debug
     }
   }
@@ -88,6 +94,7 @@ class WeightScale {
   String unit = 'lbs';
   String toggleText;
   bool lbsIsDefault = true;
+  bool changed = false;
 
   WeightScale({@required this.lbsMin, @required this.lbsMax}) {
     kgMin = lbsToKilograms(lbsMin.toDouble()).round(); // 23;
@@ -129,6 +136,7 @@ class WeightScale {
       weight = weight.roundToDouble() - 1;
       // SETSTATE THIS!
       weightDisplay = weight.toStringAsFixed(0); // temp
+      changed = true;
     }
   }
 
@@ -137,6 +145,7 @@ class WeightScale {
       weight = weight.roundToDouble() + 1;
       // SETSTATE THIS!
       weightDisplay = weight.toStringAsFixed(0);
+      changed = true;
     }
   }
 
@@ -146,6 +155,7 @@ class WeightScale {
       weight = weight + 0.1;
       // SETSTATE this
       weightDisplay = removeDecimalZero(weight);
+      changed = true;
       // print(removeDecimalZero(weight));
     }
   }
@@ -155,6 +165,7 @@ class WeightScale {
       weight = weight - 0.1;
       // SETSTATE this
       weightDisplay = removeDecimalZero(weight);
+      changed = true;
       // print(removeDecimalZero(weight));
     }
   }
@@ -165,6 +176,7 @@ class WeightScale {
       weight = newValue.roundToDouble(); // remove fractions for now
       // SETSTATE THIS!
       weightDisplay = weight.toStringAsFixed(0);
+      changed = true;
       //print(weight); // debug
     }
   }
@@ -184,6 +196,7 @@ class LengthScale {
   String unit = 'cm.';
   String toggleText; // maybe unused
   bool cmIsDefault = true;
+  bool changed = false;
 
   LengthScale({@required this.cmMin, @required this.cmMax, @required this.text}) {
     inchMin = centimetersToInches(cmMin.toDouble()).round();
@@ -233,6 +246,7 @@ class LengthScale {
       } else {
         lengthDisplay = length.toStringAsFixed(0);
       }
+      changed = true;
     }
   }
 
@@ -246,6 +260,7 @@ class LengthScale {
       } else {
         lengthDisplay = length.toStringAsFixed(0);
       }
+      changed = true;
     }
   }
 
@@ -260,6 +275,7 @@ class LengthScale {
         //lengthDisplay = length.toStringAsFixed(1);
         lengthDisplay = removeDecimalZero(length);
       }
+      changed = true;
     }
   }
 
@@ -274,6 +290,7 @@ class LengthScale {
         //lengthDisplay = length.toStringAsFixed(1);
         lengthDisplay = removeDecimalZero(length);
       }
+      changed = true;
     }
   }
 
@@ -288,6 +305,7 @@ class LengthScale {
       } else {
         lengthDisplay = length.toStringAsFixed(0);
       }
+      changed = true;
     }
   }
 }

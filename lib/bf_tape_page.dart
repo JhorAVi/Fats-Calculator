@@ -113,6 +113,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   }
 
   double sliderV = 50; // testing testing
+  bool valChanged = false; // check
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +254,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             isFemale = false;
                           });
                         },
-                        colour: (selectedGender == Gender.male) ? Color(0xFF4C4F5E) : kInActiveButtonColor,
+                        colour: (selectedGender == Gender.male) ? kLightButtonColor : kInActiveButtonColor,
                         //colour: kInActiveButtonColor,
                         widgetContents: GenderCardContent(
                           label: 'MALE',
@@ -271,7 +272,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             isFemale = true;
                           });
                         },
-                        colour: (selectedGender == Gender.female) ? Color(0xFF4C4F5E) : kInActiveButtonColor,
+                        colour: (selectedGender == Gender.female) ? kLightButtonColor : kInActiveButtonColor,
                         //colour: kInActiveButtonColor,
                         widgetContents: GenderCardContent(
                           label: 'FEMALE',
@@ -283,432 +284,333 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                   ],
                 ),
 
-                // This separates the value displays to the left and slider to the right
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                // THE SCALE BUTTONS!
+                Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Expanded(
-                      // flex: 8,
-                      // The column of all measurement widgets
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          // SCALES SCALES SCALES SCALES
-                          // AGE HERE
-                          Visibility(
-                            visible: true,
-                            child: ReusableCard(
-                              // AGE AGE AGE
-                              colour: (sliderValues.selectedButton == ButtonScale.age) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                // AGE AGE AGE currently merging this with statsCardContent
-                                text: cAge.text,
-                                unit: cAge.unit,
-                                value: cAge.age,
-                                min: cAge.min,
-                                max: cAge.max,
-                                selected: (sliderValues.selectedButton == ButtonScale.age),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.age;
-                                });
+                    // SCALES SCALES SCALES SCALES
+                    // AGE HERE
+                    Visibility(
+                      visible: true,
+                      child: ReusableCard(
+                        // AGE AGE AGE
+                        colour: (cAge.changed) ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          // AGE AGE AGE currently merging this with statsCardContent
+                          text: cAge.text,
+                          unit: cAge.unit,
+                          value: cAge.age,
+                          min: cAge.min,
+                          max: cAge.max,
+                          selected: (sliderValues.selectedButton == ButtonScale.age),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.age;
+                          });
 
-                                // BuildContext dialogContext;
-                                await popupDialog(
-                                  context,
-                                  text: cAge.text,
-                                  unit: cAge.unit,
-                                  value: cAge.age,
-                                  min: cAge.min,
-                                  max: cAge.max,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-
-                          Visibility(
-                            visible: isUSNAVY | isHERITAGE,
-                            child: ReusableCard(
-                              // HEIGHT HEIGHT HEIGHT
-                              colour: (sliderValues.selectedButton == ButtonScale.height) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cHeight.text,
-                                unit: cHeight.unit,
-                                value: cHeight.length,
-                                min: cHeight.min,
-                                max: cHeight.max,
-                                toggleText: cHeight.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.height),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.height;
-                                });
-                                await popupDialog(
-                                  context,
-                                  text: cHeight.text,
-                                  unit: cHeight.unit,
-                                  value: cHeight.length,
-                                  min: cHeight.min,
-                                  max: cHeight.max,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-
-                          Visibility(
-                            visible: isMYMCA | isHERITAGE,
-                            child: ReusableCard(
-                              // WEIGHT WEIGHT WEIGHT
-                              colour: (sliderValues.selectedButton == ButtonScale.weight) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cWeight.text,
-                                unit: cWeight.unit,
-                                value: cWeight.weight,
-                                min: cWeight.min,
-                                max: cWeight.max,
-                                toggleText: cWeight.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.weight),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.weight;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cWeight.text,
-                                  unit: cWeight.unit,
-                                  value: cWeight.weight,
-                                  min: cWeight.min,
-                                  max: cWeight.max,
-                                  toggleText: cWeight.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-
-                          Visibility(
-                            visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
-                            child: ReusableCard(
-                              // WAIST WAIST
-                              colour: (sliderValues.selectedButton == ButtonScale.waist) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cWaist.text,
-                                unit: cWaist.unit,
-                                value: cWaist.length,
-                                min: cWaist.min,
-                                max: cWaist.max,
-                                toggleText: cWaist.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.waist),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.waist;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cWaist.text,
-                                  unit: cWaist.unit,
-                                  value: cWaist.length,
-                                  min: cWaist.min,
-                                  max: cWaist.max,
-                                  toggleText: cWaist.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Visibility(
-                            visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
-                            child: ReusableCard(
-                              // HIPS HIPS
-                              colour: (sliderValues.selectedButton == ButtonScale.hip) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cHips.text,
-                                unit: cHips.unit,
-                                value: cHips.length,
-                                min: cHips.min,
-                                max: cHips.max,
-                                toggleText: cHips.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.hip),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.hip;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cHips.text,
-                                  unit: cHips.unit,
-                                  value: cHips.length,
-                                  min: cHips.min,
-                                  max: cHips.max,
-                                  toggleText: cHips.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Visibility(
-                            visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
-                            child: ReusableCard(
-                              // FOREARM FOREARM
-                              colour: (sliderValues.selectedButton == ButtonScale.forearm) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cForearm.text,
-                                unit: cForearm.unit,
-                                value: cForearm.length,
-                                min: cForearm.min,
-                                max: cForearm.max,
-                                toggleText: cForearm.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.forearm),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.forearm;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cForearm.text,
-                                  unit: cForearm.unit,
-                                  value: cForearm.length,
-                                  min: cForearm.min,
-                                  max: cForearm.max,
-                                  toggleText: cForearm.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Visibility(
-                            visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
-                            child: ReusableCard(
-                              // WRIST WRIST
-                              colour: (sliderValues.selectedButton == ButtonScale.wrist) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cWrist.text,
-                                unit: cWrist.unit,
-                                value: cWrist.length,
-                                min: cWrist.min,
-                                max: cWrist.max,
-                                toggleText: cWrist.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.wrist),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.wrist;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cWrist.text,
-                                  unit: cWrist.unit,
-                                  value: cWrist.length,
-                                  min: cWrist.min,
-                                  max: cWrist.max,
-                                  toggleText: cWrist.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-
-                          Visibility(
-                            visible: (isCOVERTBAILEY & isFemale),
-                            child: ReusableCard(
-                              // THIGH THIGH
-                              colour: (sliderValues.selectedButton == ButtonScale.thigh) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cThigh.text,
-                                unit: cThigh.unit,
-                                value: cThigh.length,
-                                min: cThigh.min,
-                                max: cThigh.max,
-                                toggleText: cThigh.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.thigh),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.thigh;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cThigh.text,
-                                  unit: cThigh.unit,
-                                  value: cThigh.length,
-                                  min: cThigh.min,
-                                  max: cThigh.max,
-                                  toggleText: cThigh.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-
-                          Visibility(
-                            visible: (isCOVERTBAILEY & isFemale),
-                            child: ReusableCard(
-                              // CALF CALF
-                              colour: (sliderValues.selectedButton == ButtonScale.calf) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cCalf.text,
-                                unit: cCalf.unit,
-                                value: cCalf.length,
-                                min: cCalf.min,
-                                max: cCalf.max,
-                                toggleText: cCalf.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.calf),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.calf;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cCalf.text,
-                                  unit: cCalf.unit,
-                                  value: cCalf.length,
-                                  min: cCalf.min,
-                                  max: cCalf.max,
-                                  toggleText: cCalf.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Visibility(
-                            visible: isUSNAVY,
-                            child: ReusableCard(
-                              // NECK NECK
-                              colour: (sliderValues.selectedButton == ButtonScale.neck) ? kActiveButtonColor : kInActiveButtonColor,
-                              widgetContents: statsCardContent(
-                                text: cNeck.text,
-                                unit: cNeck.unit,
-                                value: cNeck.length,
-                                min: cNeck.min,
-                                max: cNeck.max,
-                                toggleText: cNeck.toggleText,
-                                selected: (sliderValues.selectedButton == ButtonScale.neck),
-                              ),
-                              onPressedMy: () async {
-                                setState(() {
-                                  sliderValues.selectedButton = ButtonScale.neck;
-                                });
-                                // startAnimateSlider();
-                                await popupDialog(
-                                  context,
-                                  text: cNeck.text,
-                                  unit: cNeck.unit,
-                                  value: cNeck.length,
-                                  min: cNeck.min,
-                                  max: cNeck.max,
-                                  toggleText: cNeck.toggleText,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                        ],
+                          // BuildContext dialogContext;
+                          await popupDialog(
+                            context,
+                            text: cAge.text,
+                            unit: cAge.unit,
+                            value: cAge.age,
+                            min: cAge.min,
+                            max: cAge.max,
+                          );
+                          setState(() {});
+                        },
                       ),
                     ),
-                    // SLIDER SLIDER SLIDER SLIDER SLIDER SLIDER
-                    Container(
-                      width: 70,
-                      height: 407, // 407
+
+                    Visibility(
+                      visible: isUSNAVY | isHERITAGE,
                       child: ReusableCard(
-                        colour: kActiveButtonColor,
-                        widgetContents: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                                // INCREMENT INCREMENT INCREMENT INCREMENT
-                                // INCREMENT INCREMENT INCREMENT INCREMENT
-                                // Doesn't care if it's kgs or lbs
-                                flex: 1,
-                                child: SliderSideButton(
-                                  icon: FontAwesomeIcons.chevronCircleUp,
-                                  onPress: () {
-                                    setState(() {
-                                      incrementNow(); // perform increment
-                                    });
-                                  },
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Expanded(
-                                // DECIMAL DECIMAL DECIMAL
-                                // DECIMAL DECIMAL DECIMAL
-                                flex: 1,
-                                child: SliderSideButton(
-                                  icon: FontAwesomeIcons.plus,
-                                  onPress: () {
-                                    setState(() {
-                                      incrementFractionNow(); // perform increment
-                                    });
-                                  },
-                                )),
-                            Expanded(
-                              flex: 7,
-                              child: RotatedBox(
-                                quarterTurns: 3,
-                                child: Slider(
-                                    value: sliderValues.value,
-                                    min: sliderValues.min.toDouble(),
-                                    max: sliderValues.max.toDouble(),
-                                    activeColor: Color(0xFFEB1555),
-                                    inactiveColor: Color(0xFF8D8E98),
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        newValueTxt(newValue); // New value in text
-                                        sliderValues.value = newValue;
-                                        print('value = ' + sliderValues.value.toString());
-                                        print('newValue = ' + newValue.toString());
-                                        print('min = ' + sliderValues.min.toString());
-                                        print('max = ' + sliderValues.max.toString());
-                                      });
-                                    }),
-                              ),
-                            ),
-                            Expanded(
-                                // DECIMAL DECIMAL DECIMAL
-                                // DECIMAL DECIMAL DECIMAL
-                                flex: 1,
-                                child: SliderSideButton(
-                                  icon: FontAwesomeIcons.minus,
-                                  onPress: () {
-                                    setState(() {
-                                      decrementFractionNow(); // perform increment
-                                    });
-                                  },
-                                )),
-                            SizedBox(height: 10.0),
-                            Expanded(
-                              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                              // DECREMENT DECREMENT DECREMENT DECREMENT DECREMENT
-                              // Does not care if it is kgs or lbs
-                              flex: 1,
-                              child: SliderSideButton(
-                                icon: FontAwesomeIcons.chevronCircleDown,
-                                onPress: () {
-                                  setState(() {
-                                    decrementNow(); // Decrement now!
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
+                        // HEIGHT HEIGHT HEIGHT
+                        colour: cHeight.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cHeight.text,
+                          unit: cHeight.unit,
+                          value: cHeight.length,
+                          min: cHeight.min,
+                          max: cHeight.max,
+                          toggleText: cHeight.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.height),
                         ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.height;
+                          });
+                          await popupDialog(
+                            context,
+                            text: cHeight.text,
+                            unit: cHeight.unit,
+                            value: cHeight.length,
+                            min: cHeight.min,
+                            max: cHeight.max,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: isMYMCA | isHERITAGE,
+                      child: ReusableCard(
+                        // WEIGHT WEIGHT WEIGHT
+                        colour: cWeight.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cWeight.text,
+                          unit: cWeight.unit,
+                          value: cWeight.weight,
+                          min: cWeight.min,
+                          max: cWeight.max,
+                          toggleText: cWeight.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.weight),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.weight;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cWeight.text,
+                            unit: cWeight.unit,
+                            value: cWeight.weight,
+                            min: cWeight.min,
+                            max: cWeight.max,
+                            toggleText: cWeight.toggleText,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
+                      child: ReusableCard(
+                        // WAIST WAIST
+                        colour: cWaist.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cWaist.text,
+                          unit: cWaist.unit,
+                          value: cWaist.length,
+                          min: cWaist.min,
+                          max: cWaist.max,
+                          toggleText: cWaist.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.waist),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.waist;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cWaist.text,
+                            unit: cWaist.unit,
+                            value: cWaist.length,
+                            min: cWaist.min,
+                            max: cWaist.max,
+                            toggleText: cWaist.toggleText,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
+                      child: ReusableCard(
+                        // HIPS HIPS
+                        colour: cHips.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cHips.text,
+                          unit: cHips.unit,
+                          value: cHips.length,
+                          min: cHips.min,
+                          max: cHips.max,
+                          toggleText: cHips.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.hip),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.hip;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cHips.text,
+                            unit: cHips.unit,
+                            value: cHips.length,
+                            min: cHips.min,
+                            max: cHips.max,
+                            toggleText: cHips.toggleText,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
+                      child: ReusableCard(
+                        // FOREARM FOREARM
+                        colour: cForearm.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cForearm.text,
+                          unit: cForearm.unit,
+                          value: cForearm.length,
+                          min: cForearm.min,
+                          max: cForearm.max,
+                          toggleText: cForearm.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.forearm),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.forearm;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cForearm.text,
+                            unit: cForearm.unit,
+                            value: cForearm.length,
+                            min: cForearm.min,
+                            max: cForearm.max,
+                            toggleText: cForearm.toggleText,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
+                      child: ReusableCard(
+                        // WRIST WRIST
+                        colour: cWrist.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cWrist.text,
+                          unit: cWrist.unit,
+                          value: cWrist.length,
+                          min: cWrist.min,
+                          max: cWrist.max,
+                          toggleText: cWrist.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.wrist),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.wrist;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cWrist.text,
+                            unit: cWrist.unit,
+                            value: cWrist.length,
+                            min: cWrist.min,
+                            max: cWrist.max,
+                            toggleText: cWrist.toggleText,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: (isCOVERTBAILEY & isFemale),
+                      child: ReusableCard(
+                        // THIGH THIGH
+                        colour: cThigh.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cThigh.text,
+                          unit: cThigh.unit,
+                          value: cThigh.length,
+                          min: cThigh.min,
+                          max: cThigh.max,
+                          toggleText: cThigh.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.thigh),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.thigh;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cThigh.text,
+                            unit: cThigh.unit,
+                            value: cThigh.length,
+                            min: cThigh.min,
+                            max: cThigh.max,
+                            toggleText: cThigh.toggleText,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: (isCOVERTBAILEY & isFemale),
+                      child: ReusableCard(
+                        // CALF CALF
+                        colour: cCalf.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cCalf.text,
+                          unit: cCalf.unit,
+                          value: cCalf.length,
+                          min: cCalf.min,
+                          max: cCalf.max,
+                          toggleText: cCalf.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.calf),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.calf;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cCalf.text,
+                            unit: cCalf.unit,
+                            value: cCalf.length,
+                            min: cCalf.min,
+                            max: cCalf.max,
+                            toggleText: cCalf.toggleText,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: isUSNAVY,
+                      child: ReusableCard(
+                        // NECK NECK
+                        colour: cNeck.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        widgetContents: statsCardContent(
+                          text: cNeck.text,
+                          unit: cNeck.unit,
+                          value: cNeck.length,
+                          min: cNeck.min,
+                          max: cNeck.max,
+                          toggleText: cNeck.toggleText,
+                          selected: (sliderValues.selectedButton == ButtonScale.neck),
+                        ),
+                        onPressedMy: () async {
+                          setState(() {
+                            sliderValues.selectedButton = ButtonScale.neck;
+                          });
+                          // startAnimateSlider();
+                          await popupDialog(
+                            context,
+                            text: cNeck.text,
+                            unit: cNeck.unit,
+                            value: cNeck.length,
+                            min: cNeck.min,
+                            max: cNeck.max,
+                            toggleText: cNeck.toggleText,
+                          );
+                          setState(() {});
+                        },
                       ),
                     ),
                   ],
@@ -794,6 +696,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
+          // backgroundColor: kInActiveButtonColor,
           contentPadding: EdgeInsets.zero,
           // The TEXT above the slider
           title: Row(
@@ -841,56 +744,56 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
           ),
           // the SLIDER SLIDER
           content: Column(
+            // This column is necessary to set the diaglog height to minimum
             mainAxisSize: MainAxisSize.min,
             children: [
-              ReusableCard(
-                colour: kActiveButtonColor,
-                widgetContents: Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: SliderSideButton(
-                        icon: FontAwesomeIcons.chevronCircleLeft,
-                        onPress: () {
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SizedBox(width: 5),
+                  Expanded(
+                    flex: 1,
+                    child: SliderSideButton(
+                      icon: FontAwesomeIcons.chevronCircleLeft,
+                      onPress: () {
+                        setState(() {
+                          decrementNow(); // Decrement now!
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Slider(
+                        value: sliderValues.value,
+                        min: sliderValues.min.toDouble(),
+                        max: sliderValues.max.toDouble(),
+                        activeColor: Color(0xFFEB1555),
+                        inactiveColor: Color(0xFF8D8E98),
+                        onChanged: (newValue) {
                           setState(() {
-                            decrementNow(); // Decrement now!
+                            newValueTxt(newValue); // New value in text
+                            sliderValues.value = newValue;
+/*                            print('value from popup = ' + sliderValues.value.toString());
+                            print('newValue = ' + newValue.toString());
+                            print('min = ' + sliderValues.min.toString());
+                            print('max = ' + sliderValues.max.toString());*/
                           });
-                        },
-                      ),
+                        }),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SliderSideButton(
+                      icon: FontAwesomeIcons.chevronCircleRight,
+                      onPress: () {
+                        setState(() {
+                          incrementNow(); // perform increment
+                        });
+                      },
                     ),
-                    Expanded(
-                      flex: 8,
-                      child: Slider(
-                          value: sliderValues.value,
-                          min: sliderValues.min.toDouble(),
-                          max: sliderValues.max.toDouble(),
-                          activeColor: Color(0xFFEB1555),
-                          inactiveColor: Color(0xFF8D8E98),
-                          onChanged: (newValue) {
-                            setState(() {
-                              newValueTxt(newValue); // New value in text
-                              sliderValues.value = newValue;
-                              print('value from popup = ' + sliderValues.value.toString());
-                              print('newValue = ' + newValue.toString());
-                              print('min = ' + sliderValues.min.toString());
-                              print('max = ' + sliderValues.max.toString());
-                            });
-                          }),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: SliderSideButton(
-                        icon: FontAwesomeIcons.chevronCircleRight,
-                        onPress: () {
-                          setState(() {
-                            incrementNow(); // perform increment
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 5),
+                ],
               ),
             ],
           ),
@@ -899,12 +802,16 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MaterialButton(
+                  color: kSmallButtonColor,
                   onPressed: () {
                     setState(() {
                       decrementFractionNow(); // perform increment
                     });
                   },
                   child: Text('- 0.1'),
+                ),
+                SizedBox(
+                  width: 10,
                 ),
                 MaterialButton(
                   onPressed: () {
@@ -913,7 +820,11 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                   child: Text('OK'),
                   color: kBottomContainerColor,
                 ),
+                SizedBox(
+                  width: 10,
+                ),
                 MaterialButton(
+                  color: kSmallButtonColor,
                   onPressed: () {
                     setState(() {
                       incrementFractionNow(); // perform increment
@@ -972,19 +883,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
           // The value above executes all the time so it updates whenever the unit is toggled
           style: kUnitTextStyle,
           // textAlign: TextAlign.center,
-        ),
-
-        // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-        // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-        UnitToggleButton(
-          // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
-          //text: toggleText,
-          enabled: disableToggleOnAge(text),
-          onPress: () {
-            setState(() {
-              toggleNow(text, unit); // Change the value after toggle
-            });
-          },
         ),
       ],
     );
@@ -1069,6 +967,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   // The new value in text returned by the slider
   void newValueTxt(double newValue) {
     switch (sliderValues.selectedButton) {
+      // Maybe Change sliderValues.selectedButton to scale.text
       case ButtonScale.age:
         cAge.movingValue(newValue);
         break;
@@ -1435,6 +1334,8 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
 
     // sliderForAll(value: value, min: min, max: max); // updates slider to the current button
   }
+
+  // change color of the button of value is changed
 
   // Simply animates slider
 /*  startAnimateSlider() {

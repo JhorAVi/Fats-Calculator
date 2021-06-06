@@ -78,7 +78,7 @@ class UnitToggleButton extends StatelessWidget {
         height: 40,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      fillColor: Color(0xFF4C4F5E),
+      fillColor: kSmallButtonColor,
       child: Icon(
         FontAwesomeIcons.caretDown,
         size: 20,
@@ -131,7 +131,7 @@ class SliderSideButton extends StatelessWidget {
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       elevation: 6.0,
-      fillColor: Color(0xFF4C4F5E),
+      fillColor: kSmallButtonColor,
     );
   }
 }

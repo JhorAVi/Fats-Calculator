@@ -693,6 +693,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   }
 
   Future<dynamic> popupDialog(
+    // All the contents here are just for initial value.
     BuildContext context, {
     final String text,
     final String unit,
@@ -701,7 +702,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     final int max,
     final String toggleText,
   }) {
-    sliderForAll(value: value, min: min, max: max); // Initial value for the dialog slider
+    sliderForAll(text); // Initial value for the dialog slider
     return showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
@@ -747,6 +748,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 onPress: () {
                   setState(() {
                     toggleNow(text, unitDisplay(text)); // Change the value after toggle
+                    sliderForAll(text); // NEW
                   });
                 },
               ),
@@ -862,7 +864,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
       final String toggleText,
       final bool selected,
       final bool changed}) {
-    if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider.
+    // if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider.
     // The above function executes all the time so it updates the slider values anytime you
     // press the increment or decrement or any operation
 
@@ -910,19 +912,72 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   }
 
   // assign the slider to the pressed button
-  void sliderForAll({double value, int min, int max}) {
+  void sliderForAll(String text) {
     //sliderValues.text = text;
-    sliderValues.value = value;
+    /* sliderValues.value = value;
     sliderValues.min = min;
-    sliderValues.max = max;
+    sliderValues.max = max;*/
     //sliderValues.unit = unit;
+
+    if (text == "AGE") {
+      sliderValues.selectedButton = ButtonScale.age;
+      sliderValues.value = cAge.age;
+      sliderValues.min = cAge.min;
+      sliderValues.max = cAge.max;
+    } else if (text == "HEIGHT") {
+      sliderValues.selectedButton = ButtonScale.height;
+      sliderValues.value = cHeight.length;
+      sliderValues.min = cHeight.min;
+      sliderValues.max = cHeight.max;
+    } else if (text == "WEIGHT") {
+      sliderValues.selectedButton = ButtonScale.weight;
+      sliderValues.value = cWeight.weight;
+      sliderValues.min = cWeight.min;
+      sliderValues.max = cWeight.max;
+    } else if (text == "WAIST") {
+      sliderValues.selectedButton = ButtonScale.waist;
+      sliderValues.value = cWaist.length;
+      sliderValues.min = cWaist.min;
+      sliderValues.max = cWaist.max;
+    } else if (text == "HIP") {
+      sliderValues.selectedButton = ButtonScale.hip;
+      sliderValues.value = cHips.length;
+      sliderValues.min = cHips.min;
+      sliderValues.max = cHips.max;
+    } else if (text == "FOREARM") {
+      sliderValues.selectedButton = ButtonScale.forearm;
+      sliderValues.value = cForearm.length;
+      sliderValues.min = cForearm.min;
+      sliderValues.max = cForearm.max;
+    } else if (text == "WRIST") {
+      sliderValues.selectedButton = ButtonScale.wrist;
+      sliderValues.value = cWrist.length;
+      sliderValues.min = cWrist.min;
+      sliderValues.max = cWrist.max;
+    } else if (text == "THIGH") {
+      sliderValues.selectedButton = ButtonScale.thigh;
+      sliderValues.value = cThigh.length;
+      sliderValues.min = cThigh.min;
+      sliderValues.max = cThigh.max;
+    } else if (text == "CALF") {
+      sliderValues.selectedButton = ButtonScale.calf;
+      sliderValues.value = cCalf.length;
+      sliderValues.min = cCalf.min;
+      sliderValues.max = cCalf.max;
+    } else if (text == "NECK") {
+      sliderValues.selectedButton = ButtonScale.neck;
+      sliderValues.value = cNeck.length;
+      sliderValues.min = cNeck.min;
+      sliderValues.max = cNeck.max;
+    }
   }
 
   // The actual value depending on the text
   // text is passed instead of sliderValue because there are many individual buttons
   String currentValueTxt(String text) {
-    if (text == 'AGE') return cAge.ageDisplay;
-    if (text == 'WEIGHT')
+    if (text == 'AGE')
+      return cAge.ageDisplay;
+    else if (text == 'WEIGHT')
       return cWeight.weightDisplay;
     else if (text == 'HEIGHT')
       return cHeight.lengthDisplay;
@@ -964,8 +1019,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   String unitDisplay(String text) {
     // I've just changed this from STring to void
     String unit = '';
-    if (text == "AGE") unit = cAge.unit;
-    if (text == "HEIGHT")
+    if (text == "AGE")
+      unit = cAge.unit;
+    else if (text == "HEIGHT")
       unit = cHeight.unit;
     else if (text == "WEIGHT")
       unit = cWeight.unit;
@@ -1299,58 +1355,58 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   void toggleNow(String text, String unit) {
     if (text == 'HEIGHT' && unit == 'cm.') {
       cHeight.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.height;
+      //sliderValues.selectedButton = ButtonScale.height;
     } else if (text == 'HEIGHT' && unit == 'in.') {
       cHeight.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.height;
+      //sliderValues.selectedButton = ButtonScale.height;
     } else if (text == 'WEIGHT' && unit == 'kgs') {
       cWeight.toggleToLbs();
-      sliderValues.selectedButton = ButtonScale.weight;
+      //sliderValues.selectedButton = ButtonScale.weight;
     } else if (text == 'WEIGHT' && unit == 'lbs') {
       cWeight.toggleToKilograms();
-      sliderValues.selectedButton = ButtonScale.weight;
+      //sliderValues.selectedButton = ButtonScale.weight;
     } else if (text == 'WAIST' && unit == 'cm.') {
       cWaist.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.waist;
+      // sliderValues.selectedButton = ButtonScale.waist;
     } else if (text == 'WAIST' && unit == 'in.') {
       cWaist.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.waist;
+      //sliderValues.selectedButton = ButtonScale.waist;
     } else if (text == 'HIP' && unit == 'cm.') {
       cHips.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.hip;
+      //sliderValues.selectedButton = ButtonScale.hip;
     } else if (text == 'HIP' && unit == 'in.') {
       cHips.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.hip;
+      //sliderValues.selectedButton = ButtonScale.hip;
     } else if (text == 'FOREARM' && unit == 'cm.') {
       cForearm.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.forearm;
+      //sliderValues.selectedButton = ButtonScale.forearm;
     } else if (text == 'FOREARM' && unit == 'in.') {
       cForearm.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.forearm;
+      //sliderValues.selectedButton = ButtonScale.forearm;
     } else if (text == 'WRIST' && unit == 'cm.') {
       cWrist.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.wrist;
+      //sliderValues.selectedButton = ButtonScale.wrist;
     } else if (text == 'WRIST' && unit == 'in.') {
       cWrist.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.wrist;
+      //sliderValues.selectedButton = ButtonScale.wrist;
     } else if (text == 'THIGH' && unit == 'cm.') {
       cThigh.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.thigh;
+      //sliderValues.selectedButton = ButtonScale.thigh;
     } else if (text == 'THIGH' && unit == 'in.') {
       cThigh.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.thigh;
+      //sliderValues.selectedButton = ButtonScale.thigh;
     } else if (text == 'CALF' && unit == 'cm.') {
       cCalf.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.calf;
+      //sliderValues.selectedButton = ButtonScale.calf;
     } else if (text == 'CALF' && unit == 'in.') {
       cCalf.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.calf;
+      //sliderValues.selectedButton = ButtonScale.calf;
     } else if (text == 'NECK' && unit == 'cm.') {
       cNeck.toggleToInches();
-      sliderValues.selectedButton = ButtonScale.neck;
+      //sliderValues.selectedButton = ButtonScale.neck;
     } else if (text == 'NECK' && unit == 'in.') {
       cNeck.toggleToCentimeters();
-      sliderValues.selectedButton = ButtonScale.neck;
+      //sliderValues.selectedButton = ButtonScale.neck;
     }
 
     // sliderForAll(value: value, min: min, max: max); // updates slider to the current button

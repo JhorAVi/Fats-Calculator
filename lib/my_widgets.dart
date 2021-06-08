@@ -80,7 +80,7 @@ class UnitToggleButton extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       fillColor: kSmallButtonColor,
       child: Icon(
-        FontAwesomeIcons.caretDown,
+        enabled ? FontAwesomeIcons.caretDown : null,
         size: 20,
       ),
     );

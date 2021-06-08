@@ -303,6 +303,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           min: cAge.min,
                           max: cAge.max,
                           selected: (sliderValues.selectedButton == ButtonScale.age),
+                          changed: cAge.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -336,6 +337,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cHeight.max,
                           toggleText: cHeight.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.height),
+                          changed: cHeight.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -367,6 +369,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cWeight.max,
                           toggleText: cWeight.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.weight),
+                          changed: cWeight.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -400,6 +403,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cWaist.max,
                           toggleText: cWaist.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.waist),
+                          changed: cWaist.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -432,6 +436,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cHips.max,
                           toggleText: cHips.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.hip),
+                          changed: cHips.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -464,6 +469,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cForearm.max,
                           toggleText: cForearm.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.forearm),
+                          changed: cForearm.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -496,6 +502,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cWrist.max,
                           toggleText: cWrist.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.wrist),
+                          changed: cWrist.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -529,6 +536,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cThigh.max,
                           toggleText: cThigh.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.thigh),
+                          changed: cThigh.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -562,6 +570,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cCalf.max,
                           toggleText: cCalf.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.calf),
+                          changed: cCalf.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -594,6 +603,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           max: cNeck.max,
                           toggleText: cNeck.toggleText,
                           selected: (sliderValues.selectedButton == ButtonScale.neck),
+                          changed: cNeck.changed,
                         ),
                         onPressedMy: () async {
                           setState(() {
@@ -850,39 +860,50 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
       final int min,
       final int max,
       final String toggleText,
-      final bool selected}) {
+      final bool selected,
+      final bool changed}) {
     if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider.
     // The above function executes all the time so it updates the slider values anytime you
     // press the increment or decrement or any operation
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          // WEIGHT or HEIGHT TEXT
-          text,
-          style: kTextStyle,
+      children: [
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                // WEIGHT or HEIGHT TEXT
+                text,
+                style: kTextStyle,
+              ),
+              SizedBox(width: 10),
+              // tap to Add .1 decimal accuracy to the value
+              Text(
+                // SLIDER CURRENT VALUE NUMBER
+                currentValueTxt(text),
+                style: kAgeTextStyle,
+              ),
+              Text(
+                currentFeetText(text, unit),
+                style: kUnitTextStyle, // show feet or not
+              ),
+              Text(
+                currentInchesText(text, unit),
+                style: kAgeTextStyle, // show inch fraction or not
+              ),
+              Text(
+                ' $unit', // Displays Inches or cm etc.
+                // The value above executes all the time so it updates whenever the unit is toggled
+                style: kUnitTextStyle,
+                // textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
-        SizedBox(width: 10),
-        // tap to Add .1 decimal accuracy to the value
-        Text(
-          // SLIDER CURRENT VALUE NUMBER
-          currentValueTxt(text),
-          style: kAgeTextStyle,
-        ),
-        Text(
-          currentFeetText(text, unit),
-          style: kUnitTextStyle, // show feet or not
-        ),
-        Text(
-          currentInchesText(text, unit),
-          style: kAgeTextStyle, // show inch fraction or not
-        ),
-        Text(
-          ' $unit', // Displays Inches or cm etc.
-          // The value above executes all the time so it updates whenever the unit is toggled
-          style: kUnitTextStyle,
-          // textAlign: TextAlign.center,
+        Icon(
+          changed ? FontAwesomeIcons.check : null,
+          size: 15.0,
         ),
       ],
     );

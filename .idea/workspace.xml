@@ -32,23 +32,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7eb17980-39ef-4344-b507-e5665d1f40f3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/.filecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/app.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/debug_android_application.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/debug_android_application.stamp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/flutter_assets.d" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/flutter_assets.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/bf_tape_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bf_tape_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/input_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/input_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/scale_class.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/scale_class.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -344,7 +329,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623180297486</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Cleaned the code.&#10;Found issue where &quot;ft&quot; is not displayed after toggle">
+      <created>1623324333917</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1623324333917</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,7 +364,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Splified the classes and display. Preparing for merging Age Widget with the rest of the length Widget" />
     <MESSAGE value="Cleaned up the code a bit" />
     <MESSAGE value="Before modifying input page" />
     <MESSAGE value="Fixed the input page bug with bmi conversion" />
@@ -397,7 +388,8 @@
     <MESSAGE value="Done adding checkboxes to finished buttons (discovered that Alert Dialog under StatefulBuilder doesn't update upon change)" />
     <MESSAGE value="Done adding checkboxes to finished buttons&#10; (discovered that Alert Dialog under StatefulBuilder doesn't update upon change)&#10; Issue: The slider min max does't update after toggle." />
     <MESSAGE value="Fixed the slider min max issue after toggle." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the slider min max issue after toggle." />
+    <MESSAGE value="Cleaned the code.&#10;Found issue where &quot;ft&quot; is not displayed after toggle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaned the code.&#10;Found issue where &quot;ft&quot; is not displayed after toggle" />
   </component>
   <component name="WindowStateProjectService">
     <state x="653" y="274" width="454" height="475" key="#Notifications" timestamp="1614058006304">
@@ -424,10 +416,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-6" y="64" width="1038" height="624" maximized="true" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1623293048753" />
-    <state x="242" y="0" key="CommitChangelistDialog2" timestamp="1623180295918">
+    <state x="242" y="0" key="CommitChangelistDialog2" timestamp="1623324306492">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="242" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1623180295918" />
+    <state x="242" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1623324306492" />
     <state x="100" y="100" width="1336" height="624" key="DiffContextDialog" timestamp="1614762649245">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -456,10 +448,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="84" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1623293072132" />
-    <state x="360" y="144" key="Vcs.Push.Dialog.v2" timestamp="1623180316518">
+    <state x="360" y="144" key="Vcs.Push.Dialog.v2" timestamp="1623324363752">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="360" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1623180316518" />
+    <state x="360" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1623324363752" />
     <state x="100" y="100" width="1336" height="624" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1623316831800">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -307,7 +307,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cAge.text,
-                            unit: cAge.unit,
                             value: cAge.age,
                             min: cAge.min,
                             max: cAge.max,
@@ -332,7 +331,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cHeight.text,
-                            unit: cHeight.unit,
                             value: cHeight.length,
                             min: cHeight.min,
                             max: cHeight.max,
@@ -358,7 +356,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cWeight.text,
-                            unit: cWeight.unit,
                             value: cWeight.weight,
                             min: cWeight.min,
                             max: cWeight.max,
@@ -384,7 +381,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cWaist.text,
-                            unit: cWaist.unit,
                             value: cWaist.length,
                             min: cWaist.min,
                             max: cWaist.max,
@@ -409,7 +405,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cHips.text,
-                            unit: cHips.unit,
                             value: cHips.length,
                             min: cHips.min,
                             max: cHips.max,
@@ -434,7 +429,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cForearm.text,
-                            unit: cForearm.unit,
                             value: cForearm.length,
                             min: cForearm.min,
                             max: cForearm.max,
@@ -459,7 +453,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cWrist.text,
-                            unit: cWrist.unit,
                             value: cWrist.length,
                             min: cWrist.min,
                             max: cWrist.max,
@@ -485,7 +478,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cThigh.text,
-                            unit: cThigh.unit,
                             value: cThigh.length,
                             min: cThigh.min,
                             max: cThigh.max,
@@ -511,7 +503,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cCalf.text,
-                            unit: cCalf.unit,
                             value: cCalf.length,
                             min: cCalf.min,
                             max: cCalf.max,
@@ -536,7 +527,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           await popupDialog(
                             context,
                             text: cNeck.text,
-                            unit: cNeck.unit,
                             value: cNeck.length,
                             min: cNeck.min,
                             max: cNeck.max,
@@ -618,7 +608,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     // All the contents here are just for initial value.
     BuildContext context, {
     final String text,
-    final String unit, // initial unit value
     final double value, // To display the initial value depending on the metrics
     final int min, // initial min value
     final int max, // initial max value
@@ -643,24 +632,25 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 style: kTextStyle,
               ),
               SizedBox(width: 10),
-              // tap to Add .1 decimal accuracy to the value
               Text(
                 // SLIDER CURRENT VALUE NUMBER
                 currentValueTxt(text),
                 style: kAgeTextStyle,
               ),
               Text(
-                currentFeetText(text, unit),
-                style: kUnitTextStyle, // show feet or not
+                // FEET OR NOT
+                currentFeetText(text, unitDisplay(text)),
+                style: kUnitTextStyle,
               ),
               Text(
-                currentInchesText(text, unit),
-                style: kAgeTextStyle, // show inch fraction or not
+                // DECIMAL FROM INCHES
+                currentInchesText(text, unitDisplay(text)),
+                style: kAgeTextStyle,
               ),
               Text(
+                // INCHES OR NOT
                 ' ${unitDisplay(text)}',
                 style: kUnitTextStyle,
-                // textAlign: TextAlign.center,
               ),
 
               // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
@@ -811,15 +801,18 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 style: kAgeTextStyle,
               ),
               Text(
+                // FEET OR NOT
                 currentFeetText(text, unit),
-                style: kUnitTextStyle, // show feet or not
+                style: kUnitTextStyle,
               ),
               Text(
+                // DECIMAL FROM INCHES
                 currentInchesText(text, unit),
-                style: kAgeTextStyle, // show inch fraction or not
+                style: kAgeTextStyle,
               ),
               Text(
-                ' $unit', // Displays Inches or cm etc.
+                // INCHES OR NOT
+                ' $unit',
                 // The value above executes all the time so it updates whenever the unit is toggled
                 style: kUnitTextStyle,
                 // textAlign: TextAlign.center,
@@ -837,15 +830,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
 
   // assign the slider to the pressed button
   void sliderUpdate(String text) {
-    //sliderValues.text = text;
-    /* sliderValues.value = value;
-    sliderValues.min = min;
-    sliderValues.max = max;*/
-    //sliderValues.unit = unit;
-
     if (text == "AGE") {
-      sliderValues.selectedButton = ButtonScale.age;
-      sliderValues.value = cAge.age;
+      sliderValues.selectedButton = ButtonScale.age; // USELESS
+      sliderValues.value = cAge.age; // useless
       sliderValues.min = cAge.min;
       sliderValues.max = cAge.max;
     } else if (text == "HEIGHT") {
@@ -930,7 +917,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   }
 
   // Process the inches display part
-  String currentInchesText(String text, unit) {
+  String currentInchesText(String text, String unit) {
     return (text == 'HEIGHT' && unit == 'in.') ? cHeight.inchesDisplay : '';
   }
 

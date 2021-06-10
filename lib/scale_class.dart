@@ -71,7 +71,7 @@ class AgeScale {
     }
   }
 
-  void movingValue(double newValue) {
+  void editValue(double newValue) {
     if (min + 1 < newValue && max - 1 > newValue) {
       // deduct 1 in range for safety
       age = newValue.roundToDouble(); // remove fractions for now
@@ -170,7 +170,7 @@ class WeightScale {
     }
   }
 
-  void movingValue(double newValue) {
+  void editValue(double newValue) {
     if (min + 1 < newValue && max - 1 > newValue) {
       // deduct 1 in range for safety
       weight = newValue.roundToDouble(); // remove fractions for now
@@ -294,7 +294,7 @@ class LengthScale {
     }
   }
 
-  void movingValue(double newValue) {
+  void editValue(double newValue) {
     if (min + 1 < newValue && max - 1 > newValue) {
       // deduct 1 in range for safety
       length = newValue.roundToDouble();

@@ -280,8 +280,8 @@ class _InputPageState extends State<InputPage> {
   void newValueTxt(String text, double newValue) {
     // I've just changed this from STring to void
     if (text == "HEIGHT")
-      cHeight.movingValue(newValue);
-    else if (text == "WEIGHT") cWeight.movingValue(newValue);
+      cHeight.editValue(newValue);
+    else if (text == "WEIGHT") cWeight.editValue(newValue);
   }
 
   // increment by fraction

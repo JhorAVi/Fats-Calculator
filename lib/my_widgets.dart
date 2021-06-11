@@ -138,12 +138,19 @@ class SliderSideButton extends StatelessWidget {
 
 // Tabs Tabs Tabs
 class TabWidget extends StatefulWidget {
-  final String title, description, formula;
+  final String title, description, formula, tips;
   final int introIndex;
   final Function onPressed;
-  final Function animate;
+  //final Function animate;
 
-  TabWidget({this.title, this.description, this.formula, this.introIndex, this.onPressed, this.animate});
+  TabWidget({
+    this.title,
+    this.description,
+    this.formula,
+    this.introIndex,
+    this.tips,
+    this.onPressed,
+  });
 
   @override
   _TabWidgetState createState() => _TabWidgetState();
@@ -154,7 +161,7 @@ class _TabWidgetState extends State<TabWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.animate;
+    //widget.animate;
   }
 
   @override
@@ -162,29 +169,33 @@ class _TabWidgetState extends State<TabWidget> {
     return Column(
       children: [
         Container(
+          // Contains the text information except the button
           padding: EdgeInsets.only(left: 5, top: 5, right: 5),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text(
-                  widget.title,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  widget.description,
-                  textAlign: TextAlign.left,
-                ),
-                // Image.asset('images/CodeYMCA.png', height: 100, fit: BoxFit.fill)
-                Text(
-                  'Formula:',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  widget.formula,
-                  style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green, fontSize: 14),
-                ),
-              ],
-            ),
+          child: Column(
+            children: <Widget>[
+              Text(
+                widget.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17),
+              ),
+              Text(
+                widget.description,
+                textAlign: TextAlign.left,
+              ),
+              // Image.asset('images/CodeYMCA.png', height: 100, fit: BoxFit.fill)
+              Text(
+                'Formula:',
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                widget.formula,
+                style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green, fontSize: 14),
+              ),
+              Text(
+                widget.tips,
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
         SizedBox(

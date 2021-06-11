@@ -60,7 +60,7 @@ enum FatFormula {
   HERIGATE,
 }
 const kYMCADescription =
-    'This is the most reliable method and was developed by the YMCA as a simple way to estimate your body fat percentage. Weight is part of the formula.\n';
+    '\nThis is the most reliable method and was developed by the YMCA as a simple way to estimate your body fat percentage. Weight is part of the formula.\n';
 const kYMCAFormula = 'if (isFemale)\n'
     '     _fatsYMCA = ((0.268 * weight - 0.318 * wrist + 0.157 * waist\n'
     '     + 0.245 * hips - 0.434 * forearm - 8.987) / weight) * 100;\n'
@@ -69,7 +69,7 @@ const kYMCAFormula = 'if (isFemale)\n'
     '     * 100;';
 
 const kUSNAVYDescription =
-    'Department of Defense a.k.a. US Navy: Very reliable. Height is part of the formula but no weight. The demographics though are young and healthy.\n';
+    '\nDepartment of Defense a.k.a. US Navy: Very reliable. Height is part of the formula but no weight. The demographics though are young and healthy.\n';
 const kUSNAVYFormula = 'if (isFemale)\n'
     '     _fatsUSNAVY = 163.205 * log10(waist + hips - neck)\n'
     '     - 97.684 * log10(height) - 78.387;\n'
@@ -77,7 +77,7 @@ const kUSNAVYFormula = 'if (isFemale)\n'
     '     _fatsUSNAVY = 86.01 * log10(waist - neck)\n'
     '     - 70.041 * log10(height) + 36.76;';
 
-const kHeritageDescription = 'This method is very simplistic as the only variables needed are your age and your Body Mass Index\n';
+const kHeritageDescription = '\nThis method is very simplistic as the only variables needed are your age and your Body Mass Index.\n';
 const kHeritageFormula = 'double bmi = weightKg / (pow(heightCm / 100, 2));\n'
     'if (isFemale)\n'
     '     _fatsHERITAGE = (1.39 * bmi) + (0.16 * age) - 9;\n'
@@ -85,7 +85,7 @@ const kHeritageFormula = 'double bmi = weightKg / (pow(heightCm / 100, 2));\n'
     '     _fatsHERITAGE = (1.39 * bmi) + (0.16 * age) - 19.34;';
 
 const kCovertBaileyDescription =
-    'This is probably the newest method among the list created by a well known diet guru. Maybe better for active people. It does\'nt use height nor weight\n';
+    '\nThis is probably the newest method among the list created by a well known diet guru. Maybe better for active people. It does\'nt use height nor weight.\n';
 const kCoverBaileyFormula = 'if (isFemale) {\n'
     '     if (age <= 30)\n'
     '          _fatsCOVERTBAILEY = hips + (0.8 * thigh) - (2 * calf) - wrist;\n'
@@ -97,3 +97,7 @@ const kCoverBaileyFormula = 'if (isFemale) {\n'
     '     else\n'
     '          _fatsCOVERTBAILEY = waist + (0.5 * hips) - (2.7 * forearm) - wrist;\n'
     '}';
+const kTips = '\n-------------------------------------------\n\n'
+    '* Tips *\n\n'
+    'Results from different formulas will vary slightly depending on the individual\'s body shape. To insure a consistent '
+    'result, use the same formula for tracking your progress.\n';

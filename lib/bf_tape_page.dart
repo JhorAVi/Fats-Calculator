@@ -60,31 +60,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     Tab(text: 'Heritage'),
   ];
 
-  final _kTabPages = <Widget>[
-    // probably useless
-    TabWidget(
-      title: 'Modified YMCA',
-      description: kYMCADescription,
-      formula: kYMCAFormula,
-      //animate: animateButton,
-    ),
-    TabWidget(
-      title: 'Department of Defense a.k.a. US Navy',
-      description: kUSNAVYDescription,
-      formula: kUSNAVYFormula,
-    ),
-    TabWidget(
-      title: 'Covert Bailey',
-      description: kCovertBaileyDescription,
-      formula: kCoverBaileyFormula,
-    ),
-    TabWidget(
-      title: 'Heritage',
-      description: kHeritageDescription,
-      formula: kHeritageFormula,
-    ),
-  ];
-
   // Tab controller
   TabController _tabController;
 
@@ -92,7 +67,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     selectedGender = Gender.male; // set male as default
-    sliderValues.selectedButton = ButtonScale.age; // set age as default
+    // sliderValues.selectedButton = ButtonScale.age; // set age as default. useless
     _tabController = new TabController(vsync: this, length: _kTabs.length);
 
     animateSlider = AnimationController(vsync: this, duration: Duration(seconds: 1), lowerBound: 1, upperBound: 407);
@@ -185,57 +160,63 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
           // Tab INTRO before showing the scale buttons
           Visibility(
             visible: introVisible,
-            child: Container(
-              // TAB Contents VIEW
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-              // color: kInActiveButtonColor,
-              child: TabWidget(
-                  title: introData.title[introIndex],
-                  description: introData.description[introIndex],
-                  formula: introData.formula[introIndex],
-                  introIndex: introIndex,
-                  animate: (val) {
-                    val.forward();
-                    val.addListener(() {
-                      print(val.animate.value);
-                      setState(() {});
-                    });
-                  },
-                  onPressed: () {
-                    // When the close intro button is pressed
-                    setState(() {
-                      introVisible = false;
-                      scalesVisible = true;
-                      sliderValues.selectedButton = ButtonScale.age;
-                      if (introIndex == 0) {
-                        isMYMCA = true;
-                        isUSNAVY = false;
-                        isCOVERTBAILEY = false;
-                        isHERITAGE = false;
-                        selectedFatFormula = FatFormula.MYMCA;
-                      } else if (introIndex == 1) {
-                        isMYMCA = false;
-                        isUSNAVY = true;
-                        isCOVERTBAILEY = false;
-                        isHERITAGE = false;
-                        selectedFatFormula = FatFormula.USNAVY;
-                      } else if (introIndex == 2) {
-                        isMYMCA = false;
-                        isUSNAVY = false;
-                        isCOVERTBAILEY = true;
-                        isHERITAGE = false;
-                        selectedFatFormula = FatFormula.COVERTBAILEY;
-                      } else if (introIndex == 3) {
-                        isMYMCA = false;
-                        isUSNAVY = false;
-                        isCOVERTBAILEY = false;
-                        isHERITAGE = true;
-                        selectedFatFormula = FatFormula.HERIGATE;
-                      }
-                    });
-                  }),
+            child: Expanded(
+              // this is the reason why SingleShildScrollView works
+              child: SingleChildScrollView(
+                child: Container(
+                  // TAB Contents VIEW
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(3.0),
+                  decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                  // color: kInActiveButtonColor,
+                  child: TabWidget(
+                      title: introData.title[introIndex],
+                      description: introData.description[introIndex],
+                      formula: introData.formula[introIndex],
+                      introIndex: introIndex,
+                      tips: introData.tips,
+/*                  animate: (val) {
+                        val.forward();
+                        val.addListener(() {
+                          print(val.animate.value);
+                          setState(() {});
+                        });
+                      },*/
+                      onPressed: () {
+                        // When the close intro button is pressed
+                        setState(() {
+                          introVisible = false;
+                          scalesVisible = true;
+                          sliderValues.selectedButton = ButtonScale.age;
+                          if (introIndex == 0) {
+                            isMYMCA = true;
+                            isUSNAVY = false;
+                            isCOVERTBAILEY = false;
+                            isHERITAGE = false;
+                            selectedFatFormula = FatFormula.MYMCA;
+                          } else if (introIndex == 1) {
+                            isMYMCA = false;
+                            isUSNAVY = true;
+                            isCOVERTBAILEY = false;
+                            isHERITAGE = false;
+                            selectedFatFormula = FatFormula.USNAVY;
+                          } else if (introIndex == 2) {
+                            isMYMCA = false;
+                            isUSNAVY = false;
+                            isCOVERTBAILEY = true;
+                            isHERITAGE = false;
+                            selectedFatFormula = FatFormula.COVERTBAILEY;
+                          } else if (introIndex == 3) {
+                            isMYMCA = false;
+                            isUSNAVY = false;
+                            isCOVERTBAILEY = false;
+                            isHERITAGE = true;
+                            selectedFatFormula = FatFormula.HERIGATE;
+                          }
+                        });
+                      }),
+                ),
+              ),
             ),
           ),
           // Make all the scale buttons Invisible while on tab intro

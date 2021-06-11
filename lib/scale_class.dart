@@ -6,6 +6,7 @@ class IntroData {
   var title = ['Modified YMCA', 'Department of Defense a.k.a. US Navy', 'Covert Bailey', 'Heritage'];
   var description = [kYMCADescription, kUSNAVYDescription, kCovertBaileyDescription, kHeritageDescription];
   var formula = [kYMCAFormula, kUSNAVYFormula, kCoverBaileyFormula, kHeritageFormula];
+  var tips = kTips;
 }
 
 // values used for the slider

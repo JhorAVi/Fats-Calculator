@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:dart_numerics/dart_numerics.dart';
 import 'package:bmicalculator/constants.dart';
+import 'package:flutter/material.dart';
 
 class CalcBodyFats {
   double age, weight, height, waist, hips, forearm, wrist, thigh, calf, neck;
@@ -12,9 +13,12 @@ class CalcBodyFats {
   double _fatsUSNAVY = 0.0;
   double _fatsCOVERTBAILEY = 0.0;
   double _fats = 0.0;
-  String _shortSummary = ' ';
-  String _longSummary = ' ';
+  String _shortSummary = '';
+  String _formulaSummary = '';
+  String _longSummary = '';
+  // String _fatsPrefix = ''; // > or < signs before the value
   int selFlex1, selFlex2, selFlex3;
+  Color _pointerColor;
 
   CalcBodyFats(
       {this.age,
@@ -71,6 +75,7 @@ class CalcBodyFats {
       _fatsYMCA = ((-0.082 * weight + 4.15 * waist - 94.42) / weight) * 100; // modified
 
     _fats = _fatsYMCA;
+    print("Girl = $isFemale. Age = $age with fats result of $_fats");
   }
 
   void calcHERITAGE() {
@@ -170,7 +175,7 @@ class CalcBodyFats {
         else
           displayExtremelyFat();
       } else if (age >= 36 && age <= 40) {
-        if (_fats < 36)
+        if (_fats < 14)
           displaySkinny();
         else if (_fats >= 14 && _fats <= 22)
           displayLean();
@@ -357,27 +362,31 @@ class CalcBodyFats {
           displayExtremelyFat();
       }
     }
+    // handle result errors that fall beyond normal levels
+    if (_fats < 0)
+      displayBelowLimit();
+    else if (_fats > 50) displayAboveLimit();
 
-    // long summary
+    // FATS TAPE long summary
     switch (selectedFatFormula) {
       case FatFormula.MYMCA:
         {
-          _longSummary = 'Computed using the Modified YMCA formula';
+          _formulaSummary = 'Computed using the Modified YMCA formula';
         }
         break;
       case FatFormula.USNAVY:
         {
-          _longSummary = 'Computed using the Department of Defense a.k.a US Navy formula';
+          _formulaSummary = 'Computed using the Department of Defense a.k.a US Navy formula';
         }
         break;
       case FatFormula.COVERTBAILEY:
         {
-          _longSummary = 'Computed using the Covert Bailey formula';
+          _formulaSummary = 'Computed using the Covert Bailey formula';
         }
         break;
       case FatFormula.HERIGATE:
         {
-          _longSummary = 'Computed using the Heritage BMI formula';
+          _formulaSummary = 'Computed using the Heritage BMI formula';
         }
         break;
       default:
@@ -397,6 +406,10 @@ class CalcBodyFats {
     return _longSummary;
   }
 
+  String formulaSummary() {
+    return _formulaSummary;
+  }
+
   int getFlex1() {
     return selFlex1;
   }
@@ -409,20 +422,32 @@ class CalcBodyFats {
     return selFlex3;
   }
 
+  displayBelowLimit() {
+    selFlex1 = 0;
+    selFlex2 = 17;
+    selFlex3 = 83;
+    _shortSummary = 'Too low';
+    _longSummary =
+        'The result is far lower that what humans can sustain. Please correct any wrong measurements values or unit. e.g. centimeters instead of inches.';
+    // _fatsPrefix = '<';
+  }
+
   displaySkinny() {
     selFlex1 = 0;
     selFlex2 = 17;
     selFlex3 = 83;
     _shortSummary = 'Skinny';
-    _longSummary = 'You are too underweight. Eat more and see a doctor';
+    _longSummary = 'You are too underweight. You better eat more make sure to see a doctor';
+    //_fatsPrefix = '<';
   }
 
   displayLean() {
     selFlex1 = 16;
     selFlex2 = 22;
     selFlex3 = 62;
-    _shortSummary = 'Underweight';
-    _longSummary = 'You have a lower than normal bodyweight. Try to eat some more';
+    _shortSummary = 'Lean';
+    _longSummary =
+        'You have a visually appealing figure but this fat percentage is slightly below the ideally healthy level for your age. You will be fine though';
   }
 
   displayIdeal() {
@@ -430,7 +455,7 @@ class CalcBodyFats {
     selFlex2 = 22;
     selFlex3 = 41;
     _shortSummary = 'Ideal';
-    _longSummary = 'You have a Normal body weight. Good job!';
+    _longSummary = 'You have the best and healthy body weight. Good job and continue your healthy habits!';
   }
 
   displayAverage() {
@@ -438,23 +463,33 @@ class CalcBodyFats {
     selFlex2 = 22;
     selFlex3 = 21;
     _shortSummary = 'Average';
-    _longSummary = 'You have a higher than normal body weight. Try to exercise & eat balanced diet';
+    _longSummary = 'Your body fat is average like what most people have. You are in the fat category. Try to exercise & eat balanced diet';
   }
 
   displayOverFat() {
     selFlex1 = 79;
     selFlex2 = 20;
     selFlex3 = 0;
-    _shortSummary = 'Over Fat';
-    _longSummary = 'Your body weight is too high. You should do exercise and diet control';
+    _shortSummary = 'Over fat';
+    _longSummary = 'Your body weight is quite high. You should seriously consider exercising and lowering of calorie intake';
   }
 
   displayExtremelyFat() {
-    selFlex1 = 1;
-    selFlex2 = 17;
-    selFlex3 = 82;
-    _shortSummary = "Extremely Obese";
-    _longSummary = 'Your too much weight puts you at risk. You better see a doctor';
+    selFlex1 = 79;
+    selFlex2 = 20;
+    selFlex3 = 0;
+    _shortSummary = "Extremely obese";
+    _longSummary = 'Your too much weight puts you at risk. Please see a doctor immediately!';
+  }
+
+  displayAboveLimit() {
+    selFlex1 = 79;
+    selFlex2 = 20;
+    selFlex3 = 0;
+    _shortSummary = 'Too high';
+    _longSummary =
+        'The result is far higher that what humans can sustain. Please correct any wrong measurement values or unit. e.g. centimeters instead of inches.';
+    // _fatsPrefix = '<';
   }
 }
 
@@ -498,7 +533,7 @@ class CalculatorBrain {
       _shortSummary = 'Overweight';
       _longSummary = 'You have a higher than normal body weight. Try to exercise & eat balanced diet';
     } else if (_bmi < 35) {
-      // obese
+      // obesese
       selFlex1 = 56;
       selFlex2 = 20;
       selFlex3 = 24;

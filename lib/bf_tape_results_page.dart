@@ -9,6 +9,8 @@ class BFTapeResultPage extends StatelessWidget {
   String genderPath;
   String shortSummary;
   String longSummary;
+  String formulaSummary;
+  Color pointerColor;
   final int selFlex1, selFlex2, selFlex3;
   BFTapeResultPage({
     @required this.bodyFats,
@@ -16,10 +18,42 @@ class BFTapeResultPage extends StatelessWidget {
     this.genderPath,
     this.shortSummary,
     this.longSummary,
+    this.formulaSummary,
     @required this.selFlex1,
     @required this.selFlex2,
     @required this.selFlex3,
-  });
+  }) {
+    // adjust the color of the result pointer
+    pointerColor = Colors.red; // set the default
+    switch (shortSummary) {
+      case 'Too low':
+        pointerColor = Colors.blue;
+        break;
+      case 'Skinny':
+        pointerColor = Colors.blue;
+        break;
+      case 'Lean':
+        pointerColor = Colors.red;
+        break;
+      case 'Ideal':
+        pointerColor = Colors.red;
+        break;
+      case 'Average':
+        pointerColor = Colors.red;
+        break;
+      case 'Over fat':
+        pointerColor = Colors.cyan;
+        break;
+      case 'Extremely Obese':
+        pointerColor = Colors.cyan;
+        break;
+      case 'Too high':
+        pointerColor = Colors.cyan;
+        break;
+      default:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +76,7 @@ class BFTapeResultPage extends StatelessWidget {
                       alignment: Alignment.topCenter,
                     ) // to see the overlap
                     ),
-                child: HumanPointerLayout(selFlex1, selFlex2, selFlex3),
+                child: HumanPointerLayout(selFlex1, selFlex2, selFlex3, pointerColor),
               ),
             ),
             Expanded(
@@ -57,15 +91,25 @@ class BFTapeResultPage extends StatelessWidget {
                       shortSummary,
                       style: kResultTextStyle,
                     ),
-                    Text(
-                      bodyFats.toStringAsFixed(1),
-                      style: kBMITextStyle,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          bodyFats.toStringAsFixed(1),
+                          style: kBMITextStyle,
+                        ),
+                        Text(
+                          ' %',
+                          style: TextStyle(fontSize: 30),
+                        )
+                      ],
                     ),
                     Text(
                       longSummary,
                       style: kBodyTextStyle,
                       textAlign: TextAlign.center,
                     ),
+                    Text('* $formulaSummary')
                   ],
                 ),
               ),
@@ -82,7 +126,8 @@ class BFTapeResultPage extends StatelessWidget {
 }
 
 class HumanPointerLayout extends StatelessWidget {
-  HumanPointerLayout(this.selFlex1, this.selFlex2, this.selFlex3);
+  Color pointerColor;
+  HumanPointerLayout(this.selFlex1, this.selFlex2, this.selFlex3, this.pointerColor);
 
   // the flexes from left, center, right
   final int selFlex1, selFlex2, selFlex3;
@@ -103,7 +148,7 @@ class HumanPointerLayout extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(flex: selFlex1, child: Container()), // left of pointer
-              Expanded(flex: selFlex2, child: HumanPointer()), // the three sided pointer
+              Expanded(flex: selFlex2, child: HumanPointer(pointerColor)), // the three sided pointer
               Expanded(flex: selFlex3, child: Container()), // right of the pointer
             ],
           ),
@@ -119,6 +164,9 @@ class HumanPointerLayout extends StatelessWidget {
 }
 
 class HumanPointer extends StatelessWidget {
+  HumanPointer(this.pointerColor);
+  Color pointerColor;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -138,14 +186,14 @@ class HumanPointer extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                color: Colors.red,
+                color: pointerColor,
                 //width: 5,
               ),
             ),
             Expanded(
               flex: 8,
               child: Container(
-                color: Colors.red,
+                color: pointerColor,
                 height: 5,
                 // width: 76,
               ),
@@ -153,7 +201,7 @@ class HumanPointer extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                color: Colors.red,
+                color: pointerColor,
                 //width: 5,
               ),
             )

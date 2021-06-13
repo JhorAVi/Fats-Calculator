@@ -42,13 +42,13 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   double _fatsCOVERTBAILEY = 0.0;
 
   AgeScale cAge = AgeScale(min: 5, max: 100);
-  WeightScale cWeight = WeightScale(lbsMin: 50, lbsMax: 300);
+  WeightScale cWeight = WeightScale(lbsMin: 50, lbsMax: 500);
   LengthScale cHeight = LengthScale(cmMin: 91, cmMax: 228, text: 'HEIGHT');
   LengthScale cWaist = LengthScale(cmMin: 20, cmMax: 200, text: 'WAIST');
   LengthScale cHips = LengthScale(cmMin: 20, cmMax: 200, text: 'HIPS');
   LengthScale cWrist = LengthScale(cmMin: 5, cmMax: 30, text: 'WRIST');
   LengthScale cForearm = LengthScale(cmMin: 5, cmMax: 50, text: 'FOREARM');
-  LengthScale cThigh = LengthScale(cmMin: 5, cmMax: 50, text: 'THIGH');
+  LengthScale cThigh = LengthScale(cmMin: 5, cmMax: 100, text: 'THIGH');
   LengthScale cCalf = LengthScale(cmMin: 5, cmMax: 50, text: 'CALF');
   LengthScale cNeck = LengthScale(cmMin: 5, cmMax: 50, text: 'NECK');
 
@@ -568,6 +568,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             genderPath: isFemale ? 'images/bodyFatsWomen.jpg' : 'images/bodyFatsMen.jpg',
                             shortSummary: calcBF.shortSummary(),
                             longSummary: calcBF.longSummary(),
+                            formulaSummary: calcBF.formulaSummary(),
                             selFlex1: calcBF.getFlex1(),
                             selFlex2: calcBF.getFlex2(),
                             selFlex3: calcBF.getFlex3(),

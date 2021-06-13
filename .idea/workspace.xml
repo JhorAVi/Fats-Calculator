@@ -32,11 +32,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7eb17980-39ef-4344-b507-e5665d1f40f3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/.filecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/app.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/debug_android_application.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/debug_android_application.stamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/flutter_assets.d" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/ec0dabb551c539c8fec408e9bfd0ff23/flutter_assets.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/bf_tape_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bf_tape_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/my_widgets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/my_widgets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/scale_class.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/scale_class.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bf_tape_results_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bf_tape_results_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/function_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/function_utils.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -346,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623326670948</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Started editing the text infos">
+      <created>1623425825556</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1623425825556</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -374,7 +393,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Before modifying input page" />
     <MESSAGE value="Fixed the input page bug with bmi conversion" />
     <MESSAGE value="Fixed all formula bugs. Now the computations are perfect" />
     <MESSAGE value="Prepare to link slider with buttons" />
@@ -399,13 +417,10 @@
     <MESSAGE value="Fixed the slider min max issue after toggle." />
     <MESSAGE value="Cleaned the code.&#10;Found issue where &quot;ft&quot; is not displayed after toggle" />
     <MESSAGE value="Fixed the &quot;ft&quot; display issue.&#10;Code is now cleaner" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the &quot;ft&quot; display issue.&#10;Code is now cleaner" />
+    <MESSAGE value="Started editing the text infos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started editing the text infos" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="653" y="274" width="454" height="475" key="#Notifications" timestamp="1614058006304">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="653" y="274" width="454" height="475" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1614058006304" />
     <state x="360" y="52" key="#Plugins" timestamp="1622652145975">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -422,42 +437,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="296" y="145" key="#com.intellij.structuralsearch.plugin.ui.StructuralSearchDialog/0.0.1536.824@0.0.1536.824" timestamp="1622201116661" />
-    <state x="-6" y="64" width="1038" height="624" maximized="true" key="AVDManager" timestamp="1623425790317">
+    <state x="-6" y="64" width="1038" height="624" key="AVDManager" timestamp="1623605733163">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="-6" y="64" width="1038" height="624" maximized="true" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1623425790317" />
-    <state x="242" y="0" key="CommitChangelistDialog2" timestamp="1623326668515">
+    <state x="-6" y="64" width="1038" height="624" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1623605733163" />
+    <state x="242" y="0" key="CommitChangelistDialog2" timestamp="1623425820780">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="242" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1623326668515" />
-    <state x="100" y="100" width="1336" height="624" key="DiffContextDialog" timestamp="1614762649245">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="100" y="100" width="1336" height="624" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1614762649245" />
+    <state x="242" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1623425820780" />
     <state x="533" y="177" key="FileChooserDialogImpl" timestamp="1623168458423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="533" y="177" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1623168458423" />
-    <state width="1491" height="201" key="GridCell.Tab.0.bottom" timestamp="1623383163077">
+    <state width="1491" height="201" key="GridCell.Tab.0.bottom" timestamp="1623608195217">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="201" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1623383163077" />
-    <state width="1491" height="201" key="GridCell.Tab.0.center" timestamp="1623383163076">
+    <state width="1491" height="201" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1623608195217" />
+    <state width="1491" height="201" key="GridCell.Tab.0.center" timestamp="1623608195217">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="201" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1623383163076" />
-    <state width="1491" height="201" key="GridCell.Tab.0.left" timestamp="1623383163076">
+    <state width="1491" height="201" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1623608195217" />
+    <state width="1491" height="201" key="GridCell.Tab.0.left" timestamp="1623608195217">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="201" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1623383163076" />
-    <state width="1491" height="201" key="GridCell.Tab.0.right" timestamp="1623383163076">
+    <state width="1491" height="201" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1623608195217" />
+    <state width="1491" height="201" key="GridCell.Tab.0.right" timestamp="1623608195217">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="201" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1623383163076" />
-    <state x="361" y="84" key="SettingsEditor" timestamp="1623293072132">
+    <state width="1491" height="201" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1623608195217" />
+    <state x="361" y="84" key="SettingsEditor" timestamp="1623566566568">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="84" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1623293072132" />
+    <state x="361" y="84" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1623566566568" />
     <state x="360" y="144" key="Vcs.Push.Dialog.v2" timestamp="1623326687818">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -470,14 +481,6 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1623316831800" />
-    <state x="577" y="325" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1614854393930">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="577" y="325" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1614854393930" />
-    <state x="568" y="200" key="git4idea.merge.GitPullDialog" timestamp="1614409203241">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="568" y="200" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1614409203241" />
     <state x="593" y="310" key="git4idea.ui.GitStashDialog" timestamp="1616484622475">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

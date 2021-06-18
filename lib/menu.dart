@@ -36,9 +36,9 @@ class _MenuState extends State<Menu> {
                 }));
               },
               colour: kInActiveButtonColor,
-              widgetContents: GenderCardContent(
-                label: 'BMI',
-                iconGender: FontAwesomeIcons.mars,
+              widgetContents: MenuButtonContent(
+                text: 'BMI',
+                image: 'images/bmiButton.jpg',
               ),
             ),
             ReusableCard(
@@ -48,9 +48,9 @@ class _MenuState extends State<Menu> {
                 }));
               },
               colour: kInActiveButtonColor,
-              widgetContents: GenderCardContent(
-                label: 'BodyFats Tape measure',
-                iconGender: FontAwesomeIcons.venus,
+              widgetContents: MenuButtonContent(
+                text: 'Body fats using \nTape measure\n(simplier)',
+                image: 'images/tapeMeasureWithBody.jpg',
               ),
             ),
             ReusableCard(
@@ -60,23 +60,22 @@ class _MenuState extends State<Menu> {
                 });
               },
               colour: kInActiveButtonColor,
-              widgetContents: GenderCardContent(
-                label: 'BodyFats Caliper',
-                iconGender: FontAwesomeIcons.mars,
+              widgetContents: MenuButtonContent(
+                image: 'images/caliperWithBody.jpg',
+                text: 'Body fats using \nCaliper\n(more accurate)',
               ),
             ),
             ReusableCard(
-              onPressedMy: () {
-                setState(() {
-                  selectedGender = Gender.female;
-                });
-              },
-              colour: kInActiveButtonColor,
-              widgetContents: GenderCardContent(
-                label: 'Ideal weight',
-                iconGender: FontAwesomeIcons.venus,
-              ),
-            ),
+                onPressedMy: () {
+                  setState(() {
+                    selectedGender = Gender.female;
+                  });
+                },
+                colour: kInActiveButtonColor,
+                widgetContents: MenuButtonContent(
+                  text: 'Ideal weight',
+                  image: 'images/weightscale.jpg',
+                )),
             ReusableCard(
               onPressedMy: () {
                 setState(() {
@@ -84,25 +83,45 @@ class _MenuState extends State<Menu> {
                 });
               },
               colour: kInActiveButtonColor,
-              widgetContents: GenderCardContent(
-                label: 'Ideal Calories',
-                iconGender: FontAwesomeIcons.mars,
-              ),
-            ),
-            ReusableCard(
-              onPressedMy: () {
-                setState(() {
-                  selectedGender = Gender.female;
-                });
-              },
-              colour: kInActiveButtonColor,
-              widgetContents: GenderCardContent(
-                label: 'Graph',
-                iconGender: FontAwesomeIcons.venus,
+              widgetContents: MenuButtonContent(
+                text: 'Ideal calories',
+                image: 'images/calories2.jpg',
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MenuButtonContent extends StatelessWidget {
+  final String text;
+  final String image;
+  MenuButtonContent({this.text, this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      child: Row(
+        children: [
+          Image(
+            image: AssetImage(image),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                text,
+                style: kTextStyle,
+                textAlign: TextAlign.center,
+                // overflow: TextOverflow.ellipsis,
+                // maxLines: 3,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -215,3 +215,35 @@ class _TabWidgetState extends State<TabWidget> {
     );
   }
 }
+
+class MenuButtonContent extends StatelessWidget {
+  final String text;
+  final String image;
+  MenuButtonContent({this.text, this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      child: Row(
+        children: [
+          Image(
+            image: AssetImage(image),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                text,
+                style: kTextStyle,
+                textAlign: TextAlign.center,
+                // overflow: TextOverflow.ellipsis,
+                // maxLines: 3,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

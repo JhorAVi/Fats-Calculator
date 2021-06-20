@@ -7,7 +7,7 @@ class CalcBodyFats {
   double age, weight, height, waist, hips, forearm, wrist, thigh, calf, neck;
   bool weightIsLbs, heightIsCm, waistIsCm, hipsIsCm, forearmIsCm, wristIsCm, thighIsCm, calfIsCm, neckIsCm;
   bool ageChanged, weightChanged, heightChanged, waistChanged, hipsChanged, thighChanged, wristChanged, forearmChanged, calfChanged, neckChanged;
-  bool changedAll = true; // assumes that all body variables are modified from default and valid.
+  bool _changedAll = true; // assumes that all body variables are modified from default and valid.
   FatFormula selectedFatFormula;
   bool isFemale;
   double _fatsYMCA = 0.0;
@@ -83,12 +83,12 @@ class CalcBodyFats {
     // MODIFIED YMCA
 
     if (isFemale) {
-      changedAll = ageChanged & weightChanged & wristChanged & waistChanged & hipsChanged & forearmChanged & weightChanged;
+      _changedAll = ageChanged & weightChanged & wristChanged & waistChanged & hipsChanged & forearmChanged & weightChanged;
       _fatsYMCA = ((0.268 * weight - 0.318 * wrist + 0.157 * waist + 0.245 * hips - 0.434 * forearm - 8.987) / weight) * 100;
     } else
     // _fatsYMCA = ((4.15 * waist - 0.082 * weight - 94.42) / weight) * 100; // Not modified
     {
-      changedAll = ageChanged & weightChanged & waistChanged & weightChanged;
+      _changedAll = ageChanged & weightChanged & waistChanged & weightChanged;
       _fatsYMCA = ((-0.082 * weight + 4.15 * waist - 94.42) / weight) * 100;
     } // modified
 
@@ -97,7 +97,7 @@ class CalcBodyFats {
   }
 
   void calcHERITAGE() {
-    changedAll = ageChanged & heightChanged & weightChanged;
+    _changedAll = ageChanged & heightChanged & weightChanged;
     double heightCm = inchesToCentimeters(height); // convert height to cm
     double weightKg = lbsToKilograms(weight); // convert weight to kg
     double bmi = weightKg / (pow(heightCm / 100, 2));
@@ -111,14 +111,14 @@ class CalcBodyFats {
   void calcCOVERTBAILEY() {
     if (isFemale) {
       // FEMALE
-      changedAll = ageChanged & hipsChanged & thighChanged & calfChanged & wristChanged;
+      _changedAll = ageChanged & hipsChanged & thighChanged & calfChanged & wristChanged;
       if (age <= 30)
         _fatsCOVERTBAILEY = hips + (0.8 * thigh) - (2 * calf) - wrist;
       else
         _fatsCOVERTBAILEY = hips + thigh - (2 * calf) - wrist;
     } else {
       // MALE
-      changedAll = ageChanged & waistChanged & hipsChanged & forearmChanged & wristChanged;
+      _changedAll = ageChanged & waistChanged & hipsChanged & forearmChanged & wristChanged;
       if (age <= 30)
         _fatsCOVERTBAILEY = waist + (0.5 * hips) - (3 * forearm) - wrist;
       else
@@ -129,10 +129,10 @@ class CalcBodyFats {
 
   void calcUSNAVY() {
     if (isFemale) {
-      changedAll = ageChanged & waistChanged & hipsChanged & neckChanged & heightChanged;
+      _changedAll = ageChanged & waistChanged & hipsChanged & neckChanged & heightChanged;
       _fatsUSNAVY = 163.205 * log10(waist + hips - neck) - 97.684 * log10(height) - 78.387;
     } else {
-      changedAll = ageChanged & waistChanged & neckChanged & heightChanged;
+      _changedAll = ageChanged & waistChanged & neckChanged & heightChanged;
       _fatsUSNAVY = 86.01 * log10(waist - neck) - 70.041 * log10(height) + 36.76;
     }
     _fats = _fatsUSNAVY;
@@ -442,6 +442,10 @@ class CalcBodyFats {
 
   int getFlex3() {
     return selFlex3;
+  }
+
+  bool getChangedAll() {
+    return _changedAll;
   }
 
   displayBelowLimit() {

@@ -525,28 +525,57 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                   text: 'CALCULATE',
                   onPress: () {
                     CalcBodyFats calcBF = CalcBodyFats(
-                        age: cAge.age,
-                        isFemale: isFemale,
-                        weight: cWeight.weight,
-                        height: cHeight.length,
-                        waist: cWaist.length,
-                        hips: cHips.length,
-                        forearm: cForearm.length,
-                        wrist: cWrist.length,
-                        thigh: cThigh.length,
-                        calf: cCalf.length,
-                        neck: cNeck.length,
-                        weightIsLbs: cWeight.lbsIsDefault,
-                        heightIsCm: cHeight.cmIsDefault,
-                        waistIsCm: cWaist.cmIsDefault,
-                        hipsIsCm: cHips.cmIsDefault,
-                        forearmIsCm: cForearm.cmIsDefault,
-                        wristIsCm: cWrist.cmIsDefault,
-                        thighIsCm: cThigh.cmIsDefault,
-                        calfIsCm: cCalf.cmIsDefault,
-                        neckIsCm: cNeck.cmIsDefault,
-                        selectedFatFormula: selectedFatFormula);
-
+                      age: cAge.age,
+                      isFemale: isFemale,
+                      weight: cWeight.weight,
+                      height: cHeight.length,
+                      waist: cWaist.length,
+                      hips: cHips.length,
+                      forearm: cForearm.length,
+                      wrist: cWrist.length,
+                      thigh: cThigh.length,
+                      calf: cCalf.length,
+                      neck: cNeck.length,
+                      weightIsLbs: cWeight.lbsIsDefault, // default checker
+                      heightIsCm: cHeight.cmIsDefault,
+                      waistIsCm: cWaist.cmIsDefault,
+                      hipsIsCm: cHips.cmIsDefault,
+                      forearmIsCm: cForearm.cmIsDefault,
+                      wristIsCm: cWrist.cmIsDefault,
+                      thighIsCm: cThigh.cmIsDefault,
+                      calfIsCm: cCalf.cmIsDefault,
+                      neckIsCm: cNeck.cmIsDefault,
+                      selectedFatFormula: selectedFatFormula,
+                      ageChanged: cAge.changed, // changed checker
+                      weightChanged: cWeight.changed,
+                      heightChanged: cHeight.changed,
+                      waistChanged: cWeight.changed,
+                      hipsChanged: cHips.changed,
+                      thighChanged: cThigh.changed,
+                      forearmChanged: cForearm.changed,
+                      wristChanged: cWrist.changed,
+                      neckChanged: cNeck.changed,
+                      calfChanged: cCalf.changed,
+                    );
+                    // Now check if some scales are missed and cancel computation
+                    if (calcBF.getChangedAll() == false) {
+                      final snackBar = SnackBar(
+                        backgroundColor: Colors.blueGrey,
+                        content: Row(
+                          children: [
+                            Icon(Icons.announcement_outlined),
+                            SizedBox(width: 10.0),
+                            Expanded(child: Text('Please complete all measurements before proceeding', style: TextStyle(color: Colors.white))),
+                          ],
+                        ),
+                        action: SnackBarAction(
+                          label: 'OK',
+                          onPressed: () {},
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      return;
+                    }
                     Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -27,6 +27,7 @@ class AgeScale {
   String ageDisplay;
   String text = 'AGE';
   String unit = 'yrs';
+  String monthDisplay; // new. displays months
   bool changed = false;
 
   AgeScale({this.min, this.max}) {

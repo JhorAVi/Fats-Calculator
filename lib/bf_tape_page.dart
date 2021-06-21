@@ -549,7 +549,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       ageChanged: cAge.changed, // changed checker
                       weightChanged: cWeight.changed,
                       heightChanged: cHeight.changed,
-                      waistChanged: cWeight.changed,
+                      waistChanged: cWaist.changed,
                       hipsChanged: cHips.changed,
                       thighChanged: cThigh.changed,
                       forearmChanged: cForearm.changed,
@@ -565,7 +565,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           children: [
                             Icon(Icons.announcement_outlined),
                             SizedBox(width: 10.0),
-                            Expanded(child: Text('Please complete all measurements before proceeding', style: TextStyle(color: Colors.white))),
+                            Expanded(child: Text('Complete all measurements before proceeding', style: TextStyle(color: Colors.white))),
                           ],
                         ),
                         action: SnackBarAction(
@@ -649,18 +649,20 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 style: kAgeTextStyle,
               ),
               Text(
-                // FEET OR NOT
-                currentFeetText(text, unitDisplay(text)),
+                // INCHES OR CM with adjustment for feet and age
+                ' ${unitDisplay(text)}',
                 style: kUnitTextStyle,
               ),
+
+              // The following is for extra info for inches and months
               Text(
-                // DECIMAL FROM INCHES
-                currentInchesText(text, unitDisplay(text)),
+                // FRACTIONS by INCHES or MONTHS
+                inchOrMonthValue(text),
                 style: kAgeTextStyle,
               ),
               Text(
-                // INCHES OR NOT
-                ' ${unitDisplay(text)}',
+                // FEET OR NOT
+                inchOrMonthUnit(text),
                 style: kUnitTextStyle,
               ),
 
@@ -672,7 +674,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 enabled: disableToggleOnAge(text),
                 onPress: () {
                   setState(() {
-                    toggleNow(text, unitDisplay(text)); // Change the value after toggle
+                    toggleNow(text); // Change the value after toggle
                     sliderUpdate(text); // The slider min max values update after toggle.
                   });
                 },
@@ -812,21 +814,21 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 style: kAgeTextStyle,
               ),
               Text(
-                // FEET OR NOT
-                currentFeetText(text, unit),
-                style: kUnitTextStyle,
-              ),
-              Text(
-                // DECIMAL FROM INCHES
-                currentInchesText(text, unit),
-                style: kAgeTextStyle,
-              ),
-              Text(
-                // INCHES OR NOT
-                ' $unit',
+                // Display Feet of unit is in inches
+                ' ${(text == 'HEIGHT' && cHeight.unit == 'in.') ? 'ft.' : unit}',
                 // The value above executes all the time so it updates whenever the unit is toggled
                 style: kUnitTextStyle,
                 // textAlign: TextAlign.center,
+              ),
+              Text(
+                // Inches or Month value
+                inchOrMonthValue(text),
+                style: kAgeTextStyle,
+              ),
+              Text(
+                // Inches or Month unit
+                inchOrMonthUnit(text),
+                style: kUnitTextStyle,
               ),
             ],
           ),
@@ -921,15 +923,15 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
       return '';
   }
 
-  // Process the visibility of the feet text
-  String currentFeetText(String text, String unit) {
-    //return (text == 'HEIGHT') ? cHeight.feetText : '';
-    return (text == 'HEIGHT' && unit == 'in.') ? 'ft. ' : '';
+  // Process the inches display part
+  String inchOrMonthValue(String text) {
+    return (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0') ? cHeight.inchesDisplay : '';
   }
 
-  // Process the inches display part
-  String currentInchesText(String text, String unit) {
-    return (text == 'HEIGHT' && unit == 'in.') ? cHeight.inchesDisplay : '';
+  // Process the visibility of the feet text
+  String inchOrMonthUnit(String text) {
+    //return (text == 'HEIGHT') ? cHeight.feetText : '';
+    return (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0') ? cHeight.unit : '';
   }
 
   // no toggle arrow down on AGE
@@ -944,7 +946,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     if (text == "AGE")
       unit = cAge.unit;
     else if (text == "HEIGHT")
-      unit = cHeight.unit;
+      unit = (cHeight.unit == 'in.') ? 'ft.' : cHeight.unit;
     else if (text == "WEIGHT")
       unit = cWeight.unit;
     else if (text == "WAIST")
@@ -1274,59 +1276,59 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
 
   // toggle text
   // this is the only function with AGE is excluded
-  void toggleNow(String text, String unit) {
-    if (text == 'HEIGHT' && unit == 'cm.') {
+  void toggleNow(String text) {
+    if (text == 'HEIGHT' && cHeight.unit == 'cm.') {
       cHeight.toggleToInches();
       //sliderValues.selectedButton = ButtonScale.height;
-    } else if (text == 'HEIGHT' && unit == 'in.') {
+    } else if (text == 'HEIGHT' && cHeight.unit == 'in.') {
       cHeight.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.height;
-    } else if (text == 'WEIGHT' && unit == 'kgs') {
+    } else if (text == 'WEIGHT' && cWeight.unit == 'kgs') {
       cWeight.toggleToLbs();
       //sliderValues.selectedButton = ButtonScale.weight;
-    } else if (text == 'WEIGHT' && unit == 'lbs') {
+    } else if (text == 'WEIGHT' && cWeight.unit == 'lbs') {
       cWeight.toggleToKilograms();
       //sliderValues.selectedButton = ButtonScale.weight;
-    } else if (text == 'WAIST' && unit == 'cm.') {
+    } else if (text == 'WAIST' && cWaist.unit == 'cm.') {
       cWaist.toggleToInches();
       // sliderValues.selectedButton = ButtonScale.waist;
-    } else if (text == 'WAIST' && unit == 'in.') {
+    } else if (text == 'WAIST' && cWaist.unit == 'in.') {
       cWaist.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.waist;
-    } else if (text == 'HIPS' && unit == 'cm.') {
+    } else if (text == 'HIPS' && cHips.unit == 'cm.') {
       cHips.toggleToInches();
       //sliderValues.selectedButton = ButtonScale.hip;
-    } else if (text == 'HIPS' && unit == 'in.') {
+    } else if (text == 'HIPS' && cHips.unit == 'in.') {
       cHips.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.hip;
-    } else if (text == 'FOREARM' && unit == 'cm.') {
+    } else if (text == 'FOREARM' && cForearm.unit == 'cm.') {
       cForearm.toggleToInches();
       //sliderValues.selectedButton = ButtonScale.forearm;
-    } else if (text == 'FOREARM' && unit == 'in.') {
+    } else if (text == 'FOREARM' && cForearm.unit == 'in.') {
       cForearm.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.forearm;
-    } else if (text == 'WRIST' && unit == 'cm.') {
+    } else if (text == 'WRIST' && cWrist.unit == 'cm.') {
       cWrist.toggleToInches();
       //sliderValues.selectedButton = ButtonScale.wrist;
-    } else if (text == 'WRIST' && unit == 'in.') {
+    } else if (text == 'WRIST' && cWrist.unit == 'in.') {
       cWrist.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.wrist;
-    } else if (text == 'THIGH' && unit == 'cm.') {
+    } else if (text == 'THIGH' && cThigh.unit == 'cm.') {
       cThigh.toggleToInches();
       //sliderValues.selectedButton = ButtonScale.thigh;
-    } else if (text == 'THIGH' && unit == 'in.') {
+    } else if (text == 'THIGH' && cThigh.unit == 'in.') {
       cThigh.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.thigh;
-    } else if (text == 'CALF' && unit == 'cm.') {
+    } else if (text == 'CALF' && cCalf.unit == 'cm.') {
       cCalf.toggleToInches();
       //sliderValues.selectedButton = ButtonScale.calf;
-    } else if (text == 'CALF' && unit == 'in.') {
+    } else if (text == 'CALF' && cCalf.unit == 'in.') {
       cCalf.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.calf;
-    } else if (text == 'NECK' && unit == 'cm.') {
+    } else if (text == 'NECK' && cNeck.unit == 'cm.') {
       cNeck.toggleToInches();
       //sliderValues.selectedButton = ButtonScale.neck;
-    } else if (text == 'NECK' && unit == 'in.') {
+    } else if (text == 'NECK' && cNeck.unit == 'in.') {
       cNeck.toggleToCentimeters();
       //sliderValues.selectedButton = ButtonScale.neck;
     }

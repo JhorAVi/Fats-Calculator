@@ -240,7 +240,11 @@ class LengthScale {
 
   void decrementOne() {
     if (min + 1 < length - 1 && max - 1 > length - 1) {
-      length = length.roundToDouble() - 1;
+      var lengthF = length.floor().toDouble();
+      if (lengthF == length)
+        length--;
+      else
+        length = lengthF;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);
@@ -254,7 +258,8 @@ class LengthScale {
 
   void incrementOne() {
     if (min + 1 < length + 1 && max - 1 > length + 1) {
-      length = length.roundToDouble() + 1;
+      length = length.floor().toDouble();
+      length++;
       // SETSTATE this
       if (text == 'HEIGHT' && unit == 'in.') {
         inchesDisplay = (length % 12).toStringAsFixed(0);

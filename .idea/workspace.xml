@@ -46,7 +46,6 @@
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bf_tape_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bf_tape_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/scale_class.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/scale_class.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -385,7 +384,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624168626720</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Simplified the value display code. Ready to add months to years.">
+      <created>1624247041899</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1624247041900</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -413,7 +419,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed all except slider handle not working" />
     <MESSAGE value="Fixed all Button to Slider link issues" />
     <MESSAGE value="Before some changes in variables" />
     <MESSAGE value="Now all buttons and highlights are working correctly" />
@@ -438,7 +443,8 @@
     <MESSAGE value="Lots of improvement in the Display Results&#10;Fixed a ymca formula bug for female.&#10;Preparing for adding Images" />
     <MESSAGE value="Added images in the main menu. Ready for compute validation." />
     <MESSAGE value="Added Snackbar to prevent computation on missed measurements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Snackbar to prevent computation on missed measurements" />
+    <MESSAGE value="Simplified the value display code. Ready to add months to years." />
+    <option name="LAST_COMMIT_MESSAGE" value="Simplified the value display code. Ready to add months to years." />
   </component>
   <component name="WindowStateProjectService">
     <state x="360" y="52" key="#Plugins" timestamp="1622652145975">
@@ -457,42 +463,42 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="296" y="145" key="#com.intellij.structuralsearch.plugin.ui.StructuralSearchDialog/0.0.1536.824@0.0.1536.824" timestamp="1622201116661" />
-    <state x="34" y="62" width="1038" height="624" key="AVDManager" timestamp="1624242229843">
+    <state x="34" y="62" width="1038" height="624" key="AVDManager" timestamp="1624273157918">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="34" y="62" width="1038" height="624" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1624242229843" />
-    <state x="242" y="0" key="CommitChangelistDialog2" timestamp="1624168580278">
+    <state x="34" y="62" width="1038" height="624" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1624273157918" />
+    <state x="242" y="0" key="CommitChangelistDialog2" timestamp="1624247014596">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="242" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1624168580278" />
+    <state x="242" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1624247014596" />
     <state x="533" y="177" key="FileChooserDialogImpl" timestamp="1623168458423">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="533" y="177" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1623168458423" />
-    <state width="1491" height="178" key="GridCell.Tab.0.bottom" timestamp="1624244758726">
+    <state width="1491" height="178" key="GridCell.Tab.0.bottom" timestamp="1624272738650">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="178" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624244758726" />
-    <state width="1491" height="178" key="GridCell.Tab.0.center" timestamp="1624244758726">
+    <state width="1491" height="178" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624272738649" />
+    <state width="1491" height="178" key="GridCell.Tab.0.center" timestamp="1624272738649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="178" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1624244758726" />
-    <state width="1491" height="178" key="GridCell.Tab.0.left" timestamp="1624244758726">
+    <state width="1491" height="178" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1624272738649" />
+    <state width="1491" height="178" key="GridCell.Tab.0.left" timestamp="1624272738649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="178" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1624244758726" />
-    <state width="1491" height="178" key="GridCell.Tab.0.right" timestamp="1624244758726">
+    <state width="1491" height="178" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1624272738649" />
+    <state width="1491" height="178" key="GridCell.Tab.0.right" timestamp="1624272738649">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="178" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1624244758726" />
+    <state width="1491" height="178" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1624272738649" />
     <state x="361" y="84" key="SettingsEditor" timestamp="1623566566568">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="84" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1623566566568" />
-    <state x="360" y="144" key="Vcs.Push.Dialog.v2" timestamp="1624170755059">
+    <state x="360" y="144" key="Vcs.Push.Dialog.v2" timestamp="1624247054954">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="360" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1624170755059" />
+    <state x="360" y="144" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1624247054954" />
     <state x="100" y="100" width="1336" height="624" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1624177832374">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

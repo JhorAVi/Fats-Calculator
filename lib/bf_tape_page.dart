@@ -657,12 +657,12 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
               // The following is for extra info for inches and months
               Text(
                 // FRACTIONS by INCHES or MONTHS
-                inchOrMonthValue(text),
+                ' ${inchOrMonthValue(text)}',
                 style: kAgeTextStyle,
               ),
               Text(
                 // FEET OR NOT
-                inchOrMonthUnit(text),
+                ' ${inchOrMonthUnit(text)}',
                 style: kUnitTextStyle,
               ),
 
@@ -822,12 +822,12 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
               ),
               Text(
                 // Inches or Month value
-                inchOrMonthValue(text),
+                ' ${inchOrMonthValue(text)}',
                 style: kAgeTextStyle,
               ),
               Text(
                 // Inches or Month unit
-                inchOrMonthUnit(text),
+                ' ${inchOrMonthUnit(text)}',
                 style: kUnitTextStyle,
               ),
             ],
@@ -925,13 +925,27 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
 
   // Process the inches display part
   String inchOrMonthValue(String text) {
-    return (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0') ? cHeight.inchesDisplay : '';
+    String returnText;
+    if (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0')
+      returnText = cHeight.inchesDisplay;
+    else if (text == 'AGE' && cAge.monthDisplay != '0')
+      returnText = cAge.monthDisplay;
+    //print('This is month display ' + cAge.monthDisplay);
+    else
+      returnText = '';
+    return returnText;
   }
 
   // Process the visibility of the feet text
   String inchOrMonthUnit(String text) {
-    //return (text == 'HEIGHT') ? cHeight.feetText : '';
-    return (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0') ? cHeight.unit : '';
+    String returnText;
+    if (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0')
+      returnText = cHeight.unit;
+    else if (text == 'AGE' && cAge.monthDisplay != '0')
+      returnText = 'mos.';
+    else
+      returnText = '';
+    return returnText;
   }
 
   // no toggle arrow down on AGE

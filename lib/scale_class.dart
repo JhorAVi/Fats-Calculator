@@ -26,28 +26,35 @@ class AgeScale {
   int min, max;
   String ageDisplay;
   String text = 'AGE';
-  String unit = 'yrs';
+  String unit = 'yr.';
   String monthDisplay; // new. displays months
   bool changed = false;
 
   AgeScale({this.min, this.max}) {
     // age = (min + max) / 2;
     age = min.toDouble() + 1; // starts at the lowest age
-    ageDisplay = age.round().toString();
+    ageDisplay = age.floor().toString();
+    monthDisplay = ((age - age.floor()) * 12).toStringAsFixed(0);
   }
 // TODO add increment decrement moving
   void decrementOne() {
     if (min + 1 < age - 1 && max - 1 > age - 1) {
-      age--;
-      ageDisplay = age.toStringAsFixed(0); // temp
+      if (age.floor() == age) // no decimal
+        age--;
+      else
+        age = age.floor().toDouble();
+      ageDisplay = age.floor().toString(); // temp
+      monthDisplay = '0';
       changed = true;
     }
   }
 
   void incrementOne() {
     if (min + 1 < age + 1 && max - 1 > age + 1) {
+      age = age.floor().toDouble();
       age++;
-      ageDisplay = age.toStringAsFixed(0);
+      ageDisplay = age.floor().toString(); // temp
+      monthDisplay = '0';
       changed = true;
     }
   }
@@ -55,29 +62,28 @@ class AgeScale {
   // New
   void incrementPointOne() {
     if (max - 1 > age + 1) {
-      age = age + 0.1;
-      // SETSTATE this
-      ageDisplay = removeDecimalZero(age);
+      age = age + (1 / 12);
+      ageDisplay = age.floor().toString(); // int part
+      monthDisplay = ((age - age.floor()) * 12).toStringAsFixed(0);
       changed = true;
-      // print(removeDecimalZero(weight));
     }
   }
 
   void decrementPointOne() {
     if (min + 1 < age - 1) {
-      age = age - 0.1;
-      // SETSTATE this
-      ageDisplay = removeDecimalZero(age);
+      age = age - (1 / 12);
+      ageDisplay = age.floor().toString(); // int part
+      monthDisplay = ((age - age.floor()) * 12).toStringAsFixed(0);
       changed = true;
-      // print(removeDecimalZero(weight));
     }
   }
 
   void editValue(double newValue) {
     if (min + 1 < newValue && max - 1 > newValue) {
       // deduct 1 in range for safety
-      age = newValue.roundToDouble(); // remove fractions for now
-      ageDisplay = age.toStringAsFixed(0);
+      age = newValue.roundToDouble(); // remove fractions for clean display
+      ageDisplay = age.floor().toString();
+      monthDisplay = '0';
       changed = true;
       //print(weight); // debug
     }

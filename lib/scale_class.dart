@@ -36,23 +36,23 @@ class AgeScale {
     ageDisplay = age.floor().toString();
     monthDisplay = ((age - age.floor()) * 12).toStringAsFixed(0);
   }
-// TODO add increment decrement moving
-  void decrementOne() {
-    if (min + 1 < age - 1 && max - 1 > age - 1) {
-      if (age.floor() == age) // no decimal
-        age--;
-      else
-        age = age.floor().toDouble();
+
+  void incrementOne() {
+    if (min + 1 < age + 1 && max - 1 > age + 1) {
+      age = age.floorToDouble();
+      age++;
       ageDisplay = age.floor().toString(); // temp
       monthDisplay = '0';
       changed = true;
     }
   }
 
-  void incrementOne() {
-    if (min + 1 < age + 1 && max - 1 > age + 1) {
-      age = age.floor().toDouble();
-      age++;
+  void decrementOne() {
+    if (min + 1 < age - 1 && max - 1 > age - 1) {
+      if (age.floor() == age) // no decimal
+        age--;
+      else
+        age = age.floorToDouble();
       ageDisplay = age.floor().toString(); // temp
       monthDisplay = '0';
       changed = true;
@@ -62,18 +62,20 @@ class AgeScale {
   // New
   void incrementPointOne() {
     if (max - 1 > age + 1) {
-      age = age + (1 / 12);
+      age = roundDecimal999(age + (1 / 12)); // round the age if decimal is .999
       ageDisplay = age.floor().toString(); // int part
       monthDisplay = ((age - age.floor()) * 12).toStringAsFixed(0);
+      //print('age= $age month display++  ${(age - age.floor()) * 12} to $monthDisplay'); // testing
       changed = true;
     }
   }
 
   void decrementPointOne() {
     if (min + 1 < age - 1) {
-      age = age - (1 / 12);
+      age = roundDecimal999(age - (1 / 12)); // round the age if decimal is .999
       ageDisplay = age.floor().toString(); // int part
       monthDisplay = ((age - age.floor()) * 12).toStringAsFixed(0);
+      //print('age= $age month display--  ${(age - age.floor()) * 12} to $monthDisplay'); // testing
       changed = true;
     }
   }

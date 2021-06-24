@@ -633,6 +633,6 @@ String removeDecimalZero(double n) {
 
 // my simpler version of the above
 // Wong wrong this doesnt work here
-String singlePrecisionNoZero(double n) {
-  return double.parse(n.toStringAsFixed(1)).toString();
+double roundDecimal999(double value) {
+  return (((value - value.floor()) * 1000).floorToDouble() == 999) ? value.roundToDouble() : value; // catches the 999
 }

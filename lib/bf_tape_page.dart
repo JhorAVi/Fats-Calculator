@@ -737,39 +737,54 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
             ],
           ),
           actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              // All the action button with tips under it
               children: [
-                MaterialButton(
-                  color: kSmallButtonColor,
-                  onPressed: () {
-                    setState(() {
-                      decrementFractionNow(text); // perform increment
-                    });
-                  },
-                  child: Text('- 0.1'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MaterialButton(
+                      color: kSmallButtonColor,
+                      onPressed: () {
+                        setState(() {
+                          decrementFractionNow(text); // perform increment
+                        });
+                      },
+                      child: Text((text == 'AGE') ? '- mo.' : '- 0.1'),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
+                      color: kBottomContainerColor,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    MaterialButton(
+                      color: kSmallButtonColor,
+                      onPressed: () {
+                        setState(() {
+                          incrementFractionNow(text); // perform increment
+                        });
+                      },
+                      child: Text((text == 'AGE') ? '+ mo.' : '+ 0.1'),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                  color: kBottomContainerColor,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                MaterialButton(
-                  color: kSmallButtonColor,
-                  onPressed: () {
-                    setState(() {
-                      incrementFractionNow(text); // perform increment
-                    });
-                  },
-                  child: Text('+ 0.1'),
+                //SizedBox(height: 10.0),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    (text == 'AGE')
+                        ? '*Tip: You can increase the age precision by specifying the number of months'
+                        : '*Tip: The button to the right of the value automatically converts it to another unit.',
+                    textAlign: TextAlign.left,
+                  ),
                 ),
               ],
             )

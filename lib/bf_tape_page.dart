@@ -41,16 +41,16 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   double _fatsUSNAVY = 0.0;
   double _fatsCOVERTBAILEY = 0.0;
 
-  AgeScale cAge = AgeScale(min: 5, max: 100);
-  WeightScale cWeight = WeightScale(lbsMin: 50, lbsMax: 500);
-  LengthScale cHeight = LengthScale(cmMin: 91, cmMax: 228, text: 'HEIGHT');
-  LengthScale cWaist = LengthScale(cmMin: 20, cmMax: 200, text: 'WAIST');
-  LengthScale cHips = LengthScale(cmMin: 20, cmMax: 200, text: 'HIPS');
-  LengthScale cWrist = LengthScale(cmMin: 5, cmMax: 30, text: 'WRIST');
-  LengthScale cForearm = LengthScale(cmMin: 5, cmMax: 50, text: 'FOREARM');
-  LengthScale cThigh = LengthScale(cmMin: 5, cmMax: 100, text: 'THIGH');
-  LengthScale cCalf = LengthScale(cmMin: 5, cmMax: 50, text: 'CALF');
-  LengthScale cNeck = LengthScale(cmMin: 5, cmMax: 50, text: 'NECK');
+  AgeScale cAge = AgeScale(min: 5, max: 100, image: 'images/scales/age.jpg');
+  WeightScale cWeight = WeightScale(lbsMin: 50, lbsMax: 500, image: 'images/scales/weight.jpg');
+  LengthScale cHeight = LengthScale(cmMin: 91, cmMax: 228, text: 'HEIGHT', image: 'images/scales/height.jpg');
+  LengthScale cWaist = LengthScale(cmMin: 20, cmMax: 200, text: 'WAIST', image: 'images/scales/waist.jpg');
+  LengthScale cHips = LengthScale(cmMin: 20, cmMax: 200, text: 'HIPS', image: 'images/scales/hips.jpg');
+  LengthScale cWrist = LengthScale(cmMin: 5, cmMax: 30, text: 'WRIST', image: 'images/scales/wrist.jpg');
+  LengthScale cForearm = LengthScale(cmMin: 5, cmMax: 50, text: 'FOREARM', image: 'images/scales/forearm.jpg');
+  LengthScale cThigh = LengthScale(cmMin: 5, cmMax: 100, text: 'THIGH', image: 'images/scales/thigh.jpg');
+  LengthScale cCalf = LengthScale(cmMin: 5, cmMax: 50, text: 'CALF', image: 'images/scales/calf.jpg');
+  LengthScale cNeck = LengthScale(cmMin: 5, cmMax: 50, text: 'NECK', image: 'images/scales/neck.jpg');
 
   // tabs definition
   final _kTabs = <Tab>[
@@ -291,6 +291,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cAge.age,
                             min: cAge.min,
                             max: cAge.max,
+                            image: cAge.image,
                           );
                           setState(() {});
                         },
@@ -315,6 +316,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cHeight.length,
                             min: cHeight.min,
                             max: cHeight.max,
+                            image: cHeight.image,
                           );
                           setState(() {});
                         },
@@ -340,6 +342,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cWeight.weight,
                             min: cWeight.min,
                             max: cWeight.max,
+                            image: cWeight.image,
                           );
                           setState(() {});
                         },
@@ -365,6 +368,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cWaist.length,
                             min: cWaist.min,
                             max: cWaist.max,
+                            image: cWaist.image,
                           );
                           setState(() {});
                         },
@@ -389,6 +393,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cHips.length,
                             min: cHips.min,
                             max: cHips.max,
+                            image: cHips.image,
                           );
                           setState(() {});
                         },
@@ -413,6 +418,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cForearm.length,
                             min: cForearm.min,
                             max: cForearm.max,
+                            image: cForearm.image,
                           );
                           setState(() {});
                         },
@@ -437,6 +443,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cWrist.length,
                             min: cWrist.min,
                             max: cWrist.max,
+                            image: cWrist.image,
                           );
                           setState(() {});
                         },
@@ -462,6 +469,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cThigh.length,
                             min: cThigh.min,
                             max: cThigh.max,
+                            image: cThigh.image,
                           );
                           setState(() {});
                         },
@@ -487,6 +495,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cCalf.length,
                             min: cCalf.min,
                             max: cCalf.max,
+                            image: cCalf.image,
                           );
                           setState(() {});
                         },
@@ -511,6 +520,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cNeck.length,
                             min: cNeck.min,
                             max: cNeck.max,
+                            image: cNeck.image,
                           );
                           setState(() {});
                         },
@@ -622,6 +632,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     final double value, // To display the initial value depending on the metrics
     final int min, // initial min value
     final int max, // initial max value
+    final String image,
   }) {
     // sliderUpdate(text); // Initial value for the dialog slider
     sliderValues.value = value;
@@ -703,7 +714,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
                   image: DecorationImage(
-                    image: AssetImage('images/weightscale.jpg'),
+                    image: AssetImage(image),
                     fit: BoxFit.fill,
                   ),
                 ),

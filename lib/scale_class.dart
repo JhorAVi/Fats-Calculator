@@ -28,9 +28,10 @@ class AgeScale {
   String text = 'AGE';
   String unit = 'yr.';
   String monthDisplay; // new. displays months
+  String image;
   bool changed = false;
 
-  AgeScale({this.min, this.max}) {
+  AgeScale({this.min, this.max, this.image}) {
     // age = (min + max) / 2;
     age = min.toDouble() + 1; // starts at the lowest age
     ageDisplay = age.floor().toString();
@@ -104,9 +105,10 @@ class WeightScale {
   String unit = 'lbs';
   String toggleText;
   bool lbsIsDefault = true;
+  String image;
   bool changed = false;
 
-  WeightScale({@required this.lbsMin, @required this.lbsMax}) {
+  WeightScale({@required this.lbsMin, @required this.lbsMax, this.image}) {
     kgMin = lbsToKilograms(lbsMin.toDouble()).round(); // 23;
     kgMax = lbsToKilograms(lbsMax.toDouble()).round(); //136;
     min = lbsMin; // can either be lbs or kgs
@@ -206,9 +208,10 @@ class LengthScale {
   String unit = 'cm.';
   String toggleText; // maybe unused
   bool cmIsDefault = true;
+  String image;
   bool changed = false;
 
-  LengthScale({@required this.cmMin, @required this.cmMax, @required this.text}) {
+  LengthScale({@required this.cmMin, @required this.cmMax, @required this.text, this.image}) {
     inchMin = centimetersToInches(cmMin.toDouble()).round();
     inchMax = centimetersToInches(cmMax.toDouble()).round();
     min = cmMin;

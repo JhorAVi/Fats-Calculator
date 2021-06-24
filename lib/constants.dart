@@ -24,6 +24,11 @@ const kTextStyle = TextStyle(
   color: Color(0xFF8D8E98),
 );
 
+const kDialogTitleStyle = TextStyle(
+  fontSize: 25.0,
+  color: Color(0xFF8D8E98),
+);
+
 const kAgeTextStyle = TextStyle(
   fontSize: 30.0,
   fontWeight: FontWeight.w900,

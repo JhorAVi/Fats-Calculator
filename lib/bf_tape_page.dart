@@ -632,52 +632,81 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
           // backgroundColor: kInActiveButtonColor,
+          titlePadding: EdgeInsets.fromLTRB(8, 10, 10, 0),
           contentPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
           // The TEXT above the slider
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                // WEIGHT or HEIGHT TEXT
-                text,
-                style: kTextStyle,
-              ),
-              SizedBox(width: 10),
-              Text(
-                // SLIDER CURRENT VALUE NUMBER
-                currentValueTxt(text),
-                style: kAgeTextStyle,
-              ),
-              Text(
-                // INCHES OR CM with adjustment for feet and age
-                ' ${unitDisplay(text)}',
-                style: kUnitTextStyle,
-              ),
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    // WEIGHT or HEIGHT TEXT
+                    text,
+                    style: kDialogTitleStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      //SizedBox(width: 10),
+                      Text(
+                        // SLIDER CURRENT VALUE NUMBER
+                        currentValueTxt(text),
+                        style: kAgeTextStyle,
+                      ),
+                      Text(
+                        // INCHES OR CM with adjustment for feet and age
+                        ' ${unitDisplay(text)}',
+                        style: kUnitTextStyle,
+                      ),
 
-              // The following is for extra info for inches and months
-              Text(
-                // FRACTIONS by INCHES or MONTHS
-                ' ${inchOrMonthValue(text)}',
-                style: kAgeTextStyle,
-              ),
-              Text(
-                // FEET OR NOT
-                ' ${inchOrMonthUnit(text)}',
-                style: kUnitTextStyle,
-              ),
+                      // The following is for extra info for inches and months
+                      Text(
+                        // FRACTIONS by INCHES or MONTHS
+                        ' ${inchOrMonthValue(text)}',
+                        style: kAgeTextStyle,
+                      ),
+                      Text(
+                        // FEET OR NOT
+                        ' ${inchOrMonthUnit(text)}',
+                        style: kUnitTextStyle,
+                      ),
 
-              // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-              // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-              UnitToggleButton(
-                // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
-                //text: toggleText,
-                enabled: disableToggleOnAge(text),
-                onPress: () {
-                  setState(() {
-                    toggleNow(text); // Change the value after toggle
-                    sliderUpdate(text); // The slider min max values update after toggle.
-                  });
-                },
+                      // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+                      // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+                      Visibility(
+                        visible: (text == 'AGE') ? false : true,
+                        child: UnitToggleButton(
+                          // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
+                          //text: toggleText,
+                          onPress: () {
+                            setState(() {
+                              toggleNow(text); // Change the value after toggle
+                              sliderUpdate(text); // The slider min max values update after toggle.
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Container(
+                // Image in the Dialog
+                width: 90,
+                height: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(
+                    image: AssetImage('images/weightscale.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
             ],
           ),
@@ -691,7 +720,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                 children: <Widget>[
                   SizedBox(width: 5),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: SliderSideButton(
                       icon: FontAwesomeIcons.chevronCircleLeft,
                       onPress: () {
@@ -702,7 +731,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                     ),
                   ),
                   Expanded(
-                    flex: 7,
+                    flex: 10,
                     child: Slider(
                         value: sliderValues.value,
                         min: sliderValues.min.toDouble(),
@@ -721,7 +750,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         }),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: SliderSideButton(
                       icon: FontAwesomeIcons.chevronCircleRight,
                       onPress: () {
@@ -772,7 +801,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           incrementFractionNow(text); // perform increment
                         });
                       },
-                      child: Text((text == 'AGE') ? '+ mo.' : '+ 0.1'),
+                      child: Text(
+                        (text == 'AGE') ? '+ mo.' : '+ 0.1',
+                      ),
                     ),
                   ],
                 ),
@@ -781,8 +812,8 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     (text == 'AGE')
-                        ? '*Tip: You can increase the age precision by specifying the number of months'
-                        : '*Tip: The button to the right of the value automatically converts it to another unit.',
+                        ? '* Tip: You can increase the age precision by specifying the number of months'
+                        : '* Tip: The button to the right of the value automatically converts it to another unit.',
                     textAlign: TextAlign.left,
                   ),
                 ),

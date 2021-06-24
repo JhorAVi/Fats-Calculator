@@ -63,16 +63,18 @@ class GenderCardContent extends StatelessWidget {
 
 // the unit toggle button inside the slider card
 class UnitToggleButton extends StatelessWidget {
-  UnitToggleButton({this.onPress, this.enabled});
+  UnitToggleButton({
+    this.onPress,
+  });
   final Function onPress;
-  final bool enabled;
+  //final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
       padding: EdgeInsets.symmetric(horizontal: 10),
       elevation: 6.0,
-      onPressed: enabled ? onPress : null,
+      onPressed: onPress,
       constraints: BoxConstraints.tightFor(
         //width: 100.0,
         height: 40,
@@ -80,7 +82,7 @@ class UnitToggleButton extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       fillColor: kSmallButtonColor,
       child: Icon(
-        enabled ? FontAwesomeIcons.caretDown : null,
+        FontAwesomeIcons.caretDown,
         size: 20,
       ),
     );

@@ -193,7 +193,6 @@ class _InputPageState extends State<InputPage> {
             UnitToggleButton(
               // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
               //text: toggleText,
-              enabled: disableToggleOnAge(text),
               onPress: () {
                 setState(() {
                   toggleNow(text, unit); // Change the value after toggle

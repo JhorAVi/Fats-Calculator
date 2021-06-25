@@ -42,15 +42,24 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   double _fatsCOVERTBAILEY = 0.0;
 
   AgeScale cAge = AgeScale(min: 5, max: 100, image: 'images/scales/age.jpg');
-  WeightScale cWeight = WeightScale(lbsMin: 50, lbsMax: 500, image: 'images/scales/weight.jpg');
-  LengthScale cHeight = LengthScale(cmMin: 91, cmMax: 228, text: 'HEIGHT', image: 'images/scales/height.jpg');
-  LengthScale cWaist = LengthScale(cmMin: 20, cmMax: 200, text: 'WAIST', image: 'images/scales/waist.jpg');
-  LengthScale cHips = LengthScale(cmMin: 20, cmMax: 200, text: 'HIPS', image: 'images/scales/hips.jpg');
-  LengthScale cWrist = LengthScale(cmMin: 5, cmMax: 30, text: 'WRIST', image: 'images/scales/wrist.jpg');
-  LengthScale cForearm = LengthScale(cmMin: 5, cmMax: 50, text: 'FOREARM', image: 'images/scales/forearm.jpg');
-  LengthScale cThigh = LengthScale(cmMin: 5, cmMax: 100, text: 'THIGH', image: 'images/scales/thigh.jpg');
-  LengthScale cCalf = LengthScale(cmMin: 5, cmMax: 50, text: 'CALF', image: 'images/scales/calf.jpg');
-  LengthScale cNeck = LengthScale(cmMin: 5, cmMax: 50, text: 'NECK', image: 'images/scales/neck.jpg');
+  WeightScale cWeight =
+      WeightScale(lbsMin: 50, lbsMax: 500, image: 'images/scales/weight.jpg');
+  LengthScale cHeight = LengthScale(
+      cmMin: 91, cmMax: 228, text: 'HEIGHT', image: 'images/scales/height.jpg');
+  LengthScale cWaist = LengthScale(
+      cmMin: 20, cmMax: 200, text: 'WAIST', image: 'images/scales/waist.jpg');
+  LengthScale cHips = LengthScale(
+      cmMin: 20, cmMax: 200, text: 'HIPS', image: 'images/scales/hips.jpg');
+  LengthScale cWrist = LengthScale(
+      cmMin: 5, cmMax: 30, text: 'WRIST', image: 'images/scales/wrist.jpg');
+  LengthScale cForearm = LengthScale(
+      cmMin: 5, cmMax: 50, text: 'FOREARM', image: 'images/scales/forearm.jpg');
+  LengthScale cThigh = LengthScale(
+      cmMin: 5, cmMax: 100, text: 'THIGH', image: 'images/scales/thigh.jpg');
+  LengthScale cCalf = LengthScale(
+      cmMin: 5, cmMax: 50, text: 'CALF', image: 'images/scales/calf.jpg');
+  LengthScale cNeck = LengthScale(
+      cmMin: 5, cmMax: 50, text: 'NECK', image: 'images/scales/neck.jpg');
 
   // tabs definition
   final _kTabs = <Tab>[
@@ -70,7 +79,11 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     // sliderValues.selectedButton = ButtonScale.age; // set age as default. useless
     _tabController = new TabController(vsync: this, length: _kTabs.length);
 
-    animateSlider = AnimationController(vsync: this, duration: Duration(seconds: 1), lowerBound: 1, upperBound: 407);
+    animateSlider = AnimationController(
+        vsync: this,
+        duration: Duration(seconds: 1),
+        lowerBound: 1,
+        upperBound: 407);
 
 /*    animateSlider.forward();
     animateSlider.addListener(() {
@@ -144,16 +157,20 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
           Row(
             children: <Widget>[
               Expanded(
-                child: Text(_fatsYMCA.toStringAsFixed(1), textAlign: TextAlign.center),
+                child: Text(_fatsYMCA.toStringAsFixed(1),
+                    textAlign: TextAlign.center),
               ),
               Expanded(
-                child: Text(_fatsUSNAVY.toStringAsFixed(1), textAlign: TextAlign.center),
+                child: Text(_fatsUSNAVY.toStringAsFixed(1),
+                    textAlign: TextAlign.center),
               ),
               Expanded(
-                child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1), textAlign: TextAlign.center),
+                child: Text(_fatsCOVERTBAILEY.toStringAsFixed(1),
+                    textAlign: TextAlign.center),
               ),
               Expanded(
-                child: Text(_fatsHERITAGE.toStringAsFixed(1), textAlign: TextAlign.center),
+                child: Text(_fatsHERITAGE.toStringAsFixed(1),
+                    textAlign: TextAlign.center),
               )
             ],
           ),
@@ -167,7 +184,8 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                   // TAB Contents VIEW
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(3.0),
-                  decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent)),
                   // color: kInActiveButtonColor,
                   child: TabWidget(
                       title: introData.title[introIndex],
@@ -235,12 +253,16 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             isFemale = false;
                           });
                         },
-                        colour: (selectedGender == Gender.male) ? kLightButtonColor : kInActiveButtonColor,
+                        colour: (selectedGender == Gender.male)
+                            ? kLightButtonColor
+                            : kInActiveButtonColor,
                         //colour: kInActiveButtonColor,
                         widgetContents: GenderCardContent(
                           label: 'MALE',
                           iconGender: FontAwesomeIcons.male,
-                          iconStatus: (!isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.times,
+                          iconStatus: (!isFemale)
+                              ? FontAwesomeIcons.check
+                              : FontAwesomeIcons.times,
                         ),
                       ),
                     ),
@@ -253,12 +275,16 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             isFemale = true;
                           });
                         },
-                        colour: (selectedGender == Gender.female) ? kLightButtonColor : kInActiveButtonColor,
+                        colour: (selectedGender == Gender.female)
+                            ? kLightButtonColor
+                            : kInActiveButtonColor,
                         //colour: kInActiveButtonColor,
                         widgetContents: GenderCardContent(
                           label: 'FEMALE',
                           iconGender: FontAwesomeIcons.female,
-                          iconStatus: (isFemale) ? FontAwesomeIcons.check : FontAwesomeIcons.times,
+                          iconStatus: (isFemale)
+                              ? FontAwesomeIcons.check
+                              : FontAwesomeIcons.times,
                         ),
                       ),
                     ),
@@ -275,15 +301,19 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       visible: true,
                       child: ReusableCard(
                         // AGE AGE AGE
-                        colour: (cAge.changed) ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: (cAge.changed)
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           // AGE AGE AGE currently merging this with statsCardContent
                           text: cAge.text,
                           unit: cAge.unit,
+                          image: 'images/tools/calendar.png',
                           changed: cAge.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.age; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.age; // useless
                           // BuildContext dialogContext;
                           await popupDialog(
                             context,
@@ -302,10 +332,13 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       visible: isUSNAVY | isHERITAGE,
                       child: ReusableCard(
                         // HEIGHT HEIGHT HEIGHT
-                        colour: cHeight.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cHeight.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cHeight.text,
                           unit: cHeight.unit,
+                          image: 'images/tools/tapemeasure.png',
                           changed: cHeight.changed,
                         ),
                         onPressedMy: () async {
@@ -327,14 +360,18 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       visible: isMYMCA | isHERITAGE,
                       child: ReusableCard(
                         // WEIGHT WEIGHT WEIGHT
-                        colour: cWeight.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cWeight.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cWeight.text,
                           unit: cWeight.unit,
+                          image: 'images/tools/weightscale.png',
                           changed: cWeight.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.weight; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.weight; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -350,17 +387,22 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                     ),
 
                     Visibility(
-                      visible: isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
+                      visible:
+                          isMYMCA | isUSNAVY | (isCOVERTBAILEY & !isFemale),
                       child: ReusableCard(
                         // WAIST WAIST
-                        colour: cWaist.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cWaist.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cWaist.text,
                           unit: cWaist.unit,
+                          image: 'images/tools/tapemeasure.png',
                           changed: cWaist.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.waist; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.waist; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -375,17 +417,23 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       ),
                     ),
                     Visibility(
-                      visible: (isMYMCA & isFemale) | (isUSNAVY & isFemale) | isCOVERTBAILEY,
+                      visible: (isMYMCA & isFemale) |
+                          (isUSNAVY & isFemale) |
+                          isCOVERTBAILEY,
                       child: ReusableCard(
                         // HIPS HIPS
-                        colour: cHips.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cHips.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cHips.text,
                           unit: cHips.unit,
+                          image: 'images/tools/tapemeasure.png',
                           changed: cHips.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.hip; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.hip; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -400,17 +448,22 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       ),
                     ),
                     Visibility(
-                      visible: (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
+                      visible:
+                          (isMYMCA & isFemale) | (isCOVERTBAILEY & !isFemale),
                       child: ReusableCard(
                         // FOREARM FOREARM
-                        colour: cForearm.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cForearm.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cForearm.text,
                           unit: cForearm.unit,
+                          image: 'images/tools/tapemeasure.png',
                           changed: cForearm.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.forearm; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.forearm; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -428,14 +481,18 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       visible: (isMYMCA & isFemale) | isCOVERTBAILEY,
                       child: ReusableCard(
                         // WRIST WRIST
-                        colour: cWrist.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cWrist.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cWrist.text,
                           unit: cWrist.unit,
+                          image: 'images/tools/tapemeasure.png',
                           changed: cWrist.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.wrist; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.wrist; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -454,14 +511,18 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       visible: (isCOVERTBAILEY & isFemale),
                       child: ReusableCard(
                         // THIGH THIGH
-                        colour: cThigh.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cThigh.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cThigh.text,
                           unit: cThigh.unit,
+                          image: 'images/tools/tapemeasure.png',
                           changed: cThigh.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.thigh; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.thigh; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -480,14 +541,18 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       visible: (isCOVERTBAILEY & isFemale),
                       child: ReusableCard(
                         // CALF CALF
-                        colour: cCalf.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cCalf.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cCalf.text,
                           unit: cCalf.unit,
+                          image: 'imags/tools/tapemeasure.png',
                           changed: cCalf.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.calf; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.calf; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -505,14 +570,18 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                       visible: isUSNAVY,
                       child: ReusableCard(
                         // NECK NECK
-                        colour: cNeck.changed ? kActiveButtonColor : kInActiveButtonColor,
+                        colour: cNeck.changed
+                            ? kActiveButtonColor
+                            : kInActiveButtonColor,
                         widgetContents: statsCardContent(
                           text: cNeck.text,
                           unit: cNeck.unit,
+                          image: 'images/tools/tapemeasure.png',
                           changed: cNeck.changed,
                         ),
                         onPressedMy: () async {
-                          sliderValues.selectedButton = ButtonScale.neck; // useless
+                          sliderValues.selectedButton =
+                              ButtonScale.neck; // useless
                           // startAnimateSlider();
                           await popupDialog(
                             context,
@@ -575,7 +644,10 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           children: [
                             Icon(Icons.announcement_outlined),
                             SizedBox(width: 10.0),
-                            Expanded(child: Text('Complete all measurements before proceeding', style: TextStyle(color: Colors.white))),
+                            Expanded(
+                                child: Text(
+                                    'Complete all measurements before proceeding',
+                                    style: TextStyle(color: Colors.white))),
                           ],
                         ),
                         action: SnackBarAction(
@@ -604,7 +676,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             // The page to show
                             isFemale: isFemale,
                             bodyFats: bodyFats,
-                            genderPath: isFemale ? 'images/bodyFatsWomen.jpg' : 'images/bodyFatsMen.jpg',
+                            genderPath: isFemale
+                                ? 'images/bodyFatsWomen.jpg'
+                                : 'images/bodyFatsMen.jpg',
                             shortSummary: calcBF.shortSummary(),
                             longSummary: calcBF.longSummary(),
                             formulaSummary: calcBF.formulaSummary(),
@@ -645,81 +719,92 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
           // backgroundColor: kInActiveButtonColor,
           titlePadding: EdgeInsets.fromLTRB(8, 10, 10, 0),
           contentPadding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
           // The TEXT above the slider
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    // WEIGHT or HEIGHT TEXT
-                    text,
-                    style: kDialogTitleStyle,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      //SizedBox(width: 10),
-                      Text(
-                        // SLIDER CURRENT VALUE NUMBER
-                        currentValueTxt(text),
-                        style: kAgeTextStyle,
-                      ),
-                      Text(
-                        // INCHES OR CM with adjustment for feet and age
-                        ' ${unitDisplay(text)}',
-                        style: kUnitTextStyle,
-                      ),
+          title: Container(
+            height:
+                77, // this height should depend on the fonsize of the content
+            child: Row(
+              // Separation between Value group and image
+              // mainAxisAlignment: MainAxisAlignment.end, // to set image to top right corner
+              // crossAxisAlignment: CrossAxisAlignment.start, // to set image to top right corner
 
-                      // The following is for extra info for inches and months
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    // Unit on top and value under
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       Text(
-                        // FRACTIONS by INCHES or MONTHS
-                        ' ${inchOrMonthValue(text)}',
-                        style: kAgeTextStyle,
+                        // WEIGHT or HEIGHT TEXT
+                        text,
+                        style: kDialogTitleStyle,
                       ),
-                      Text(
-                        // FEET OR NOT
-                        ' ${inchOrMonthUnit(text)}',
-                        style: kUnitTextStyle,
-                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          //SizedBox(width: 10),
+                          Text(
+                            // SLIDER CURRENT VALUE NUMBER
+                            currentValueTxt(text),
+                            style: kAgeTextStyle,
+                          ),
+                          Text(
+                            // INCHES OR CM with adjustment for feet and age
+                            ' ${unitDisplay(text)}',
+                            style: kUnitTextStyle,
+                          ),
 
-                      // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-                      // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
-                      Visibility(
-                        visible: (text == 'AGE') ? false : true,
-                        child: UnitToggleButton(
-                          // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
-                          //text: toggleText,
-                          onPress: () {
-                            setState(() {
-                              toggleNow(text); // Change the value after toggle
-                              sliderUpdate(text); // The slider min max values update after toggle.
-                            });
-                          },
-                        ),
+                          // The following is for extra info for inches and months
+                          Text(
+                            // FRACTIONS by INCHES or MONTHS
+                            ' ${inchOrMonthValue(text)}',
+                            style: kAgeTextStyle,
+                          ),
+                          Text(
+                            // FEET OR NOT
+                            ' ${inchOrMonthUnit(text)}',
+                            style: kUnitTextStyle,
+                          ),
+
+                          // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+                          // TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE
+                          Visibility(
+                            visible: (text == 'AGE') ? false : true,
+                            child: UnitToggleButton(
+                              // Negate the UNIT Button  // Make sure that the conversion has decimal accuracy
+                              //text: toggleText,
+                              onPress: () {
+                                setState(() {
+                                  toggleNow(
+                                      text); // Change the value after toggle
+                                  sliderUpdate(
+                                      text); // The slider min max values update after toggle.
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Container(
-                // Image in the Dialog
-                width: 90,
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(
-                    image: AssetImage(image),
-                    fit: BoxFit.fill,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: ReusableImage(
+                    image: image,
+                    //width: 90,
+                    //height: 70,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           // the SLIDER SLIDER
           content: Column(
@@ -824,7 +909,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                   child: Text(
                     (text == 'AGE')
                         ? '* Tip: You can increase the age precision by specifying the number of months'
-                        : '* Tip: The button to the right of the value automatically converts it to another unit.',
+                        : '* Tip: The button right of the value auto converts that value to the alternative unit.',
                     textAlign: TextAlign.left,
                   ),
                 ),
@@ -842,53 +927,59 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   Row statsCardContent(
       {final String text,
       final String unit,
-      //final double value, // To display the initial value depending on the metrics
-      //final int min,
-      // final int max,
-      //final String toggleText,
-      // final bool selected,
+      final String image,
       final bool changed}) {
     // if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider.
     // The above function executes all the time so it updates the slider values anytime you
     // press the increment or decrement or any operation
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                // WEIGHT or HEIGHT TEXT
-                text,
-                style: kTextStyle,
-              ),
-              SizedBox(width: 10),
-              // tap to Add .1 decimal accuracy to the value
-              Text(
-                // SLIDER CURRENT VALUE NUMBER
-                currentValueTxt(text),
-                style: kAgeTextStyle,
-              ),
-              Text(
-                // Display Feet of unit is in inches
-                ' ${(text == 'HEIGHT' && cHeight.unit == 'in.') ? 'ft.' : unit}',
-                // The value above executes all the time so it updates whenever the unit is toggled
-                style: kUnitTextStyle,
-                // textAlign: TextAlign.center,
-              ),
-              Text(
-                // Inches or Month value
-                ' ${inchOrMonthValue(text)}',
-                style: kAgeTextStyle,
-              ),
-              Text(
-                // Inches or Month unit
-                ' ${inchOrMonthUnit(text)}',
-                style: kUnitTextStyle,
-              ),
-            ],
+        Container(
+          // contains the image
+          height: 45,
+          width: 70,
+          child: ReusableImage(
+            image: image,
+            // width: 30,
+            // height: 20,
           ),
+        ),
+        Row(
+          // contains the value group
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              // WEIGHT or HEIGHT TEXT
+              text,
+              style: kTextStyle,
+            ),
+            SizedBox(width: 10),
+            // tap to Add .1 decimal accuracy to the value
+            Text(
+              // SLIDER CURRENT VALUE NUMBER
+              currentValueTxt(text),
+              style: kAgeTextStyle,
+            ),
+            Text(
+              // Display Feet of unit is in inches
+              ' ${(text == 'HEIGHT' && cHeight.unit == 'in.') ? 'ft.' : unit}',
+              // The value above executes all the time so it updates whenever the unit is toggled
+              style: kUnitTextStyle,
+              // textAlign: TextAlign.center,
+            ),
+            Text(
+              // Inches or Month value
+              ' ${inchOrMonthValue(text)}',
+              style: kAgeTextStyle,
+            ),
+            Text(
+              // Inches or Month unit
+              ' ${inchOrMonthUnit(text)}',
+              style: kUnitTextStyle,
+            ),
+          ],
         ),
         Icon(
           changed ? FontAwesomeIcons.check : null,
@@ -983,7 +1074,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   // Process the inches display part
   String inchOrMonthValue(String text) {
     String returnText;
-    if (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0')
+    if (text == 'HEIGHT' &&
+        cHeight.unit == 'in.' &&
+        cHeight.inchesDisplay != '0')
       returnText = cHeight.inchesDisplay;
     else if (text == 'AGE' && cAge.monthDisplay != '0')
       returnText = cAge.monthDisplay;
@@ -996,7 +1089,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   // Process the visibility of the feet text
   String inchOrMonthUnit(String text) {
     String returnText;
-    if (text == 'HEIGHT' && cHeight.unit == 'in.' && cHeight.inchesDisplay != '0')
+    if (text == 'HEIGHT' &&
+        cHeight.unit == 'in.' &&
+        cHeight.inchesDisplay != '0')
       returnText = cHeight.unit;
     else if (text == 'AGE' && cAge.monthDisplay != '0')
       returnText = 'mos.';

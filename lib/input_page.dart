@@ -211,7 +211,7 @@ class _InputPageState extends State<InputPage> {
               // Does not care if it is kgs or lbs
               flex: 1,
               child: SliderSideButton(
-                icon: FontAwesomeIcons.minus,
+                icon: FontAwesomeIcons.chevronCircleLeft,
                 onPress: () {
                   setState(() {
                     decrementNow(text); // Decrement now!
@@ -241,7 +241,7 @@ class _InputPageState extends State<InputPage> {
                 // Doesn't care if it's kgs or lbs
                 flex: 1,
                 child: SliderSideButton(
-                  icon: FontAwesomeIcons.plus,
+                  icon: FontAwesomeIcons.chevronCircleRight,
                   onPress: () {
                     setState(() {
                       incrementNow(text); // perform increment

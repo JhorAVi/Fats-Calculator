@@ -191,7 +191,10 @@ class _TabWidgetState extends State<TabWidget> {
               ),
               Text(
                 widget.formula,
-                style: TextStyle(fontStyle: FontStyle.italic, color: Colors.green, fontSize: 14),
+                style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    color: Colors.green,
+                    fontSize: 14),
               ),
               Text(
                 widget.tips,
@@ -207,7 +210,8 @@ class _TabWidgetState extends State<TabWidget> {
           padding: EdgeInsets.all(15.0),
           color: kBottomContainerColor,
           onPressed: widget.onPressed,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Text(
             'MEASURE NOW',
             style: kLargeButtonTextStyle,
@@ -246,6 +250,26 @@ class MenuButtonContent extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class ReusableImage extends StatelessWidget {
+  ReusableImage({this.image});
+  final String image;
+  //final double width;
+  //final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // Image in the Dialog
+      // width: width,
+      // height: height,
+      decoration: BoxDecoration(
+          color: Colors.black, // testing if this works for pgn
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(fit: BoxFit.fill, image: AssetImage(image))),
     );
   }
 }

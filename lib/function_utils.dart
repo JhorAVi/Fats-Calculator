@@ -463,7 +463,7 @@ class CalcBodyFats {
     selFlex2 = 17;
     selFlex3 = 83;
     _shortSummary = 'Skinny';
-    _longSummary = 'You are too underweight. You better eat more make sure to see a doctor';
+    _longSummary = 'You are too underweight. You better eat more & make sure to see a doctor';
     //_fatsPrefix = '<';
   }
 

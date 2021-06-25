@@ -46,16 +46,16 @@ class GenderCardContent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Icon(iconStatus, size: 30.0),
+        Icon(
+          iconGender,
+          size: 30.0,
+        ),
         Text(
           label,
           style: kTextStyle,
           textAlign: TextAlign.center,
         ),
-        Icon(
-          iconGender,
-          size: 30.0,
-        ),
+        Icon(iconStatus, size: 30.0),
       ],
     );
   }

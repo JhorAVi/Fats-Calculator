@@ -547,7 +547,7 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cCalf.text,
                           unit: cCalf.unit,
-                          image: 'imags/tools/tapemeasure.png',
+                          image: 'images/tools/tapemeasure.png',
                           changed: cCalf.changed,
                         ),
                         onPressedMy: () async {
@@ -981,9 +981,17 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
             ),
           ],
         ),
-        Icon(
-          changed ? FontAwesomeIcons.check : null,
-          size: 15.0,
+        Visibility(
+          visible: changed ? true : false,
+          child: Row(
+            children: [
+              Text('done '),
+              Icon(
+                FontAwesomeIcons.check,
+                size: 15.0,
+              ),
+            ],
+          ),
         ),
       ],
     );

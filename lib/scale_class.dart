@@ -3,9 +3,24 @@ import 'function_utils.dart';
 import 'constants.dart';
 
 class IntroData {
-  var title = ['Modified YMCA', 'Department of Defense a.k.a. US Navy', 'Covert Bailey', 'Heritage'];
-  var description = [kYMCADescription, kUSNAVYDescription, kCovertBaileyDescription, kHeritageDescription];
-  var formula = [kYMCAFormula, kUSNAVYFormula, kCoverBaileyFormula, kHeritageFormula];
+  var title = [
+    'Modified YMCA',
+    'Department of Defense a.k.a. US Navy',
+    'Covert Bailey',
+    'Heritage'
+  ];
+  var description = [
+    kYMCADescription,
+    kUSNAVYDescription,
+    kCovertBaileyDescription,
+    kHeritageDescription
+  ];
+  var formula = [
+    kYMCAFormula,
+    kUSNAVYFormula,
+    kCoverBaileyFormula,
+    kHeritageFormula
+  ];
   var tips = kTips;
 }
 
@@ -28,10 +43,10 @@ class AgeScale {
   String text = 'AGE';
   String unit = 'yr.';
   String monthDisplay; // new. displays months
-  String image;
+  String image, image2;
   bool changed = false;
 
-  AgeScale({this.min, this.max, this.image}) {
+  AgeScale({this.min, this.max, this.image, this.image2}) {
     // age = (min + max) / 2;
     age = min.toDouble() + 1; // starts at the lowest age
     ageDisplay = age.floor().toString();
@@ -105,16 +120,18 @@ class WeightScale {
   String unit = 'lbs';
   String toggleText;
   bool lbsIsDefault = true;
-  String image;
+  String image, image2;
   bool changed = false;
 
-  WeightScale({@required this.lbsMin, @required this.lbsMax, this.image}) {
+  WeightScale(
+      {@required this.lbsMin, @required this.lbsMax, this.image, this.image2}) {
     kgMin = lbsToKilograms(lbsMin.toDouble()).round(); // 23;
     kgMax = lbsToKilograms(lbsMax.toDouble()).round(); //136;
     min = lbsMin; // can either be lbs or kgs
     max = lbsMax;
     //weight = (lbsMin + lbsMax) / 2;
-    weight = lbsMin.toDouble() + 1; // Set to lowest value to make it obvious that it has not been set yet
+    weight = lbsMin.toDouble() +
+        1; // Set to lowest value to make it obvious that it has not been set yet
     //toggleText = (lbsIsDefault) ? '<< switch kgs' : '<< switch lbs';
     weightDisplay = weight.round().toString();
   }
@@ -203,21 +220,28 @@ class LengthScale {
   int inchMin, inchMax;
   String lengthDisplay;
   //String feetText;
-  String inchesDisplay; // the inches part of feet display computed differently from the rest
+  String
+      inchesDisplay; // the inches part of feet display computed differently from the rest
   String text;
   String unit = 'cm.';
   String toggleText; // maybe unused
   bool cmIsDefault = true;
-  String image;
+  String image, image2;
   bool changed = false;
 
-  LengthScale({@required this.cmMin, @required this.cmMax, @required this.text, this.image}) {
+  LengthScale(
+      {@required this.cmMin,
+      @required this.cmMax,
+      @required this.text,
+      this.image,
+      this.image2}) {
     inchMin = centimetersToInches(cmMin.toDouble()).round();
     inchMax = centimetersToInches(cmMax.toDouble()).round();
     min = cmMin;
     max = cmMax;
     // length = (cmMin + cmMax) / 2;
-    length = cmMin.toDouble() + 1; // Start at the lowest value so that user will know that the value is not yet set.
+    length = cmMin.toDouble() +
+        1; // Start at the lowest value so that user will know that the value is not yet set.
     lengthDisplay = length.round().toString();
   }
 

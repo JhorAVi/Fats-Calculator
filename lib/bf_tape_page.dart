@@ -41,25 +41,64 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
   double _fatsUSNAVY = 0.0;
   double _fatsCOVERTBAILEY = 0.0;
 
-  AgeScale cAge = AgeScale(min: 5, max: 100, image: 'images/scales/age.jpg');
-  WeightScale cWeight =
-      WeightScale(lbsMin: 50, lbsMax: 500, image: 'images/scales/weight.jpg');
+  AgeScale cAge = AgeScale(
+      min: 5,
+      max: 100,
+      image: 'images/scales/age.jpg',
+      image2: 'images/scales/age2.jpg');
+  WeightScale cWeight = WeightScale(
+      lbsMin: 50,
+      lbsMax: 500,
+      image: 'images/scales/weight.jpg',
+      image2: 'images/scales/weight2.jpg');
   LengthScale cHeight = LengthScale(
-      cmMin: 91, cmMax: 228, text: 'HEIGHT', image: 'images/scales/height.jpg');
+      cmMin: 91,
+      cmMax: 228,
+      text: 'HEIGHT',
+      image: 'images/scales/height.jpg',
+      image2: 'images/scales/height2.jpg');
   LengthScale cWaist = LengthScale(
-      cmMin: 20, cmMax: 200, text: 'WAIST', image: 'images/scales/waist.jpg');
+      cmMin: 20,
+      cmMax: 200,
+      text: 'WAIST',
+      image: 'images/scales/waist.jpg',
+      image2: 'images/scales/waist2.jpg');
   LengthScale cHips = LengthScale(
-      cmMin: 20, cmMax: 200, text: 'HIPS', image: 'images/scales/hips.jpg');
+      cmMin: 20,
+      cmMax: 200,
+      text: 'HIPS',
+      image: 'images/scales/hips.jpg',
+      image2: 'images/scales/hips2.jpg');
   LengthScale cWrist = LengthScale(
-      cmMin: 5, cmMax: 30, text: 'WRIST', image: 'images/scales/wrist.jpg');
+      cmMin: 5,
+      cmMax: 30,
+      text: 'WRIST',
+      image: 'images/scales/wrist.jpg',
+      image2: 'images/scales/wrist2.jpg');
   LengthScale cForearm = LengthScale(
-      cmMin: 5, cmMax: 50, text: 'FOREARM', image: 'images/scales/forearm.jpg');
+      cmMin: 5,
+      cmMax: 50,
+      text: 'FOREARM',
+      image: 'images/scales/forearm.jpg',
+      image2: 'images/scales/forearm2.jpg');
   LengthScale cThigh = LengthScale(
-      cmMin: 5, cmMax: 100, text: 'THIGH', image: 'images/scales/thigh.jpg');
+      cmMin: 5,
+      cmMax: 100,
+      text: 'THIGH',
+      image: 'images/scales/thigh.jpg',
+      image2: 'images/scales/thigh2.jpg');
   LengthScale cCalf = LengthScale(
-      cmMin: 5, cmMax: 50, text: 'CALF', image: 'images/scales/calf.jpg');
+      cmMin: 5,
+      cmMax: 50,
+      text: 'CALF',
+      image: 'images/scales/calf.jpg',
+      image2: 'images/scales/calf2.jpg');
   LengthScale cNeck = LengthScale(
-      cmMin: 5, cmMax: 50, text: 'NECK', image: 'images/scales/neck.jpg');
+      cmMin: 5,
+      cmMax: 50,
+      text: 'NECK',
+      image: 'images/scales/neck.jpg',
+      image2: 'images/scales/neck2.jpg');
 
   // tabs definition
   final _kTabs = <Tab>[
@@ -308,7 +347,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                           // AGE AGE AGE currently merging this with statsCardContent
                           text: cAge.text,
                           unit: cAge.unit,
-                          image: 'images/tools/calendar.png',
+                          image: (selectedGender == Gender.female)
+                              ? cAge.image
+                              : cAge.image2,
                           changed: cAge.changed,
                         ),
                         onPressedMy: () async {
@@ -321,7 +362,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cAge.age,
                             min: cAge.min,
                             max: cAge.max,
-                            image: cAge.image,
+                            image: (selectedGender == Gender.female)
+                                ? cAge.image
+                                : cAge.image2,
                           );
                           setState(() {});
                         },
@@ -338,7 +381,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cHeight.text,
                           unit: cHeight.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cHeight.image
+                              : cHeight.image2,
                           changed: cHeight.changed,
                         ),
                         onPressedMy: () async {
@@ -349,7 +394,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cHeight.length,
                             min: cHeight.min,
                             max: cHeight.max,
-                            image: cHeight.image,
+                            image: (selectedGender == Gender.female)
+                                ? cHeight.image
+                                : cHeight.image2,
                           );
                           setState(() {});
                         },
@@ -366,7 +413,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cWeight.text,
                           unit: cWeight.unit,
-                          image: 'images/tools/weightscale.png',
+                          image: (selectedGender == Gender.female)
+                              ? cWeight.image
+                              : cWeight.image2,
                           changed: cWeight.changed,
                         ),
                         onPressedMy: () async {
@@ -379,7 +428,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cWeight.weight,
                             min: cWeight.min,
                             max: cWeight.max,
-                            image: cWeight.image,
+                            image: (selectedGender == Gender.female)
+                                ? cWeight.image
+                                : cWeight.image2,
                           );
                           setState(() {});
                         },
@@ -397,7 +448,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cWaist.text,
                           unit: cWaist.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cWaist.image
+                              : cWaist.image2,
                           changed: cWaist.changed,
                         ),
                         onPressedMy: () async {
@@ -410,7 +463,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cWaist.length,
                             min: cWaist.min,
                             max: cWaist.max,
-                            image: cWaist.image,
+                            image: (selectedGender == Gender.female)
+                                ? cWaist.image
+                                : cWaist.image2,
                           );
                           setState(() {});
                         },
@@ -428,7 +483,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cHips.text,
                           unit: cHips.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cHips.image
+                              : cHips.image2,
                           changed: cHips.changed,
                         ),
                         onPressedMy: () async {
@@ -441,7 +498,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cHips.length,
                             min: cHips.min,
                             max: cHips.max,
-                            image: cHips.image,
+                            image: (selectedGender == Gender.female)
+                                ? cHips.image
+                                : cHips.image2,
                           );
                           setState(() {});
                         },
@@ -458,7 +517,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cForearm.text,
                           unit: cForearm.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cForearm.image
+                              : cForearm.image2,
                           changed: cForearm.changed,
                         ),
                         onPressedMy: () async {
@@ -471,7 +532,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cForearm.length,
                             min: cForearm.min,
                             max: cForearm.max,
-                            image: cForearm.image,
+                            image: (selectedGender == Gender.female)
+                                ? cForearm.image
+                                : cForearm.image2,
                           );
                           setState(() {});
                         },
@@ -487,7 +550,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cWrist.text,
                           unit: cWrist.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cWrist.image
+                              : cWrist.image2,
                           changed: cWrist.changed,
                         ),
                         onPressedMy: () async {
@@ -500,7 +565,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cWrist.length,
                             min: cWrist.min,
                             max: cWrist.max,
-                            image: cWrist.image,
+                            image: (selectedGender == Gender.female)
+                                ? cWrist.image
+                                : cWrist.image2,
                           );
                           setState(() {});
                         },
@@ -517,7 +584,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cThigh.text,
                           unit: cThigh.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cThigh.image
+                              : cThigh.image2,
                           changed: cThigh.changed,
                         ),
                         onPressedMy: () async {
@@ -530,7 +599,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cThigh.length,
                             min: cThigh.min,
                             max: cThigh.max,
-                            image: cThigh.image,
+                            image: (selectedGender == Gender.female)
+                                ? cThigh.image
+                                : cThigh.image2,
                           );
                           setState(() {});
                         },
@@ -547,7 +618,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cCalf.text,
                           unit: cCalf.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cCalf.image
+                              : cCalf.image2,
                           changed: cCalf.changed,
                         ),
                         onPressedMy: () async {
@@ -560,7 +633,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cCalf.length,
                             min: cCalf.min,
                             max: cCalf.max,
-                            image: cCalf.image,
+                            image: (selectedGender == Gender.female)
+                                ? cCalf.image
+                                : cCalf.image2,
                           );
                           setState(() {});
                         },
@@ -576,7 +651,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                         widgetContents: statsCardContent(
                           text: cNeck.text,
                           unit: cNeck.unit,
-                          image: 'images/tools/tapemeasure.png',
+                          image: (selectedGender == Gender.female)
+                              ? cNeck.image
+                              : cNeck.image2,
                           changed: cNeck.changed,
                         ),
                         onPressedMy: () async {
@@ -589,7 +666,9 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
                             value: cNeck.length,
                             min: cNeck.min,
                             max: cNeck.max,
-                            image: cNeck.image,
+                            image: (selectedGender == Gender.female)
+                                ? cNeck.image
+                                : cNeck.image2,
                           );
                           setState(() {});
                         },

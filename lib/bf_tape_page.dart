@@ -778,6 +778,86 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
     );
   }
 
+  // Widget inside the slider card FUNCTION
+  // Widget inside the slider card FUNCTION
+  // TODO add the ft with proper size
+  Row statsCardContent(
+      {final String text,
+      final String unit,
+      final String image,
+      final bool changed}) {
+    // if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider.
+    // The above function executes all the time so it updates the slider values anytime you
+    // press the increment or decrement or any operation
+    String leftSpace =
+        '  ' * (10 - (text.length)); // the left tab depending on text length
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          // contains the value group
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            //          SizedBox(width: (50 - (text.length)).toDouble()),
+            Text(leftSpace),
+            Text(
+              // WEIGHT or HEIGHT TEXT
+              text,
+              style: kTextStyle,
+            ),
+            SizedBox(width: 10),
+            Container(
+              // contains the image
+              height: 45,
+              width: 70,
+              child: ReusableImage(
+                image: image,
+                // width: 30,
+                // height: 20,
+              ),
+            ),
+            SizedBox(width: 10),
+            // tap to Add .1 decimal accuracy to the value
+            Text(
+              // SLIDER CURRENT VALUE NUMBER
+              currentValueTxt(text),
+              style: kAgeTextStyle,
+            ),
+            Text(
+              // Display Feet of unit is in inches
+              ' ${(text == 'HEIGHT' && cHeight.unit == 'in.') ? 'ft.' : unit}',
+              // The value above executes all the time so it updates whenever the unit is toggled
+              style: kUnitTextStyle,
+              // textAlign: TextAlign.center,
+            ),
+            Text(
+              // Inches or Month value
+              ' ${inchOrMonthValue(text)}',
+              style: kAgeTextStyle,
+            ),
+            Text(
+              // Inches or Month unit
+              ' ${inchOrMonthUnit(text)}',
+              style: kUnitTextStyle,
+            ),
+          ],
+        ),
+        Visibility(
+          visible: changed ? true : false,
+          child: Row(
+            children: [
+              Text('done '),
+              Icon(
+                FontAwesomeIcons.check,
+                size: 15.0,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Future<dynamic> popupDialog(
     // All the contents here are just for initial value.
     BuildContext context, {
@@ -997,82 +1077,6 @@ class _FatsTapeState extends State<FatsTape> with TickerProviderStateMixin {
           ],
         ),
       ),
-    );
-  }
-
-  // Widget inside the slider card FUNCTION
-  // Widget inside the slider card FUNCTION
-  // TODO add the ft with proper size
-  Row statsCardContent(
-      {final String text,
-      final String unit,
-      final String image,
-      final bool changed}) {
-    // if (selected) sliderForAll(value: value, min: min, max: max); // Links current button to slider.
-    // The above function executes all the time so it updates the slider values anytime you
-    // press the increment or decrement or any operation
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          // contains the image
-          height: 45,
-          width: 70,
-          child: ReusableImage(
-            image: image,
-            // width: 30,
-            // height: 20,
-          ),
-        ),
-        Row(
-          // contains the value group
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              // WEIGHT or HEIGHT TEXT
-              text,
-              style: kTextStyle,
-            ),
-            SizedBox(width: 10),
-            // tap to Add .1 decimal accuracy to the value
-            Text(
-              // SLIDER CURRENT VALUE NUMBER
-              currentValueTxt(text),
-              style: kAgeTextStyle,
-            ),
-            Text(
-              // Display Feet of unit is in inches
-              ' ${(text == 'HEIGHT' && cHeight.unit == 'in.') ? 'ft.' : unit}',
-              // The value above executes all the time so it updates whenever the unit is toggled
-              style: kUnitTextStyle,
-              // textAlign: TextAlign.center,
-            ),
-            Text(
-              // Inches or Month value
-              ' ${inchOrMonthValue(text)}',
-              style: kAgeTextStyle,
-            ),
-            Text(
-              // Inches or Month unit
-              ' ${inchOrMonthUnit(text)}',
-              style: kUnitTextStyle,
-            ),
-          ],
-        ),
-        Visibility(
-          visible: changed ? true : false,
-          child: Row(
-            children: [
-              Text('done '),
-              Icon(
-                FontAwesomeIcons.check,
-                size: 15.0,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
